@@ -44,37 +44,32 @@ export const Navigation: React.FC<NavigationProps> = ({
             : 'py-6 bg-transparent'
         }`}
       >
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 flex items-center justify-between">
-          {/* BRAND WORDMARK */}
+        <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+          {/* BRAND LOGO WITH COMPACT NAME UNDERNEATH */}
           <button
             onClick={() => onNavigate('awakening')}
-            className="group flex items-center gap-3.5 text-left cursor-pointer focus:outline-none"
+            className="group flex flex-col items-center justify-center shrink-0 text-center cursor-pointer focus:outline-none"
+            aria-label="ARENOVA Home"
           >
             <img
               src={arenovaLogo}
-              alt=""
-              aria-hidden="true"
-              className="h-8 w-9 rounded-md border border-[#E84B2C]/35 object-contain transition-transform group-hover:scale-105 duration-300"
+              alt="ARENOVA"
+              className="h-7 sm:h-8 w-auto rounded-md border border-[#E84B2C]/35 object-contain transition-transform group-hover:scale-105 duration-300 shadow-sm shadow-[#E84B2C]/15"
             />
-            <div className="flex flex-col">
-              <span className="font-display tracking-[0.22em] text-lg sm:text-xl font-bold text-[#F3F0E8] group-hover:text-white transition-colors">
-                ARENOVA
-              </span>
-              <span className="text-[9px] uppercase tracking-[0.25em] text-[#9E9B93] group-hover:text-[#E84B2C] transition-colors">
-                AI & Automation
-              </span>
-            </div>
+            <span className="font-display tracking-[0.24em] text-[8.5px] sm:text-[9px] font-bold text-[#F3F0E8] group-hover:text-white transition-colors leading-none mt-1">
+              ARENOVA
+            </span>
           </button>
 
-          {/* DESKTOP NARRATIVE NAVIGATION */}
-          <nav className="hidden lg:flex items-center gap-1 xl:gap-2 px-3 py-1.5 rounded-full bg-[#181716]/70 border border-[#F3F0E8]/10 backdrop-blur-md">
+          {/* DESKTOP NARRATIVE NAVIGATION - LINEAR & NON-WRAPPING */}
+          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full bg-[#181716]/80 border border-[#F3F0E8]/10 backdrop-blur-md shrink-0 shadow-lg shadow-black/25">
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
                 <button
                   key={link.id}
                   onClick={() => onNavigate(link.id)}
-                  className={`relative px-3 py-1 text-xs tracking-wider uppercase transition-all duration-200 rounded-full cursor-pointer ${
+                  className={`relative px-2 xl:px-3 py-1 text-[10.5px] xl:text-[11.5px] tracking-wider uppercase whitespace-nowrap transition-all duration-200 rounded-full cursor-pointer shrink-0 ${
                     isActive
                       ? 'text-[#F3F0E8] font-semibold bg-[#E84B2C]/20 border border-[#E84B2C]/40 shadow-sm shadow-[#E84B2C]/20'
                       : 'text-[#A39E93] hover:text-[#F3F0E8] hover:bg-[#F3F0E8]/5'
@@ -90,15 +85,15 @@ export const Navigation: React.FC<NavigationProps> = ({
           </nav>
 
           {/* RIGHT ACTION: TELEMETRY & CTA */}
-          <div className="hidden sm:flex items-center gap-4">
-            <div className="hidden xl:flex items-center gap-2 px-3 py-1 rounded-full bg-[#161514] border border-[#F3F0E8]/08 text-[11px] text-[#A39E93]">
+          <div className="hidden sm:flex items-center gap-2.5 xl:gap-3 shrink-0">
+            <div className="hidden 2xl:flex items-center gap-2 px-3 py-1 rounded-full bg-[#161514] border border-[#F3F0E8]/08 text-[11px] text-[#A39E93]">
               <Sparkles className="w-3 h-3 text-[#E84B2C]" />
               <span className="font-mono">FLIGHT: {Math.round(scrollProgress * 100)}%</span>
             </div>
 
             <button
               onClick={() => onNavigate('contact')}
-              className="btn-cinematic px-5 py-2.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-xs tracking-wider uppercase transition-all shadow-lg shadow-[#E84B2C]/25 hover:shadow-[#E84B2C]/40 flex items-center gap-2 cursor-pointer"
+              className="btn-cinematic px-3.5 xl:px-5 py-2 xl:py-2.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-[10.5px] xl:text-xs tracking-wider uppercase whitespace-nowrap transition-all shadow-lg shadow-[#E84B2C]/25 hover:shadow-[#E84B2C]/40 flex items-center gap-1.5 xl:gap-2 cursor-pointer"
             >
               <span>Build your advantage</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
