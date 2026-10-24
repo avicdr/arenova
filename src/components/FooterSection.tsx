@@ -16,8 +16,9 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
             <div className="flex items-center gap-3">
               <img
                 src={arenovaLogo}
-                alt=""
-                aria-hidden="true"
+                alt="ARENOVA Brand Emblem"
+                width="36"
+                height="32"
                 className="h-8 w-9 rounded-md border border-[#E84B2C]/35 object-contain"
               />
               <span className="font-display tracking-[0.22em] text-2xl font-bold text-[#F3F0E8]">
@@ -44,90 +45,138 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
           {/* COLUMNS */}
           <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-xs font-mono">
             {/* CORE DISCIPLINES */}
-            <div className="flex flex-col gap-3">
+            <nav aria-label="Core Services" className="flex flex-col gap-3">
               <span className="uppercase tracking-widest text-[#E84B2C] font-bold">
                 Services
               </span>
-              <button
-                onClick={() => onNavigate('services')}
+              <a
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('services');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 AI Front Desk Agents
-              </button>
-              <button
-                onClick={() => onNavigate('services')}
+              </a>
+              <a
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('services');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Workflow Automation
-              </button>
-              <button
-                onClick={() => onNavigate('services')}
+              </a>
+              <a
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('services');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Custom AI Agents
-              </button>
-              <button
-                onClick={() => onNavigate('services')}
+              </a>
+              <a
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('services');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Google Ads & Growth
-              </button>
-              <button
-                onClick={() => onNavigate('services')}
+              </a>
+              <a
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('services');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Websites That Convert
-              </button>
-            </div>
+              </a>
+            </nav>
 
             {/* EXPLORATION */}
-            <div className="flex flex-col gap-3">
+            <nav aria-label="Journey Sections" className="flex flex-col gap-3">
               <span className="uppercase tracking-widest text-[#E84B2C] font-bold">
                 Journey
               </span>
-              <button
-                onClick={() => onNavigate('awakening')}
+              <a
+                href="#awakening"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('awakening');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 01 Awakening
-              </button>
-              <button
-                onClick={() => onNavigate('problem')}
+              </a>
+              <a
+                href="#problem"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('problem');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 02 The Problem
-              </button>
-              <button
-                onClick={() => onNavigate('transformation')}
+              </a>
+              <a
+                href="#transformation"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('transformation');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 03 Transformation
-              </button>
-              <button
-                onClick={() => onNavigate('workflow-demo')}
+              </a>
+              <a
+                href="#workflow-demo"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('workflow-demo');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 04 System Demo
-              </button>
-              <button
-                onClick={() => onNavigate('industries')}
+              </a>
+              <a
+                href="#industries"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('industries');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 05 Industries
-              </button>
-              <button
-                onClick={() => onNavigate('approach')}
+              </a>
+              <a
+                href="#approach"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('approach');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 06 Delivery Approach
-              </button>
-              <button
-                onClick={() => onNavigate('ascent')}
+              </a>
+              <a
+                href="#ascent"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('ascent');
+                }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 07 The Ascent
-              </button>
-            </div>
+              </a>
+            </nav>
 
             {/* HUBS & CONNECT */}
             <div className="flex flex-col gap-3 col-span-2 sm:col-span-1">
@@ -140,6 +189,10 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
               <div className="pt-3">
                 <a
                   href="#contact-form"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate('contact');
+                  }}
                   className="inline-flex items-center gap-1.5 text-[#E84B2C] hover:underline"
                 >
                   <span>Request System Audit</span>
@@ -152,7 +205,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
 
         {/* BOTTOM METRICS & COPYRIGHT */}
         <div className="pt-8 border-t border-[#F3F0E8]/08 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#A39E93]">
-          <p>© {new Date().getFullYear()} ARENOVA. All systems engineered with precision.</p>
+          <p>© 2026 ARENOVA. All systems engineered with precision.</p>
           <div className="flex items-center gap-6">
             <span>Security: Zero-Trust TLS 1.3</span>
             <span>•</span>

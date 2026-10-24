@@ -46,40 +46,54 @@ export const Navigation: React.FC<NavigationProps> = ({
       >
         <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
           {/* BRAND LOGO WITH COMPACT NAME UNDERNEATH */}
-          <button
-            onClick={() => onNavigate('awakening')}
+          <a
+            href="#awakening"
+            onClick={(e) => {
+              e.preventDefault();
+              onNavigate('awakening');
+            }}
             className="group flex flex-col items-center justify-center shrink-0 text-center cursor-pointer focus:outline-none"
             aria-label="ARENOVA Home"
           >
             <img
               src={arenovaLogo}
-              alt="ARENOVA"
+              alt="ARENOVA Logo"
+              width="32"
+              height="32"
               className="h-7 sm:h-8 w-auto rounded-md border border-[#E84B2C]/35 object-contain transition-transform group-hover:scale-105 duration-300 shadow-sm shadow-[#E84B2C]/15"
             />
             <span className="font-display tracking-[0.24em] text-[8.5px] sm:text-[9px] font-bold text-[#F3F0E8] group-hover:text-white transition-colors leading-none mt-1">
               ARENOVA
             </span>
-          </button>
+          </a>
 
           {/* DESKTOP NARRATIVE NAVIGATION - LINEAR & NON-WRAPPING */}
-          <nav className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full bg-[#181716]/80 border border-[#F3F0E8]/10 backdrop-blur-md shrink-0 shadow-lg shadow-black/25">
+          <nav
+            aria-label="Main Navigation"
+            className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full bg-[#181716]/80 border border-[#F3F0E8]/10 backdrop-blur-md shrink-0 shadow-lg shadow-black/25"
+          >
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
               return (
-                <button
+                <a
                   key={link.id}
-                  onClick={() => onNavigate(link.id)}
+                  href={`#${link.id}`}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    onNavigate(link.id);
+                  }}
                   className={`relative px-2 xl:px-3 py-1 text-[10.5px] xl:text-[11.5px] tracking-wider uppercase whitespace-nowrap transition-all duration-200 rounded-full cursor-pointer shrink-0 ${
                     isActive
                       ? 'text-[#F3F0E8] font-semibold bg-[#E84B2C]/20 border border-[#E84B2C]/40 shadow-sm shadow-[#E84B2C]/20'
                       : 'text-[#A39E93] hover:text-[#F3F0E8] hover:bg-[#F3F0E8]/5'
                   }`}
+                  aria-current={isActive ? 'page' : undefined}
                 >
                   {link.label}
                   {isActive && (
                     <span className="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#E84B2C]" />
                   )}
-                </button>
+                </a>
               );
             })}
           </nav>
@@ -91,23 +105,31 @@ export const Navigation: React.FC<NavigationProps> = ({
               <span className="font-mono">FLIGHT: {Math.round(scrollProgress * 100)}%</span>
             </div>
 
-            <button
-              onClick={() => onNavigate('contact')}
+            <a
+              href="#contact-form"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate('contact');
+              }}
               className="btn-cinematic px-3.5 xl:px-5 py-2 xl:py-2.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-[10.5px] xl:text-xs tracking-wider uppercase whitespace-nowrap transition-all shadow-lg shadow-[#E84B2C]/25 hover:shadow-[#E84B2C]/40 flex items-center gap-1.5 xl:gap-2 cursor-pointer"
             >
               <span>Build your advantage</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
-            </button>
+            </a>
           </div>
 
           {/* MOBILE MENU TOGGLE */}
           <div className="flex sm:hidden items-center gap-2">
-            <button
-              onClick={() => onNavigate('contact')}
+            <a
+              href="#contact-form"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate('contact');
+              }}
               className="px-3 py-1.5 rounded-full bg-[#E84B2C] text-[#F3F0E8] text-[10px] uppercase tracking-wider font-semibold"
             >
               Build
-            </button>
+            </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="p-2 rounded-lg bg-[#1A1918] text-[#F3F0E8] border border-[#F3F0E8]/10"
@@ -127,9 +149,11 @@ export const Navigation: React.FC<NavigationProps> = ({
               Narrative Path
             </p>
             {navLinks.map((link) => (
-              <button
+              <a
                 key={link.id}
-                onClick={() => {
+                href={`#${link.id}`}
+                onClick={(e) => {
+                  e.preventDefault();
                   onNavigate(link.id);
                   setMobileMenuOpen(false);
                 }}
@@ -137,7 +161,7 @@ export const Navigation: React.FC<NavigationProps> = ({
               >
                 <span>{link.label}</span>
                 <ArrowUpRight className="w-4 h-4 text-[#A39E93]" />
-              </button>
+              </a>
             ))}
           </div>
 
