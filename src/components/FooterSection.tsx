@@ -1,5 +1,6 @@
 import React from 'react';
-import { Flame, ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import arenovaLogo from '../../arenova.png';
 
 interface FooterSectionProps {
   onNavigate: (sectionId: string) => void;
@@ -13,9 +14,12 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
           <div className="lg:col-span-5 flex flex-col gap-6">
             <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-full bg-[#1A1918] border border-[#E84B2C]/40 flex items-center justify-center">
-                <Flame className="w-4 h-4 text-[#E84B2C]" />
-              </div>
+              <img
+                src={arenovaLogo}
+                alt=""
+                aria-hidden="true"
+                className="h-8 w-9 rounded-md border border-[#E84B2C]/35 object-contain"
+              />
               <span className="font-display tracking-[0.22em] text-2xl font-bold text-[#F3F0E8]">
                 ARENOVA
               </span>

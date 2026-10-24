@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Flame, Sparkles } from 'lucide-react';
+import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react';
+import arenovaLogo from '../../arenova.png';
 
 interface NavigationProps {
   activeSection: string;
@@ -49,10 +50,12 @@ export const Navigation: React.FC<NavigationProps> = ({
             onClick={() => onNavigate('awakening')}
             className="group flex items-center gap-3.5 text-left cursor-pointer focus:outline-none"
           >
-            <div className="relative w-8 h-8 rounded-full bg-[#1A1918] border border-[#E84B2C]/40 flex items-center justify-center overflow-hidden transition-transform group-hover:scale-105 duration-300">
-              <Flame className="w-4 h-4 text-[#E84B2C] animate-pulse" />
-              <div className="absolute inset-0 bg-[#E84B2C]/10 blur-sm" />
-            </div>
+            <img
+              src={arenovaLogo}
+              alt=""
+              aria-hidden="true"
+              className="h-8 w-9 rounded-md border border-[#E84B2C]/35 object-contain transition-transform group-hover:scale-105 duration-300"
+            />
             <div className="flex flex-col">
               <span className="font-display tracking-[0.22em] text-lg sm:text-xl font-bold text-[#F3F0E8] group-hover:text-white transition-colors">
                 ARENOVA
