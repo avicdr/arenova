@@ -82,8 +82,8 @@ export function createSceneController(): SceneController {
     // The scroll layer follows one continuous analytic path. Lateral/vertical drift
     // provides cinematic swooping while depth carries the chapter journey.
     return target.set(
-      2.2 * (1 - p) + 2.6 * Math.sin(Math.PI * 3.2 * p) * envelope,
-      0.25 + 1.25 * Math.sin(Math.PI * 3.2 * p) * envelope + 8.8 * ascent,
+      2.2 * (1 - p * 0.3) + 1.2 * Math.sin(Math.PI * 2.2 * p) * envelope * (1 - ascent),
+      0.35 + 0.65 * Math.sin(Math.PI * 3.2 * p) * envelope + 9.0 * ascent,
       0.5 - 62.0 * depthTravel,
     );
   }

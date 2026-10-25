@@ -39,7 +39,7 @@ export function createPhoenixFire(): PhoenixFireEffect {
   const aura = new THREE.Sprite(material);
   aura.name = 'PhoenixFireHalo';
   aura.position.set(0, -0.08, -1.72);
-  aura.scale.set(6.8, 6.0, 1);
+  aura.scale.set(4.8, 5.6, 1);
   group.add(aura);
 
   const coolEmber = new THREE.Color(0xe84c20);
@@ -47,8 +47,8 @@ export function createPhoenixFire(): PhoenixFireEffect {
   function update(scrollProgress: number, time: number, wingPower = 0, scrollEnergy = 0) {
     const rebirth = THREE.MathUtils.smoothstep(scrollProgress, 0.54, 0.88);
     const stroke = THREE.MathUtils.clamp(wingPower, 0, 1);
-    const pulse = 1 + Math.sin(time * 0.92) * 0.042 + stroke * 0.04 + scrollEnergy * 0.05;
-    aura.scale.set(6.8 * pulse, 6.0 * pulse, 1);
+    const pulse = 1 + Math.sin(time * 0.92) * 0.038 + stroke * 0.035 + scrollEnergy * 0.04;
+    aura.scale.set(4.8 * pulse, 5.6 * pulse, 1);
     material.opacity = 0.76 + rebirth * 0.12 + stroke * 0.06 + scrollEnergy * 0.18;
     material.color.lerpColors(coolEmber, goldEmber, rebirth * 0.62);
   }

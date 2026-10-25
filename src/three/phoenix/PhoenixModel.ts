@@ -47,18 +47,18 @@ const Y_AXIS = new THREE.Vector3(0, 1, 0);
 const Z_AXIS = new THREE.Vector3(0, 0, 1);
 const X_AXIS = new THREE.Vector3(1, 0, 0);
 const BODY_PROFILE = [
-  [-1.18, 0.08, 0.1, -0.05],
-  [-1.02, 0.22, 0.23, -0.025],
-  [-0.78, 0.38, 0.36, 0.0],
-  [-0.48, 0.53, 0.48, 0.025],
-  [-0.12, 0.64, 0.58, 0.035],
-  [0.2, 0.61, 0.54, 0.055],
-  [0.48, 0.48, 0.44, 0.1],
-  [0.72, 0.32, 0.3, 0.18],
-  [0.92, 0.245, 0.23, 0.27],
-  [1.15, 0.22, 0.21, 0.34],
-  [1.35, 0.19, 0.19, 0.36],
-  [1.49, 0.08, 0.1, 0.36],
+  [-1.18, 0.05, 0.06, -0.04],
+  [-1.02, 0.12, 0.13, -0.02],
+  [-0.78, 0.22, 0.21, 0.0],
+  [-0.48, 0.31, 0.28, 0.02],
+  [-0.12, 0.38, 0.33, 0.035],
+  [0.2, 0.36, 0.32, 0.05],
+  [0.48, 0.29, 0.26, 0.10],
+  [0.72, 0.21, 0.19, 0.18],
+  [0.92, 0.16, 0.15, 0.26],
+  [1.15, 0.14, 0.13, 0.33],
+  [1.35, 0.12, 0.12, 0.35],
+  [1.49, 0.06, 0.07, 0.35],
 ] as const;
 
 function clamp01(value: number) {
@@ -600,7 +600,7 @@ export function buildPhoenixModel(materials: PhoenixMaterialSet, isMobile = fals
     ? [{ y: 0.39, count: 3 }, { y: 0.14, count: 5 }, { y: -0.12, count: 5 }, { y: -0.39, count: 3 }]
     : [{ y: 0.46, count: 3 }, { y: 0.25, count: 5 }, { y: 0.04, count: 7 }, { y: -0.17, count: 7 }, { y: -0.38, count: 5 }, { y: -0.59, count: 3 }];
   chestRows.forEach((row, rowIndex) => {
-    const halfWidth = (0.18 + 0.40 * Math.sqrt(Math.max(0, 1 - Math.pow(row.y / 0.9, 2))));
+    const halfWidth = (0.11 + 0.23 * Math.sqrt(Math.max(0, 1 - Math.pow(row.y / 0.9, 2))));
     for (let index = 0; index < row.count; index++) {
       const fraction = row.count === 1 ? 0.5 : index / (row.count - 1);
       const x = THREE.MathUtils.lerp(-halfWidth, halfWidth, fraction);
@@ -608,8 +608,8 @@ export function buildPhoenixModel(materials: PhoenixMaterialSet, isMobile = fals
       chestFeathers.push(makePlacement(
         x, row.y + 0.12, surfaceDepth(x, row.y) + 0.01,
         new THREE.Vector3(slant, -1, 0.025),
-        0.29 + ((index + rowIndex) % 3) * 0.025,
-        0.175 + (index % 2) * 0.012,
+        0.25 + ((index + rowIndex) % 3) * 0.022,
+        0.135 + (index % 2) * 0.012,
         rowIndex % 2 ? '#db3338' : '#f0443c',
         (index * 0.173 + rowIndex * 0.231) % 1,
         { flutter: 0.009, curve: -slant * 0.12 },
@@ -634,17 +634,17 @@ export function buildPhoenixModel(materials: PhoenixMaterialSet, isMobile = fals
   addBatch(bodyGroup, neckFeathers, featherSource, materials.feather, materials.flame, isMobile, geometries, tipFlames, emitterAnchors);
 
   const bodyFlameSites = [
-    { x: -0.12, y: 1.02, width: 0.062, height: 0.24, seed: 0.13, back: false },
-    { x: 0.14, y: 0.76, width: 0.074, height: 0.27, seed: 0.29, back: false },
-    { x: -0.39, y: 0.38, width: 0.071, height: 0.23, seed: 0.43, back: false },
-    { x: 0.34, y: 0.12, width: 0.064, height: 0.25, seed: 0.58, back: false },
-    { x: -0.2, y: -0.1, width: 0.07, height: 0.21, seed: 0.69, back: false },
-    { x: 0.18, y: -0.34, width: 0.062, height: 0.24, seed: 0.76, back: false },
-    { x: -0.1, y: -0.61, width: 0.058, height: 0.2, seed: 0.87, back: false },
-    { x: 0.2, y: -0.74, width: 0.056, height: 0.21, seed: 0.94, back: false },
-    { x: 0.04, y: 0.48, width: 0.067, height: 0.24, seed: 0.22, back: true },
-    { x: -0.29, y: 0.02, width: 0.06, height: 0.22, seed: 0.51, back: true },
-    { x: 0.24, y: -0.42, width: 0.064, height: 0.23, seed: 0.82, back: true },
+    { x: -0.08, y: 1.02, width: 0.048, height: 0.20, seed: 0.13, back: false },
+    { x: 0.09, y: 0.76, width: 0.055, height: 0.22, seed: 0.29, back: false },
+    { x: -0.24, y: 0.38, width: 0.055, height: 0.20, seed: 0.43, back: false },
+    { x: 0.21, y: 0.12, width: 0.050, height: 0.20, seed: 0.58, back: false },
+    { x: -0.13, y: -0.1, width: 0.052, height: 0.18, seed: 0.69, back: false },
+    { x: 0.12, y: -0.34, width: 0.048, height: 0.19, seed: 0.76, back: false },
+    { x: -0.06, y: -0.61, width: 0.044, height: 0.17, seed: 0.87, back: false },
+    { x: 0.13, y: -0.74, width: 0.042, height: 0.18, seed: 0.94, back: false },
+    { x: 0.03, y: 0.48, width: 0.050, height: 0.20, seed: 0.22, back: true },
+    { x: -0.18, y: 0.02, width: 0.046, height: 0.19, seed: 0.51, back: true },
+    { x: 0.15, y: -0.42, width: 0.048, height: 0.19, seed: 0.82, back: true },
   ];
   bodyFlameSites.forEach((site, index) => {
     if (isMobile && index % 2 === 1) return;
@@ -669,7 +669,7 @@ export function buildPhoenixModel(materials: PhoenixMaterialSet, isMobile = fals
   for (const side of [-1, 1]) {
     const leg = new THREE.Group();
     leg.name = side < 0 ? 'LeftVisiblePhoenixLeg' : 'RightVisiblePhoenixLeg';
-    leg.position.set(side * 0.22, -0.78, 0.38);
+    leg.position.set(side * 0.16, -0.78, 0.26);
     bodyGroup.add(leg);
     legs.push(leg);
 
@@ -827,7 +827,7 @@ function createWing(
 ) {
   const shoulder = new THREE.Group();
   shoulder.name = side < 0 ? 'LeftWingShoulder' : 'RightWingShoulder';
-  shoulder.position.set(side * 0.43, 0.28, -0.035);
+  shoulder.position.set(side * 0.30, 0.28, -0.035);
   shoulder.scale.set(isMobile ? 0.30 : 0.68, isMobile ? 1.16 : 1.24, 1);
   bodyGroup.add(shoulder);
 
@@ -839,7 +839,7 @@ function createWing(
   ];
   addTube(shoulder, upperPoints, [0.24, 0.22, 0.17, 0.115], materials.wingBone, geometries, 'RoundedUpperWingStructure');
   createSphereMesh(shoulder, new THREE.SphereGeometry(1, 16, 12), materials.wingBone,
-    new THREE.Vector3(side * 0.02, 0.02, 0.035), new THREE.Vector3(0.31, 0.23, 0.24), geometries, 'FeatheredShoulder');
+    new THREE.Vector3(side * 0.02, 0.02, 0.035), new THREE.Vector3(0.20, 0.16, 0.16), geometries, 'FeatheredShoulder');
 
   const elbow = new THREE.Group();
   elbow.name = side < 0 ? 'LeftWingElbow' : 'RightWingElbow';

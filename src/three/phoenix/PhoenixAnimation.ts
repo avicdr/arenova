@@ -56,9 +56,9 @@ function poseWing(
 
   // The elbow and wrist follow the shoulder through damped springs. This keeps
   // the large wing stroke readable while adding the natural lag of flight feathers.
-  springTo(state.elbow, stroke, delta, 16.5);
-  springTo(state.wrist, state.elbow.value, delta, 12.0);
-  const sweepAmplitude = 0.58 + opening * 0.14 + scrollEnergy * 0.32;
+  springTo(state.elbow, stroke, delta, 13.5);
+  springTo(state.wrist, state.elbow.value, delta, 9.5);
+  const sweepAmplitude = 0.53 + opening * 0.10 + scrollEnergy * 0.16;
   const elbowFollow = state.elbow.value;
   const wristFollow = state.wrist.value;
 
@@ -81,7 +81,7 @@ function poseWing(
 
 export function createPhoenixAnimation(model: PhoenixModelInstance): PhoenixAnimationEngine {
   let elapsed = 0;
-  const cycleRate = Math.PI * 2 * 1.35;
+  const cycleRate = Math.PI * 2 * 1.05;
   const wingStates: [WingState, WingState] = [
     { side: model.leftWing.side, elbow: makeSpring(-0.99), wrist: makeSpring(-0.99) },
     { side: model.rightWing.side, elbow: makeSpring(-1), wrist: makeSpring(-1) },
@@ -105,9 +105,9 @@ export function createPhoenixAnimation(model: PhoenixModelInstance): PhoenixAnim
     if (!reducedMotion) elapsed += Math.min(delta, 0.05);
     const dt = Math.min(delta, 0.05);
     if (!reducedMotion) {
-      const scrollTarget = THREE.MathUtils.clamp(Math.abs(scrollSpeed) * 1.8, 0, 1);
-      springTo(scrollDrive, scrollTarget, dt, 6.2);
-      wingPhase += dt * cycleRate * (1 + scrollDrive.value * 1.3);
+      const scrollTarget = THREE.MathUtils.clamp(Math.abs(scrollSpeed) * 1.3, 0, 1);
+      springTo(scrollDrive, scrollTarget, dt, 5.0);
+      wingPhase += dt * cycleRate * (1 + scrollDrive.value * 0.45);
     } else {
       scrollDrive.value = 0;
       scrollDrive.velocity = 0;
@@ -141,10 +141,10 @@ export function createPhoenixAnimation(model: PhoenixModelInstance): PhoenixAnim
     const power = (leftPower + rightPower) * 0.5;
 
     if (!reducedMotion) {
-      springTo(featherFollow, stroke, dt, 14.5);
-      springTo(tailFollow, -stroke, dt, 6.8);
-      springTo(bodyFollow, stroke, dt, 7.8);
-      springTo(legFollow, -stroke, dt, 8.2);
+      springTo(featherFollow, stroke, dt, 11.5);
+      springTo(tailFollow, -stroke, dt, 5.4);
+      springTo(bodyFollow, stroke, dt, 6.2);
+      springTo(legFollow, -stroke, dt, 6.8);
     } else {
       featherFollow.value = 0;
       featherFollow.velocity = 0;
@@ -159,39 +159,39 @@ export function createPhoenixAnimation(model: PhoenixModelInstance): PhoenixAnim
     // These shared shader signals bend batched feathers and pulse their heat
     // without touching React state or allocating per-feather update objects.
     model.motion.uWingSweep.value = reducedMotion ? 0 : featherFollow.value;
-    model.motion.uWingLift.value = reducedMotion ? 0 : THREE.MathUtils.clamp(power + scrollEnergy * 0.25, 0, 1);
-    model.motion.uTailSway.value = reducedMotion ? 0 : tailFollow.value * 0.04;
-    model.motion.uHeadTurn.value = reducedMotion ? 0 : mouse.x * 0.05 + Math.sin(time * 0.48) * 0.016;
-    model.motion.uHeadNod.value = reducedMotion ? 0 : -mouse.y * 0.035 + Math.sin(time * 0.72) * 0.014;
-    model.motion.uBreath.value = reducedMotion ? 0 : Math.sin(time * 1.8) * 0.062 + power * 0.016;
+    model.motion.uWingLift.value = reducedMotion ? 0 : THREE.MathUtils.clamp(power + scrollEnergy * 0.2, 0, 1);
+    model.motion.uTailSway.value = reducedMotion ? 0 : tailFollow.value * 0.035;
+    model.motion.uHeadTurn.value = reducedMotion ? 0 : mouse.x * 0.045 + Math.sin(time * 0.42) * 0.014;
+    model.motion.uHeadNod.value = reducedMotion ? 0 : -mouse.y * 0.03 + Math.sin(time * 0.62) * 0.012;
+    model.motion.uBreath.value = reducedMotion ? 0 : Math.sin(time * 1.5) * 0.052 + power * 0.014;
 
     poseWing(model.leftWing, wingStates[0], reducedMotion ? 0 : leftStroke, opening, reducedMotion ? 0 : leftPower, mouse, dt, reducedMotion, scrollEnergy);
     poseWing(model.rightWing, wingStates[1], reducedMotion ? 0 : rightStroke, opening, reducedMotion ? 0 : rightPower, mouse, dt, reducedMotion, scrollEnergy);
 
-    const breath = reducedMotion ? 0 : Math.sin(time * 1.8);
-    model.bodyMesh.scale.set(1 + breath * 0.009, 1 + breath * 0.018, 1 + breath * 0.012);
+    const breath = reducedMotion ? 0 : Math.sin(time * 1.5);
+    model.bodyMesh.scale.set(1 + breath * 0.007, 1 + breath * 0.014, 1 + breath * 0.01);
     model.bodyGroup.rotation.set(
-      reducedMotion ? 0 : -bodyFollow.value * (0.024 + scrollEnergy * 0.01) + Math.sin(time * 0.58) * 0.014,
-      reducedMotion ? 0 : mouse.x * 0.018 + Math.sin(time * 0.45) * 0.012,
-      reducedMotion ? 0 : Math.sin(time * 0.76) * 0.016 - mouse.x * 0.015 + (leftStroke - rightStroke) * 0.016,
+      reducedMotion ? 0 : -bodyFollow.value * (0.02 + scrollEnergy * 0.008) + Math.sin(time * 0.5) * 0.012,
+      reducedMotion ? 0 : mouse.x * 0.016 + Math.sin(time * 0.4) * 0.01,
+      reducedMotion ? 0 : Math.sin(time * 0.65) * 0.014 - mouse.x * 0.014 + (leftStroke - rightStroke) * 0.014,
     );
     model.bodyGroup.position.set(
-      bodyBase.x + (reducedMotion ? 0 : Math.sin(time * 0.85 + 0.4) * 0.02 + (rightStroke - leftStroke) * 0.014),
-      bodyBase.y + (reducedMotion ? 0 : Math.sin(time * 1.35) * 0.024 + bodyFollow.value * 0.02),
-      bodyBase.z + (reducedMotion ? 0 : Math.sin(time * 0.7 - 0.3) * 0.016),
+      bodyBase.x + (reducedMotion ? 0 : Math.sin(time * 0.75 + 0.4) * 0.016 + (rightStroke - leftStroke) * 0.012),
+      bodyBase.y + (reducedMotion ? 0 : Math.sin(time * 1.15) * 0.02 + bodyFollow.value * 0.016),
+      bodyBase.z + (reducedMotion ? 0 : Math.sin(time * 0.6 - 0.3) * 0.014),
     );
 
     // The inner flight rig owns all idle-flight offsets. Scroll layout remains
     // on the outer experience group, so a chapter update cannot cancel this motion.
     model.flightGroup.position.set(
-      reducedMotion ? 0 : Math.sin(time * 0.58) * 0.05 + mouse.x * 0.022 + (rightStroke - leftStroke) * 0.025,
-      reducedMotion ? 0 : Math.sin(time * 1.1) * 0.08 + power * (0.14 + scrollEnergy * 0.09) + scrollEnergy * 0.12 + ascent * 0.04,
-      reducedMotion ? 0 : Math.sin(time * 0.65 - 0.4) * 0.035 - power * 0.03 - scrollEnergy * 0.52,
+      reducedMotion ? 0 : Math.sin(time * 0.45) * 0.035 + mouse.x * 0.016 + (rightStroke - leftStroke) * 0.018,
+      reducedMotion ? 0 : Math.sin(time * 0.85) * 0.055 + power * (0.09 + scrollEnergy * 0.05) + scrollEnergy * 0.06 + ascent * 0.035,
+      reducedMotion ? 0 : Math.sin(time * 0.52 - 0.4) * 0.025 - power * 0.02 - scrollEnergy * 0.28,
     );
     model.flightGroup.rotation.set(
-      reducedMotion ? 0 : -bodyFollow.value * (0.028 + scrollEnergy * 0.015) - scrollEnergy * 0.12 + Math.sin(time * 0.52) * 0.012,
-      reducedMotion ? 0 : Math.sin(time * 0.48) * 0.014,
-      reducedMotion ? 0 : Math.sin(time * 0.58) * 0.018 - mouse.x * 0.015,
+      reducedMotion ? 0 : -bodyFollow.value * (0.022 + scrollEnergy * 0.008) - scrollEnergy * 0.06 + Math.sin(time * 0.45) * 0.009,
+      reducedMotion ? 0 : Math.sin(time * 0.4) * 0.01,
+      reducedMotion ? 0 : Math.sin(time * 0.48) * 0.014 - mouse.x * 0.012,
     );
 
     model.headGroup.rotation.set(
