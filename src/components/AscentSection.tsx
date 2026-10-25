@@ -62,6 +62,8 @@ export const AscentSection: React.FC<AscentSectionProps> = ({ onNavigate }) => {
           _subject: `New ARENOVA Architecture Brief: ${formData.fullName} (${formData.companyName})`,
           _template: 'table',
           _captcha: 'false',
+          name: formData.fullName,
+          email: formData.workEmail,
           'Full Name': formData.fullName,
           'Work Email': formData.workEmail,
           'Company or Practice': formData.companyName,
@@ -179,7 +181,18 @@ export const AscentSection: React.FC<AscentSectionProps> = ({ onNavigate }) => {
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+            <form
+              action="https://formsubmit.co/avi@arenova.in"
+              method="POST"
+              onSubmit={handleSubmit}
+              className="flex flex-col gap-6"
+            >
+              {/* FormSubmit Configuration / Metadata Fields */}
+              <input type="hidden" name="_subject" value={`New ARENOVA Architecture Brief: ${formData.fullName} (${formData.companyName})`} />
+              <input type="hidden" name="_template" value="table" />
+              <input type="hidden" name="_captcha" value="false" />
+              <input type="hidden" name="monthlyVolume" value={formData.monthlyVolume} />
+
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 pb-6 border-b border-[#F3F0E8]/10">
                 <div>
                   <h3 className="font-display font-bold text-2xl text-[#F3F0E8]">
@@ -198,12 +211,15 @@ export const AscentSection: React.FC<AscentSectionProps> = ({ onNavigate }) => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* FULL NAME */}
                 <div>
-                  <label className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A39E93] mb-2">
+                  <label htmlFor="fullName" className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A39E93] mb-2">
                     <User className="w-3.5 h-3.5 text-[#E84B2C]" />
                     <span>Your Full Name *</span>
                   </label>
                   <input
+                    id="fullName"
+                    name="name"
                     type="text"
+                    autoComplete="name"
                     value={formData.fullName}
                     onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     placeholder="e.g. Dr. Julian Hayes"
@@ -219,12 +235,15 @@ export const AscentSection: React.FC<AscentSectionProps> = ({ onNavigate }) => {
 
                 {/* WORK EMAIL */}
                 <div>
-                  <label className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A39E93] mb-2">
+                  <label htmlFor="workEmail" className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A39E93] mb-2">
                     <Mail className="w-3.5 h-3.5 text-[#E84B2C]" />
                     <span>Work Email Address *</span>
                   </label>
                   <input
+                    id="workEmail"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     value={formData.workEmail}
                     onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
                     placeholder="julian@hayesdental.com"
@@ -240,12 +259,15 @@ export const AscentSection: React.FC<AscentSectionProps> = ({ onNavigate }) => {
 
                 {/* COMPANY NAME */}
                 <div>
-                  <label className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A39E93] mb-2">
+                  <label htmlFor="companyName" className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A39E93] mb-2">
                     <Building className="w-3.5 h-3.5 text-[#E84B2C]" />
                     <span>Company or Practice Name *</span>
                   </label>
                   <input
+                    id="companyName"
+                    name="companyName"
                     type="text"
+                    autoComplete="organization"
                     value={formData.companyName}
                     onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
                     placeholder="Hayes Specialist Dental Group"
@@ -261,11 +283,13 @@ export const AscentSection: React.FC<AscentSectionProps> = ({ onNavigate }) => {
 
                 {/* SERVICE INTEREST */}
                 <div>
-                  <label className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A39E93] mb-2">
+                  <label htmlFor="serviceInterest" className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A39E93] mb-2">
                     <Layers className="w-3.5 h-3.5 text-[#E84B2C]" />
                     <span>Primary Service Needed</span>
                   </label>
                   <select
+                    id="serviceInterest"
+                    name="serviceInterest"
                     value={formData.serviceInterest}
                     onChange={(e) => setFormData({ ...formData, serviceInterest: e.target.value })}
                     className="w-full px-4 py-3 rounded-xl bg-[#141312] border border-[#F3F0E8]/10 text-sm text-[#F3F0E8] focus:outline-none focus:border-[#E84B2C] transition-colors"
@@ -305,11 +329,13 @@ export const AscentSection: React.FC<AscentSectionProps> = ({ onNavigate }) => {
 
               {/* MESSAGE / BOTTLENECK DESCRIPTION */}
               <div>
-                <label className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A39E93] mb-2">
+                <label htmlFor="message" className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-[#A39E93] mb-2">
                   <MessageSquare className="w-3.5 h-3.5 text-[#E84B2C]" />
                   <span>Describe Your Core Operational Challenge *</span>
                 </label>
                 <textarea
+                  id="message"
+                  name="message"
                   rows={4}
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
