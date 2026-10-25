@@ -30,11 +30,23 @@ export const BackgroundCanvas: React.FC = () => {
       controller = sceneController;
       controllerRef.current = sceneController;
 
+      let lastScrollY = window.scrollY;
+      let lastScrollTime = performance.now();
+
       const progressAt = () => {
         const scrollable = document.documentElement.scrollHeight - window.innerHeight;
         return scrollable > 0 ? THREEClamp(window.scrollY / scrollable) : 0;
       };
-      const syncScroll = () => sceneController.setScrollProgress(progressAt(), 0);
+      const syncScroll = () => {
+        const now = performance.now();
+        const dt = Math.max((now - lastScrollTime) / 1000, 0.001);
+        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+        const currentY = window.scrollY;
+        const velocity = scrollable > 0 ? ((currentY - lastScrollY) / scrollable) / dt : 0;
+        lastScrollY = currentY;
+        lastScrollTime = now;
+        sceneController.setScrollProgress(progressAt(), velocity);
+      };
       const handleMouseMove = (event: MouseEvent) => {
         sceneController.setMouse((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
       };

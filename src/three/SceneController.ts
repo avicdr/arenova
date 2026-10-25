@@ -55,20 +55,6 @@ export function createSceneController(): SceneController {
   // -------------------------------------------------------------
   // ENVIRONMENTAL 3D OBJECTS
   // -------------------------------------------------------------
-  let monolithsGroup: THREE.Group | null = null;
-  let monolithMaterial: THREE.MeshStandardMaterial | null = null;
-  let monolithMeshes: {
-    mesh: THREE.Mesh;
-    chaosPos: THREE.Vector3;
-    alignedPos: THREE.Vector3;
-    chaosRot: THREE.Euler;
-    alignedRot: THREE.Euler;
-  }[] = [];
-
-  let connectionLines: THREE.LineSegments | null = null;
-  let connectionMat: THREE.LineBasicMaterial | null = null;
-  let ascentPillarsGroup: THREE.Group | null = null;
-  let ascentPillarMaterial: THREE.MeshStandardMaterial | null = null;
   let ambientDataGrid: THREE.Points | null = null;
 
   // -------------------------------------------------------------
@@ -89,17 +75,16 @@ export function createSceneController(): SceneController {
   function getLayoutPosition(progress: number, target: THREE.Vector3) {
     const p = THREE.MathUtils.clamp(progress, 0, 1);
     const envelope = Math.sin(Math.PI * p);
-    const ascent = THREE.MathUtils.smoothstep(p, 0.82, 1);
-    const depthTravel = p - 0.11 * Math.sin(Math.PI * p);
+    const ascent = THREE.MathUtils.smoothstep(p, 0.80, 1);
+    // Eager responsive travel curve: accelerates flight traversal on less scroll
+    const depthTravel = Math.pow(p, 0.82);
 
-    // The scroll layer follows one continuous analytic path instead of moving
-    // between a list of authored world-space poses. Depth still carries the
-    // chapter journey through the existing environment; lateral/vertical drift
-    // stays bounded and eases to the hero and ascent anchors.
+    // The scroll layer follows one continuous analytic path. Lateral/vertical drift
+    // provides cinematic swooping while depth carries the chapter journey.
     return target.set(
-      2.1 * (1 - p) + 2.2 * Math.sin(Math.PI * 3.2 * p) * envelope,
-      0.2 + 0.42 * Math.sin(Math.PI * 3.2 * p) * envelope + 8.3 * ascent,
-      0.5 - 60.5 * depthTravel,
+      2.2 * (1 - p) + 2.6 * Math.sin(Math.PI * 3.2 * p) * envelope,
+      0.25 + 1.25 * Math.sin(Math.PI * 3.2 * p) * envelope + 8.8 * ascent,
+      0.5 - 62.0 * depthTravel,
     );
   }
 
@@ -114,12 +99,12 @@ export function createSceneController(): SceneController {
 
   const cameraKeys = [
     { at: 0.00, side: -2.3, distance: 9.2, height: 0.65, lookSide: -3.65, lookHeight: 0.18, lookAhead: 0.05 },
-    { at: 0.15, side: -1.0, distance: 8.9, height: 0.65, lookSide: -1.35, lookHeight: 0.12, lookAhead: 0.08 },
-    { at: 0.35, side: -0.55, distance: 7.8, height: 0.88, lookSide: -0.12, lookHeight: 0.12, lookAhead: 0.1 },
-    { at: 0.50, side: 2.9, distance: 4.5, height: 0.65, lookSide: 1.6, lookHeight: 0.35, lookAhead: 0.12 },
-    { at: 0.70, side: -0.35, distance: 5.2, height: 1.25, lookSide: 0.0, lookHeight: 0.3, lookAhead: 0.28 },
-    { at: 0.85, side: 0.0, distance: 14.2, height: 1.25, lookSide: 0.0, lookHeight: -0.05, lookAhead: 0.3 },
-    { at: 1.00, side: 0.0, distance: 15.5, height: 0.9, lookSide: 0.0, lookHeight: 0.0, lookAhead: 0.45 },
+    { at: 0.18, side: -2.2, distance: 8.8, height: 0.70, lookSide: -3.50, lookHeight: 0.18, lookAhead: 0.08 },
+    { at: 0.32, side: -2.3, distance: 8.4, height: 0.80, lookSide: -3.60, lookHeight: 0.20, lookAhead: 0.10 },
+    { at: 0.50, side: -2.2, distance: 8.2, height: 0.75, lookSide: -3.45, lookHeight: 0.20, lookAhead: 0.12 },
+    { at: 0.70, side: -2.0, distance: 8.6, height: 0.85, lookSide: -3.20, lookHeight: 0.22, lookAhead: 0.18 },
+    { at: 0.85, side: -0.8, distance: 12.0, height: 1.10, lookSide: -1.20, lookHeight: 0.10, lookAhead: 0.28 },
+    { at: 1.00, side: 0.0, distance: 15.0, height: 0.90, lookSide: 0.00, lookHeight: 0.00, lookAhead: 0.45 },
   ];
   const cameraPose = { side: 0, distance: 0, height: 0, lookSide: 0, lookHeight: 0, lookAhead: 0 };
 
@@ -192,107 +177,9 @@ export function createSceneController(): SceneController {
     phoenix.rootGroup.position.copy(startPos);
     phoenix.rootGroup.scale.setScalar(isMobile ? 0.86 : 1.03);
 
-    // -------------------------------------------------------------
-    // ENVIRONMENTAL 3D OBJECTS:
-    // Fragmented Monoliths (Section 2) -> Organized Conduits (Section 3)
-    // -------------------------------------------------------------
-    monolithsGroup = new THREE.Group();
-    scene.add(monolithsGroup);
+    // Monolith slabs removed - celestial space is completely open and unobstructed so the Phoenix is never hidden
 
-    const slabMat = new THREE.MeshStandardMaterial({
-      color: 0x1c0c09,
-      roughness: 0.28,
-      metalness: 0.78,
-      transparent: true,
-      depthWrite: false,
-    });
-    monolithMaterial = slabMat;
 
-    const numSlabs = 22;
-    for (let i = 0; i < numSlabs; i++) {
-      const zSlab = -8 - i * 2.4;
-      const slabGeo = new THREE.BoxGeometry(0.8 + (i % 3) * 0.4, 3.5 + (i % 2) * 1.5, 0.25);
-      const slabMesh = new THREE.Mesh(slabGeo, slabMat);
-      slabMesh.castShadow = true;
-      slabMesh.receiveShadow = true;
-
-      // Chaotic fragmented state (Section 2)
-      const chaosX = (i % 2 === 0 ? 1 : -1) * (2.2 + Math.sin(i * 1.4) * 2.2);
-      const chaosY = Math.sin(i * 0.8) * 2.8 - 0.4;
-      const chaosZ = zSlab + Math.cos(i * 2.1) * 1.5;
-      const chaosPos = new THREE.Vector3(chaosX, chaosY, chaosZ);
-      const chaosRot = new THREE.Euler(
-        Math.sin(i * 1.1) * 0.62,
-        Math.sin(i * 2.3) * 0.7,
-        Math.cos(i * 3.7) * 0.62
-      );
-
-      // Aligned harmonious architecture state (Section 3)
-      const side = i % 2 === 0 ? 1 : -1;
-      const alignedX = side * (3.8 + Math.abs(Math.sin(i * 0.5)) * 0.8);
-      const alignedY = 0.5 + (i % 2) * 0.6;
-      const alignedZ = zSlab;
-      const alignedPos = new THREE.Vector3(alignedX, alignedY, alignedZ);
-      const alignedRot = new THREE.Euler(0, side * -0.25, 0);
-
-      slabMesh.position.copy(chaosPos);
-      slabMesh.rotation.copy(chaosRot);
-      monolithsGroup.add(slabMesh);
-
-      monolithMeshes.push({
-        mesh: slabMesh,
-        chaosPos,
-        alignedPos,
-        chaosRot,
-        alignedRot,
-      });
-    }
-
-    // Connection laser lines that light up when transformation occurs
-    const linePositions: number[] = [];
-    for (let i = 0; i < monolithMeshes.length - 1; i++) {
-      linePositions.push(
-        monolithMeshes[i].alignedPos.x, monolithMeshes[i].alignedPos.y, monolithMeshes[i].alignedPos.z,
-        monolithMeshes[i + 1].alignedPos.x, monolithMeshes[i + 1].alignedPos.y, monolithMeshes[i + 1].alignedPos.z
-      );
-    }
-    const lineGeo = new THREE.BufferGeometry();
-    lineGeo.setAttribute('position', new THREE.Float32BufferAttribute(linePositions, 3));
-    connectionMat = new THREE.LineBasicMaterial({
-      color: 0xff8a32,
-      transparent: true,
-      opacity: 0.0,
-      blending: THREE.AdditiveBlending,
-    });
-    connectionLines = new THREE.LineSegments(lineGeo, connectionMat);
-    scene.add(connectionLines);
-
-    // -------------------------------------------------------------
-    // ASCENT LIGHT PORTAL PILLARS (Section 8)
-    // -------------------------------------------------------------
-    ascentPillarsGroup = new THREE.Group();
-    ascentPillarsGroup.position.set(0, 0, -56);
-    scene.add(ascentPillarsGroup);
-
-    const pillarMat = new THREE.MeshStandardMaterial({
-      color: 0x24100a,
-      roughness: 0.2,
-      metalness: 0.9,
-      emissive: 0xff6d00,
-      emissiveIntensity: 0.12,
-      transparent: true,
-      depthWrite: false,
-    });
-    ascentPillarMaterial = pillarMat;
-
-    for (let p = 0; p < 8; p++) {
-      const pSide = p % 2 === 0 ? 1 : -1;
-      const pRow = Math.floor(p / 2);
-      const pGeo = new THREE.CylinderGeometry(0.35, 0.45, 18, 12);
-      const pMesh = new THREE.Mesh(pGeo, pillarMat);
-      pMesh.position.set(pSide * (4.5 + pRow * 1.5), 6, -pRow * 5.0);
-      ascentPillarsGroup.add(pMesh);
-    }
 
     // -------------------------------------------------------------
     // AMBIENT CELESTIAL DUST
@@ -331,7 +218,7 @@ export function createSceneController(): SceneController {
       ? (nextProgress - lastScrollTarget) / sampleDelta
       : 0;
     targetProgress = nextProgress;
-    scrollVelocity = velocity || THREE.MathUtils.clamp(measuredVelocity, -3, 3);
+    scrollVelocity = velocity || THREE.MathUtils.clamp(measuredVelocity, -5, 5);
     lastScrollTarget = nextProgress;
     lastScrollSampleTime = now;
     if (reducedMotion && pageVisible && animFrameId === 0) {
@@ -394,8 +281,8 @@ export function createSceneController(): SceneController {
       if (Math.abs(scrollVelocity) < 0.015) scrollVelocity = 0;
     }
 
-    // Smooth input once; all poses and effects read this same progress value.
-    const ease = 1 - Math.exp(-delta * 5.5);
+    // Smooth input with responsive damping so it reacts immediately to scroll
+    const ease = 1 - Math.exp(-delta * 8.5);
     if (reducedMotion) currentProgress = targetProgress;
     else currentProgress += (targetProgress - currentProgress) * ease;
 
@@ -460,41 +347,6 @@ export function createSceneController(): SceneController {
       camera.lookAt(cameraLookCurrent);
     }
 
-    // -------------------------------------------------------------
-    // ENVIRONMENTAL TRANSFORMATION
-    // Section 2: Fragmented chaotic monoliths (only visible from Chapter 02 onwards)
-    // Section 3: Harmonious alignment into organized conduits
-    // -------------------------------------------------------------
-    const architectureFade = 1 - THREE.MathUtils.smoothstep(currentProgress, 0.72, 0.84);
-    const pillarFade = 1 - THREE.MathUtils.smoothstep(currentProgress, 0.78, 0.86);
-    if (monolithMaterial) monolithMaterial.opacity = architectureFade;
-    if (ascentPillarMaterial) ascentPillarMaterial.opacity = pillarFade;
-    if (monolithsGroup) {
-      monolithsGroup.visible = currentProgress >= 0.12 && architectureFade > 0.01;
-    }
-    if (connectionLines) {
-      connectionLines.visible = currentProgress >= 0.25 && architectureFade > 0.01;
-    }
-    if (ascentPillarsGroup) {
-      ascentPillarsGroup.visible = currentProgress >= 0.78 && pillarFade > 0.01;
-    }
-
-    if (monolithMeshes.length > 0 && currentProgress >= 0.12) {
-      const alignFactor = THREE.MathUtils.smoothstep(currentProgress, 0.25, 0.37);
-
-      for (let i = 0; i < monolithMeshes.length; i++) {
-        const item = monolithMeshes[i];
-        item.mesh.position.lerpVectors(item.chaosPos, item.alignedPos, alignFactor);
-        item.mesh.rotation.x = THREE.MathUtils.lerp(item.chaosRot.x, item.alignedRot.x, alignFactor);
-        item.mesh.rotation.y = THREE.MathUtils.lerp(item.chaosRot.y, item.alignedRot.y, alignFactor);
-        item.mesh.rotation.z = THREE.MathUtils.lerp(item.chaosRot.z, item.alignedRot.z, alignFactor);
-      }
-
-      if (connectionMat) {
-        connectionMat.opacity = THREE.MathUtils.smoothstep(currentProgress, 0.26, 0.48) * 0.72 * architectureFade;
-      }
-    }
-
     // Ambient floating celestial dust motion
     if (ambientDataGrid) {
       ambientDataGrid.rotation.y = currentProgress * 0.12;
@@ -503,6 +355,7 @@ export function createSceneController(): SceneController {
     if (renderer && scene && camera) {
       renderer.render(scene, camera);
     }
+
   }
 
   function dispose() {
@@ -513,9 +366,6 @@ export function createSceneController(): SceneController {
     phoenix = null;
 
     const roots: THREE.Object3D[] = [];
-    if (monolithsGroup) roots.push(monolithsGroup);
-    if (connectionLines) roots.push(connectionLines);
-    if (ascentPillarsGroup) roots.push(ascentPillarsGroup);
     if (ambientDataGrid) roots.push(ambientDataGrid);
     const geometries = new Set<THREE.BufferGeometry>();
     const materials = new Set<THREE.Material>();
@@ -536,13 +386,6 @@ export function createSceneController(): SceneController {
       renderer.domElement.remove();
       renderer.dispose();
     }
-    monolithMeshes = [];
-    monolithsGroup = null;
-    monolithMaterial = null;
-    connectionLines = null;
-    connectionMat = null;
-    ascentPillarsGroup = null;
-    ascentPillarMaterial = null;
     ambientDataGrid = null;
     hasCameraPose = false;
     scene = null;
