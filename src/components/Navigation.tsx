@@ -45,26 +45,23 @@ export const Navigation: React.FC<NavigationProps> = ({
         }`}
       >
         <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
-          {/* BRAND LOGO WITH COMPACT NAME UNDERNEATH */}
+          {/* BRAND LOGO */}
           <a
             href="#awakening"
             onClick={(e) => {
               e.preventDefault();
               onNavigate('awakening');
             }}
-            className="group flex flex-col items-center justify-center shrink-0 text-center cursor-pointer focus:outline-none"
+            className="group flex items-center justify-center shrink-0 cursor-pointer focus:outline-none transition-transform duration-300 hover:scale-105"
             aria-label="ARENOVA Home"
           >
             <img
               src={arenovaLogo}
               alt="ARENOVA Logo"
-              width="32"
-              height="32"
-              className="h-7 sm:h-8 w-auto rounded-md border border-[#E84B2C]/35 object-contain transition-transform group-hover:scale-105 duration-300 shadow-sm shadow-[#E84B2C]/15"
+              width="48"
+              height="48"
+              className="h-11 sm:h-14 w-auto object-contain drop-shadow-[0_0_16px_rgba(232,75,44,0.35)] transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_24px_rgba(232,75,44,0.65)]"
             />
-            <span className="font-display tracking-[0.24em] text-[8.5px] sm:text-[9px] font-bold text-[#F3F0E8] group-hover:text-white transition-colors leading-none mt-1">
-              ARENOVA
-            </span>
           </a>
 
           {/* DESKTOP NARRATIVE NAVIGATION - LINEAR & NON-WRAPPING */}

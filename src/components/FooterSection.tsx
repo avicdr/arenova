@@ -17,9 +17,9 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
               <img
                 src={arenovaLogo}
                 alt="ARENOVA Brand Emblem"
-                width="36"
-                height="32"
-                className="h-8 w-9 rounded-md border border-[#E84B2C]/35 object-contain"
+                width="40"
+                height="40"
+                className="h-10 w-auto object-contain drop-shadow-[0_0_15px_rgba(232,75,44,0.3)]"
               />
               <span className="font-display tracking-[0.22em] text-2xl font-bold text-[#F3F0E8]">
                 ARENOVA
