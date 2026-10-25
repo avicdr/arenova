@@ -31,14 +31,14 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
             </p>
 
             <p className="text-sm text-[#A39E93] leading-relaxed max-w-sm">
-              Arenova builds AI-powered operations, intelligent front desk experiences, and digital
-              growth systems that help businesses move forward.
+              Arenova builds high-converting marketing engines (Meta & Google Ads), intelligent front desk
+              automation, and autonomous revenue systems that help businesses scale.
             </p>
 
             {/* LIVE SYSTEM STATUS */}
             <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#161514] border border-[#F3F0E8]/08 text-xs font-mono text-[#A39E93] w-fit">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>All automation clusters operational — 99.98% SLA</span>
+              <span>All marketing & automation clusters operational — 99.98% SLA</span>
             </div>
           </div>
 
@@ -80,14 +80,24 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 Custom AI Agents
               </a>
               <a
-                href="#services"
+                href="#marketing"
                 onClick={(e) => {
                   e.preventDefault();
-                  onNavigate('services');
+                  onNavigate('marketing');
                 }}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
+                className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                Google Ads & Growth
+                Meta & Google Ads
+              </a>
+              <a
+                href="#marketing"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('marketing');
+                }}
+                className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer"
+              >
+                Performance Marketing
               </a>
               <a
                 href="#services"
@@ -137,6 +147,26 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 03 Transformation
               </a>
               <a
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('services');
+                }}
+                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
+              >
+                04 Services
+              </a>
+              <a
+                href="#marketing"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('marketing');
+                }}
+                className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer"
+              >
+                05 Marketing & Ads
+              </a>
+              <a
                 href="#workflow-demo"
                 onClick={(e) => {
                   e.preventDefault();
@@ -144,7 +174,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                04 System Demo
+                06 System Demo
               </a>
               <a
                 href="#industries"
@@ -154,7 +184,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                05 Industries
+                07 Industries
               </a>
               <a
                 href="#approach"
@@ -164,7 +194,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                06 Delivery Approach
+                08 Delivery Approach
               </a>
               <a
                 href="#ascent"
@@ -174,7 +204,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                07 The Ascent
+                09 The Ascent
               </a>
             </nav>
 

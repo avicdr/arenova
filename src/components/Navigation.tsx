@@ -29,6 +29,7 @@ export const Navigation: React.FC<NavigationProps> = ({
     { id: 'problem', label: 'The Problem' },
     { id: 'transformation', label: 'Transformation' },
     { id: 'services', label: 'Services' },
+    { id: 'marketing', label: 'Marketing' },
     { id: 'workflow-demo', label: 'System Demo' },
     { id: 'industries', label: 'Industries' },
     { id: 'approach', label: 'Approach' },

@@ -15,6 +15,7 @@ import {
   Building2,
   Stethoscope,
   Wrench,
+  Target,
 } from 'lucide-react';
 
 interface WorkflowDemoSectionProps {
@@ -105,6 +106,27 @@ export const WorkflowDemoSection: React.FC<WorkflowDemoSectionProps> = ({ onNavi
       routingTarget: 'HubSpot Enterprise Pipeline + Private Slack Channel #deal-inbound-urgent',
       followUpAction:
         'Automated Mutual NDA sent via DocuSign + Partner intake discovery video meeting scheduled for Thursday 2:00 PM.',
+    },
+    {
+      id: 'paid-marketing',
+      name: 'OmniVelo Direct Growth',
+      industry: 'Paid Ads / Meta & Google Funnel',
+      icon: Target,
+      customerName: 'Marcus Bennett',
+      enquiryText:
+        'Prospect tapped Instagram Reels ad ("Scale Qualified Customer Volume 3x"). Completed our interactive 4-step diagnostic qualification funnel for a $35k/mo paid media engagement.',
+      intent: 'High-Intent Inbound Lead from Meta Ads (CAPI Verified)',
+      extractedData: {
+        prospect: 'Marcus Bennett (VP Growth)',
+        source_channel: 'Meta Ads // Instagram Reels Hook #03',
+        monthly_media_budget: '$35,000 / month',
+        acquisition_goal: 'Scale Meta & Google Ads to 4.5x+ ROAS',
+        attribution_status: 'Meta CAPI Verified + GA4 Server Match',
+        lead_score: '97 / 100 (VIP High Intent)',
+      },
+      routingTarget: 'Meta CAPI Offline Signal + HubSpot Growth Pipeline + Instant WhatsApp Executive Handshake',
+      followUpAction:
+        'Automated WhatsApp & SMS welcome dispatched in 11 seconds with customized ROI projection deck + direct calendar link booked for Wednesday 11:00 AM.',
     },
   ];
 

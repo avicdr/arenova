@@ -49,8 +49,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
 
           <div className="md:col-span-6 flex flex-col gap-6">
             <p className="text-sm sm:text-base text-[#D0CBC1] leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-              Arenova builds AI-powered operations, intelligent front desk experiences, and digital
-              growth systems that help businesses move forward.
+              Arenova builds high-converting marketing engines (Meta Ads & Google Ads) paired with 24/7 AI front desk automation to capture qualified leads, accelerate conversions, and scale business revenue.
             </p>
 
             {/* CTAs */}
@@ -64,10 +63,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
               </button>
 
               <button
-                onClick={() => onNavigate('problem')}
+                onClick={() => onNavigate('marketing')}
                 className="px-6 py-3.5 rounded-full bg-[#181716]/80 hover:bg-[#201F1D] text-[#F3F0E8] border border-[#F3F0E8]/15 hover:border-[#F3F0E8]/30 font-medium text-xs sm:text-sm tracking-wider uppercase transition-all backdrop-blur-md cursor-pointer"
               >
-                Discover Arenova
+                Marketing & Paid Ads
               </button>
             </div>
           </div>
@@ -76,13 +75,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
 
       {/* BOTTOM FOOTER TICKER & SCROLL GUIDE */}
       <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 border-t border-[#F3F0E8]/08 pt-6">
-        <div className="flex items-center gap-4 text-xs text-[#A39E93]">
+        <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs text-[#A39E93]">
           <div className="flex items-center gap-1.5">
             <ShieldCheck className="w-3.5 h-3.5 text-[#E84B2C]" />
-            <span>Zero Hallucination Routing</span>
+            <span>Meta & Google Ads Engine</span>
           </div>
           <span className="text-[#F3F0E8]/20">•</span>
-          <span>Bespoke Integrations</span>
+          <span>4.8x Avg ROAS</span>
+          <span className="text-[#F3F0E8]/20">•</span>
+          <span>&lt;15s Lead Follow-up</span>
         </div>
 
         <button

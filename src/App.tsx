@@ -6,6 +6,7 @@ import { HeroSection } from './components/HeroSection';
 import { ProblemSection } from './components/ProblemSection';
 import { TransformationSection } from './components/TransformationSection';
 import { ServicesSection } from './components/ServicesSection';
+import { MarketingSection } from './components/MarketingSection';
 import { WorkflowDemoSection } from './components/WorkflowDemoSection';
 import { IndustriesSection } from './components/IndustriesSection';
 import { ApproachSection } from './components/ApproachSection';
@@ -75,6 +76,7 @@ export function App() {
       'problem',
       'transformation',
       'services',
+      'marketing',
       'workflow-demo',
       'industries',
       'approach',
@@ -152,7 +154,10 @@ export function App() {
         {/* CHAPTER 04: OUR 5 SERVICES */}
         <ServicesSection onNavigate={handleNavigate} />
 
-        {/* CHAPTER 05: SEE THE SYSTEM WORK (INTERACTIVE BROWSER LAB) */}
+        {/* CHAPTER 05: PERFORMANCE MARKETING & GROWTH ENGINES */}
+        <MarketingSection onNavigate={handleNavigate} />
+
+        {/* CHAPTER 06: SEE THE SYSTEM WORK (INTERACTIVE BROWSER LAB) */}
         <WorkflowDemoSection onNavigate={handleNavigate} />
 
         {/* CHAPTER 06: INDUSTRIES */}
