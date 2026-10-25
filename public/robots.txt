@@ -3,4 +3,4 @@ Allow: /
 Disallow: /scratch/
 Disallow: /screenshots/
 
-Sitemap: https://avicdr.github.io/arenova-web/sitemap.xml
+Sitemap: https://arenova.in/sitemap.xml
