@@ -245,9 +245,9 @@ export const AscentSection: React.FC<AscentSectionProps> = ({ onNavigate }) => {
                     className="w-full px-4 py-3 rounded-xl bg-[#141312] border border-[#F3F0E8]/10 text-sm text-[#F3F0E8] focus:outline-none focus:border-[#E84B2C] transition-colors"
                   >
                     <option value="AI Front Desk Agents">AI Front Desk Agents (24/7 Answering & Booking)</option>
+                    <option value="Performance Marketing & Paid Ads">Performance Marketing & Paid Ads (Meta & Google Ads)</option>
                     <option value="Workflow Automation">Workflow Automation (Cross-SaaS Sync)</option>
                     <option value="Custom AI Agents">Custom AI Agents (Specialized Operations)</option>
-                    <option value="Google Ads & Growth">Google Ads & Growth (Commercial Pipeline)</option>
                     <option value="Websites That Convert">Websites That Convert (High-End Digital)</option>
                     <option value="Full Architecture Overhaul">Full Architecture Overhaul (All Pillars)</option>
                   </select>
