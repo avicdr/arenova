@@ -21,6 +21,9 @@
     <meta name="bingbot" content="index, follow" />
     <link rel="canonical" href="https://arenova.in/" />
     
+    <!-- AI Search & Discovery Manifest -->
+    <link rel="alternate" type="text/plain" href="https://arenova.in/llms.txt" title="LLM Context" />
+
     <!-- Geo & Language -->
     <meta name="language" content="English" />
     <meta name="revisit-after" content="7 days" />
@@ -50,7 +53,7 @@
     <meta name="twitter:image" content="https://arenova.in/metadata.png" />
     <meta name="twitter:image:alt" content="ARENOVA — Transform The Way Your Business Works" />
 
-    <!-- Google Fonts: Syne, Plus Jakarta Sans, Cinzel -->
+    <!-- Google Fonts: Syne, Plus Jakarta Sans, Cinzel (font-display: swap) -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -64,12 +67,18 @@
           "@type": "Organization",
           "@id": "https://arenova.in/#organization",
           "name": "ARENOVA",
+          "legalName": "ARENOVA Systems Architecture & AI Automation",
           "url": "https://arenova.in/",
           "logo": {
             "@type": "ImageObject",
+            "@id": "https://arenova.in/#logo",
             "url": "https://arenova.in/arenova.png",
+            "contentUrl": "https://arenova.in/arenova.png",
+            "width": "512",
+            "height": "512",
             "caption": "ARENOVA Logo"
           },
+          "image": "https://arenova.in/metadata.png",
           "slogan": "Transform the way your business works",
           "description": "Arenova builds high-converting marketing engines (Meta Ads & Google Ads) paired with 24/7 AI front desk automation and autonomous operations to generate qualified leads and scale enterprise revenue.",
           "knowsAbout": [
@@ -82,9 +91,15 @@
             "Systems Architecture",
             "Conversion Rate Optimization (CRO)"
           ],
+          "sameAs": [
+            "https://frontdesk.arenova.in",
+            "https://arova.arenova.in",
+            "https://outreacher.arenova.in"
+          ],
           "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "customer service",
+            "email": "avi@arenova.in",
             "availableLanguage": ["English"]
           }
         },
@@ -103,7 +118,7 @@
           "@type": "WebPage",
           "@id": "https://arenova.in/#webpage",
           "url": "https://arenova.in/",
-          "name": "ARENOVA | Enterprise AI Automation & Systems Architecture",
+          "name": "ARENOVA | Enterprise AI Automation, Meta & Google Ads, and Lead Generation Systems",
           "isPartOf": {
             "@id": "https://arenova.in/#website"
           },
@@ -114,10 +129,26 @@
           "inLanguage": "en-US"
         },
         {
+          "@type": "BreadcrumbList",
+          "@id": "https://arenova.in/#breadcrumb",
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "name": "Home",
+              "item": "https://arenova.in/"
+            }
+          ]
+        },
+        {
           "@type": "ProfessionalService",
           "@id": "https://arenova.in/#service",
           "name": "ARENOVA Systems Architecture & AI Automation",
           "image": "https://arenova.in/metadata.png",
+          "url": "https://arenova.in/",
+          "provider": {
+            "@id": "https://arenova.in/#organization"
+          },
           "priceRange": "$$$$",
           "currenciesAccepted": "USD",
           "paymentAccepted": "Wire, Credit Card",
@@ -173,7 +204,68 @@
     </script>
   </head>
   <body class="bg-[#111110] text-[#F3F0E8] antialiased selection:bg-[#E84B2C] selection:text-white overflow-x-hidden">
-    <div id="root"></div>
+    <!-- Pre-rendered Semantic HTML for Search Crawlers and Initial Render -->
+    <div id="root">
+      <header style="padding: 24px; border-bottom: 1px solid rgba(243,240,232,0.08); display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <a href="/" style="color: #F3F0E8; font-family: 'Syne', sans-serif; font-weight: 700; text-decoration: none; font-size: 20px;">ARENOVA</a>
+        </div>
+        <nav aria-label="Main Crawlable Navigation">
+          <a href="#services" style="color: #A39E93; margin: 0 12px; text-decoration: none;">Services</a>
+          <a href="#marketing" style="color: #A39E93; margin: 0 12px; text-decoration: none;">Marketing</a>
+          <a href="#workflow-demo" style="color: #A39E93; margin: 0 12px; text-decoration: none;">Workflow Demo</a>
+          <a href="#industries" style="color: #A39E93; margin: 0 12px; text-decoration: none;">Industries</a>
+          <a href="#approach" style="color: #A39E93; margin: 0 12px; text-decoration: none;">Approach</a>
+          <a href="#ascent" style="color: #E84B2C; margin: 0 12px; text-decoration: none;">Contact</a>
+        </nav>
+      </header>
+      <main style="max-width: 1200px; margin: 0 auto; padding: 48px 24px;">
+        <section id="awakening" style="margin-bottom: 64px;">
+          <p style="font-family: monospace; color: #E84B2C; text-transform: uppercase; font-size: 12px; letter-spacing: 0.25em;">CHAPTER 01 // AWAKENING</p>
+          <h1 style="font-family: 'Syne', sans-serif; font-size: 48px; font-weight: 700; color: #F3F0E8; line-height: 1.1; margin: 16px 0;">Transform the way your business works.</h1>
+          <h2 style="font-size: 22px; color: #D0CBC1; margin-bottom: 24px;">Intelligent AI systems. Seamless automation. Limitless possibilities.</h2>
+          <p style="color: #A39E93; line-height: 1.7; max-width: 800px;">
+            Arenova builds high-converting marketing engines (Meta Ads &amp; Google Ads) paired with 24/7 AI front desk automation to capture qualified leads, accelerate conversions, and scale business revenue.
+          </p>
+        </section>
+        <section id="services" style="margin-bottom: 64px;">
+          <p style="font-family: monospace; color: #E84B2C; text-transform: uppercase; font-size: 12px; letter-spacing: 0.25em;">CHAPTER 04 // OUR SERVICES</p>
+          <h2 style="font-family: 'Syne', sans-serif; font-size: 36px; color: #F3F0E8; margin: 16px 0;">Engineered Systems &amp; Disciplines</h2>
+          <article style="margin: 24px 0;">
+            <h3 style="color: #F3F0E8; font-size: 20px;">AI Front Desk Agents</h3>
+            <p style="color: #A39E93;">Handle enquiries instantly across voice, web chat, SMS, and WhatsApp. Answer routine questions accurately, qualify potential clients, and schedule appointments straight into your calendar 24/7.</p>
+          </article>
+          <article style="margin: 24px 0;">
+            <h3 style="color: #F3F0E8; font-size: 20px;">Workflow Automation</h3>
+            <p style="color: #A39E93;">Connect fragmented business tools into friction-free operational pipelines. Automate administrative handoffs, synchronize customer records, and eliminate copy-pasting between disparate software.</p>
+          </article>
+          <article style="margin: 24px 0;">
+            <h3 style="color: #F3F0E8; font-size: 20px;">Custom AI Agents</h3>
+            <p style="color: #A39E93;">Deploy bespoke AI models engineered for business-specific research, document analysis, lead vetting, and complex operational workflows.</p>
+          </article>
+          <article style="margin: 24px 0;">
+            <h3 style="color: #F3F0E8; font-size: 20px;">Performance Marketing &amp; Revenue Engines</h3>
+            <p style="color: #A39E93;">High-impact Meta Ads and Google Ads paired with conversion landing pages and sub-15 second autonomous lead response.</p>
+          </article>
+          <article style="margin: 24px 0;">
+            <h3 style="color: #F3F0E8; font-size: 20px;">Conversion-Engineered Web Experiences</h3>
+            <p style="color: #A39E93;">High-speed, cinematic, high-converting digital platforms engineered for enterprise credibility and conversion optimization.</p>
+          </article>
+        </section>
+        <section id="ecosystem" style="margin-bottom: 64px;">
+          <h2 style="font-family: 'Syne', sans-serif; font-size: 36px; color: #F3F0E8; margin: 16px 0;">The Arenova Product Ecosystem</h2>
+          <p style="color: #A39E93; margin-bottom: 24px;">Arenova powers specialized enterprise products built for distinct growth bottlenecks:</p>
+          <ul>
+            <li style="margin: 12px 0;"><a href="https://frontdesk.arenova.in" style="color: #E84B2C; text-decoration: none; font-weight: 600;">Arenova Frontdesk</a> — AI-powered WhatsApp receptionist and appointment booking for clinics and businesses.</li>
+            <li style="margin: 12px 0;"><a href="https://arova.arenova.in" style="color: #FFAA3D; text-decoration: none; font-weight: 600;">Arova</a> — B2B lead intelligence and qualified business leads discovery platform.</li>
+            <li style="margin: 12px 0;"><a href="https://outreacher.arenova.in" style="color: #D4AF37; text-decoration: none; font-weight: 600;">Outreacher</a> — Cold email outreach and sales workflow automation platform.</li>
+          </ul>
+        </section>
+      </main>
+      <footer style="padding: 32px 24px; border-top: 1px solid rgba(243,240,232,0.08); font-size: 13px; color: #A39E93;">
+        <p>&copy; 2026 ARENOVA Systems Architecture &amp; AI Automation. All systems engineered with precision. Contact: <a href="mailto:avi@arenova.in" style="color: #E84B2C;">avi@arenova.in</a></p>
+      </footer>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

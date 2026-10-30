@@ -12,6 +12,7 @@ import { IndustriesSection } from './components/IndustriesSection';
 import { ApproachSection } from './components/ApproachSection';
 import { AscentSection } from './components/AscentSection';
 import { FooterSection } from './components/FooterSection';
+import { Analytics } from './components/Analytics';
 
 export function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -130,6 +131,9 @@ export function App() {
 
   return (
     <div className="relative min-h-screen bg-[#111110] text-[#F3F0E8] overflow-x-hidden selection:bg-[#E84B2C] selection:text-white">
+      {/* ANALYTICS INJECTION (CONFIG-AWARE) */}
+      <Analytics />
+
       {/* PERSISTENT 3D PHOENIX & ENVIRONMENTAL CANVAS */}
       <BackgroundCanvas />
 

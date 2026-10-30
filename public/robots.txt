@@ -1,6 +1,39 @@
+# ARENOVA (https://arenova.in) — Production Robots Policy
 User-agent: *
 Allow: /
+Allow: /assets/
+Allow: /arenova.png
+Allow: /metadata.png
+Allow: /llms.txt
+Allow: /llms-full.txt
 Disallow: /scratch/
 Disallow: /screenshots/
+Disallow: /.chrome-tmp/
+Disallow: /verify-*
+
+# Explicit Search & AI Discovery Crawlers
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
 
 Sitemap: https://arenova.in/sitemap.xml

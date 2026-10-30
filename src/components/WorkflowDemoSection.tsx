@@ -39,6 +39,7 @@ export const WorkflowDemoSection: React.FC<WorkflowDemoSectionProps> = ({ onNavi
   const [selectedScenarioIndex, setSelectedScenarioIndex] = useState(0);
   const [currentStep, setCurrentStep] = useState(1);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [sessionTimestamp] = useState(() => '2026-10-30T12:00:00.000Z');
 
   const scenarios: Scenario[] = [
     {
@@ -479,7 +480,7 @@ export const WorkflowDemoSection: React.FC<WorkflowDemoSectionProps> = ({ onNavi
                 {JSON.stringify(
                   {
                     engine: 'Arenova Orchestration Engine v2.4',
-                    timestamp: new Date().toISOString(),
+                    timestamp: sessionTimestamp,
                     scenario_id: currentScenario.id,
                     active_stage: currentStep,
                     stage_name: steps[currentStep - 1].title,

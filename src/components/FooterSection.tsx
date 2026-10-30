@@ -43,7 +43,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
           </div>
 
           {/* COLUMNS */}
-          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-xs font-mono">
+          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-8 text-xs font-mono">
             {/* CORE DISCIPLINES */}
             <nav aria-label="Core Services" className="flex flex-col gap-3">
               <span className="uppercase tracking-widest text-[#E84B2C] font-bold">
@@ -108,6 +108,55 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Websites That Convert
+              </a>
+            </nav>
+
+            {/* ARENOVA ECOSYSTEM PRODUCTS */}
+            <nav aria-label="Ecosystem Products" className="flex flex-col gap-3">
+              <span className="uppercase tracking-widest text-[#E84B2C] font-bold">
+                Ecosystem
+              </span>
+              <a
+                href="https://frontdesk.arenova.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Arenova Frontdesk — AI WhatsApp Receptionist & Clinic Automation"
+                className="group flex flex-col gap-0.5 text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
+              >
+                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#E84B2C] transition-colors">
+                  Frontdesk <ArrowUpRight className="w-3 h-3 inline opacity-70 group-hover:opacity-100" />
+                </span>
+                <span className="text-[11px] text-[#A39E93] group-hover:text-[#D0CBC1]">
+                  AI WhatsApp Receptionist
+                </span>
+              </a>
+              <a
+                href="https://arova.arenova.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Arova — B2B Lead Intelligence & Qualified Business Discovery"
+                className="group flex flex-col gap-0.5 text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
+              >
+                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#FFAA3D] transition-colors">
+                  Arova <ArrowUpRight className="w-3 h-3 inline opacity-70 group-hover:opacity-100" />
+                </span>
+                <span className="text-[11px] text-[#A39E93] group-hover:text-[#D0CBC1]">
+                  B2B Lead Intelligence
+                </span>
+              </a>
+              <a
+                href="https://outreacher.arenova.in"
+                target="_blank"
+                rel="noopener noreferrer"
+                title="Outreacher — Email Outreach & Sales Automation"
+                className="group flex flex-col gap-0.5 text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
+              >
+                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#D4AF37] transition-colors">
+                  Outreacher <ArrowUpRight className="w-3 h-3 inline opacity-70 group-hover:opacity-100" />
+                </span>
+                <span className="text-[11px] text-[#A39E93] group-hover:text-[#D0CBC1]">
+                  Sales Outreach Engine
+                </span>
               </a>
             </nav>
 

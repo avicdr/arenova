@@ -1,0 +1,75 @@
+# ARENOVA — Comprehensive Technical & Architectural Documentation
+
+## Organization Identity
+- Brand Name: ARENOVA
+- Full Legal / Operating Name: ARENOVA Systems Architecture & AI Automation
+- Website: https://arenova.in
+- Parent Entity for: Arenova Frontdesk, Arova, Outreacher
+- Primary Contact: avi@arenova.in
+- Headquarters Domain: arenova.in
+
+## Core Mission & Architecture
+Arenova bridges the chasm between paid media spend, customer inquiry intake, and closed revenue. By pairing precision performance marketing (Meta Ads and Google Ads) with 24/7 AI front desk automation and autonomous backend workflows, businesses capture and qualify inbound prospects within 15 seconds.
+
+## Primary Service Disciplines
+
+### 1. AI Front Desk Agents
+- Objective: Capture 100% of inbound enquiries 24/7 across multiple communication channels.
+- Inbound Channels: Voice telephony, WhatsApp Business API, SMS, and Web Chat widgets.
+- Core Mechanisms:
+  - Intent extraction and natural language triage under 15 seconds.
+  - Strict guardrails trained strictly on company-provided service catalogs, FAQs, and pricing matrices (zero hallucination).
+  - Multi-tier qualification based on territory, budget, urgency, and service fit.
+  - Automated calendar synchronization with direct booking holds into Calendly, Acuity, Cliniko, or Dentrix.
+  - Seamless escalation triggers to on-call human staff when urgent or out-of-scope criteria are detected.
+
+### 2. Workflow Automation & System Orchestration
+- Objective: Eliminate manual clerical busywork and data silos between disjointed SaaS tools.
+- Supported Integrations: HubSpot, Salesforce, Make.com, Zapier Enterprise, PostgreSQL, Stripe, QuickBooks, Xero.
+- Core Capabilities:
+  - Automated CRM contact creation and qualification score tagging.
+  - Real-time contract and invoice generation upon client sign-off.
+  - Two-way database synchronization preventing clerical drift.
+  - Instant internal team alerts via Slack, Microsoft Teams, or SMS.
+
+### 3. Custom AI Agents
+- Objective: Domain-specific autonomous workers trained on proprietary enterprise knowledge.
+- Capabilities:
+  - Retrieval-Augmented Generation (RAG) using vector embeddings grounded in verified company documents.
+  - Automated proposal drafting, RFP response compilation, and executive brief generation.
+  - Human-in-the-loop validation checkpoints for sensitive commercial workflows.
+
+### 4. Performance Marketing & Revenue Engines
+- Meta Ads (Facebook & Instagram): Visual disruption, cinematic storytelling, and paid social acquisition funnels designed to generate qualified appointments.
+- Google Ads (Search & Performance Max): High-intent demand capture, search query domination, and negative keyword moats that cut wasted budget by an average of 38%.
+- Pipeline Acceleration: Sub-15-second lead follow-up automation converting ad clicks into qualified calendar bookings before prospect intent decays.
+
+### 5. Conversion-Engineered Web Experiences
+- High-performance, cinematic digital flagships engineered for conversion rate optimization (CRO) and enterprise credibility.
+- Optimized for Core Web Vitals (sub-2.5s LCP, sub-200ms INP, zero CLS).
+
+## Product Ecosystem Relationships
+
+Arenova operates as the parent engineering agency and technology incubator for three specialized platforms:
+
+1. **Arenova Frontdesk** (`https://frontdesk.arenova.in`):
+   - Vertical: Healthcare, clinics, aesthetic medicine, and local service practices.
+   - Purpose: Automated WhatsApp AI receptionist handling patient inquiries, triage, and appointment booking.
+   - Parent Brand: Arenova.
+
+2. **Arova** (`https://arova.arenova.in`):
+   - Vertical: B2B sales teams, agencies, and enterprise growth operators.
+   - Purpose: B2B lead intelligence and qualified business leads discovery platform.
+   - Parent Brand: Arenova.
+
+3. **Outreacher** (`https://outreacher.arenova.in`):
+   - Vertical: B2B outbound sales and pipeline acceleration.
+   - Purpose: Multi-stage email outreach and sales workflow automation platform.
+   - Parent Brand: Arenova.
+
+## Canonical Technical Specifications
+- Canonical Protocol: HTTPS
+- Canonical Domain: https://arenova.in/
+- Robots Policy: Crawlable by all legitimate search and AI agents; internal build/scratch routes restricted.
+- Sitemap: https://arenova.in/sitemap.xml
+
