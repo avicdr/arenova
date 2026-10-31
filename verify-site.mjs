@@ -72,14 +72,12 @@ async function verify() {
   await page.locator('#workflow-demo').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1000);
 
-  // Step through stages 1 to 5
-  const nextStageBtn = page.locator('button:has-text("Next Stage")');
-  for (let s = 1; s <= 4; s++) {
-    if (await nextStageBtn.isVisible() && await nextStageBtn.isEnabled()) {
-      await nextStageBtn.click();
-      await page.waitForTimeout(400);
-      console.log(`Advanced to workflow stage ${s + 1}`);
-    }
+  // Switch scenario tab
+  const scenarioBtns = page.locator('#workflow-demo button');
+  if (await scenarioBtns.count() > 1) {
+    await scenarioBtns.nth(1).click();
+    await page.waitForTimeout(400);
+    console.log('Selected second scenario in live demo');
   }
   await page.screenshot({ path: 'screenshots/05-workflow-demo.png' });
 
