@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, ArrowUpRight, Sparkles } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
 import arenovaLogo from '../../arenova.png';
 
 interface NavigationProps {
@@ -11,7 +11,6 @@ interface NavigationProps {
 export const Navigation: React.FC<NavigationProps> = ({
   activeSection,
   onNavigate,
-  scrollProgress,
 }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -25,15 +24,10 @@ export const Navigation: React.FC<NavigationProps> = ({
   }, []);
 
   const navLinks = [
-    { id: 'awakening', label: 'Awakening' },
-    { id: 'problem', label: 'The Problem' },
-    { id: 'transformation', label: 'Transformation' },
+    { id: 'problem', label: 'Why Us' },
     { id: 'services', label: 'Services' },
-    { id: 'marketing', label: 'Marketing' },
-    { id: 'workflow-demo', label: 'System Demo' },
+    { id: 'workflow-demo', label: 'Live Demo' },
     { id: 'industries', label: 'Industries' },
-    { id: 'approach', label: 'Approach' },
-    { id: 'ascent', label: 'The Ascent' },
   ];
 
   return (
@@ -61,14 +55,14 @@ export const Navigation: React.FC<NavigationProps> = ({
               alt="ARENOVA Logo"
               width="48"
               height="48"
-              className="h-11 sm:h-14 w-auto object-contain drop-shadow-[0_0_16px_rgba(232,75,44,0.35)] transition-all duration-300 group-hover:scale-105 group-hover:drop-shadow-[0_0_24px_rgba(232,75,44,0.65)]"
+              className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_16px_rgba(232,75,44,0.35)] transition-all duration-300 group-hover:scale-105"
             />
           </a>
 
-          {/* DESKTOP NARRATIVE NAVIGATION - LINEAR & NON-WRAPPING */}
+          {/* DESKTOP STREAMLINED NAVIGATION */}
           <nav
             aria-label="Main Navigation"
-            className="hidden lg:flex items-center gap-0.5 xl:gap-1.5 px-2 xl:px-2.5 py-1.5 rounded-full bg-[#181716]/80 border border-[#F3F0E8]/10 backdrop-blur-md shrink-0 shadow-lg shadow-black/25"
+            className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#181716]/80 border border-[#F3F0E8]/10 backdrop-blur-md shrink-0 shadow-lg shadow-black/25"
           >
             {navLinks.map((link) => {
               const isActive = activeSection === link.id;
@@ -80,7 +74,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                     e.preventDefault();
                     onNavigate(link.id);
                   }}
-                  className={`relative px-2 xl:px-3 py-1 text-[10.5px] xl:text-[11.5px] tracking-wider uppercase whitespace-nowrap transition-all duration-200 rounded-full cursor-pointer shrink-0 ${
+                  className={`relative px-4 py-1.5 text-xs tracking-wider uppercase whitespace-nowrap transition-all duration-200 rounded-full cursor-pointer shrink-0 ${
                     isActive
                       ? 'text-[#F3F0E8] font-semibold bg-[#E84B2C]/20 border border-[#E84B2C]/40 shadow-sm shadow-[#E84B2C]/20'
                       : 'text-[#A39E93] hover:text-[#F3F0E8] hover:bg-[#F3F0E8]/5'
@@ -96,22 +90,17 @@ export const Navigation: React.FC<NavigationProps> = ({
             })}
           </nav>
 
-          {/* RIGHT ACTION: TELEMETRY & CTA */}
-          <div className="hidden sm:flex items-center gap-2.5 xl:gap-3 shrink-0">
-            <div className="hidden 2xl:flex items-center gap-2 px-3 py-1 rounded-full bg-[#161514] border border-[#F3F0E8]/08 text-[11px] text-[#A39E93]">
-              <Sparkles className="w-3 h-3 text-[#E84B2C]" />
-              <span className="font-mono">FLIGHT: {Math.round(scrollProgress * 100)}%</span>
-            </div>
-
+          {/* RIGHT ACTION: CTA BUTTON */}
+          <div className="hidden sm:flex items-center gap-3 shrink-0">
             <a
               href="#contact-form"
               onClick={(e) => {
                 e.preventDefault();
                 onNavigate('contact');
               }}
-              className="btn-cinematic px-3.5 xl:px-5 py-2 xl:py-2.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-[10.5px] xl:text-xs tracking-wider uppercase whitespace-nowrap transition-all shadow-lg shadow-[#E84B2C]/25 hover:shadow-[#E84B2C]/40 flex items-center gap-1.5 xl:gap-2 cursor-pointer"
+              className="btn-cinematic px-5 py-2.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-xs tracking-wider uppercase whitespace-nowrap transition-all shadow-lg shadow-[#E84B2C]/25 hover:shadow-[#E84B2C]/40 flex items-center gap-2 cursor-pointer"
             >
-              <span>Build your advantage</span>
+              <span>Get an Audit</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </div>
@@ -124,13 +113,13 @@ export const Navigation: React.FC<NavigationProps> = ({
                 e.preventDefault();
                 onNavigate('contact');
               }}
-              className="px-3 py-1.5 rounded-full bg-[#E84B2C] text-[#F3F0E8] text-[10px] uppercase tracking-wider font-semibold"
+              className="px-3.5 py-1.5 rounded-full bg-[#E84B2C] text-[#F3F0E8] text-[11px] uppercase tracking-wider font-semibold"
             >
-              Build
+              Audit
             </a>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg bg-[#1A1918] text-[#F3F0E8] border border-[#F3F0E8]/10"
+              className="p-2 rounded-lg bg-[#1A1918] text-[#F3F0E8] border border-[#F3F0E8]/10 cursor-pointer"
               aria-label="Toggle menu"
             >
               {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -139,13 +128,10 @@ export const Navigation: React.FC<NavigationProps> = ({
         </div>
       </header>
 
-      {/* MOBILE DRAWER */}
+      {/* MOBILE DROPDOWN DRAWER */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-40 lg:hidden bg-[#111110]/95 backdrop-blur-2xl pt-24 px-6 flex flex-col justify-between pb-10">
-          <div className="flex flex-col gap-3">
-            <p className="text-[10px] uppercase tracking-[0.25em] text-[#9E9B93] mb-2 font-mono">
-              Narrative Path
-            </p>
+        <div className="fixed inset-0 top-[72px] bg-[#111110]/95 backdrop-blur-xl z-40 sm:hidden flex flex-col p-6 border-b border-[#F3F0E8]/10 animate-fadeIn">
+          <nav className="flex flex-col gap-3 py-6">
             {navLinks.map((link) => (
               <a
                 key={link.id}
@@ -155,28 +141,23 @@ export const Navigation: React.FC<NavigationProps> = ({
                   onNavigate(link.id);
                   setMobileMenuOpen(false);
                 }}
-                className="flex items-center justify-between text-left py-2.5 border-b border-[#F3F0E8]/08 text-base font-display text-[#F3F0E8] hover:text-[#E84B2C] transition-colors"
+                className="px-4 py-3 rounded-xl bg-[#181716]/60 border border-[#F3F0E8]/08 text-sm font-mono tracking-wider uppercase text-[#F3F0E8] flex items-center justify-between"
               >
                 <span>{link.label}</span>
-                <ArrowUpRight className="w-4 h-4 text-[#A39E93]" />
+                <span className="text-[#E84B2C]">→</span>
               </a>
             ))}
-          </div>
 
-          <div className="flex flex-col gap-3 pt-6 border-t border-[#F3F0E8]/10">
             <button
               onClick={() => {
                 onNavigate('contact');
                 setMobileMenuOpen(false);
               }}
-              className="w-full py-3.5 rounded-full bg-[#E84B2C] text-center text-sm font-semibold text-[#F3F0E8] uppercase tracking-wider shadow-lg shadow-[#E84B2C]/25"
+              className="btn-cinematic w-full py-3.5 mt-4 rounded-xl bg-[#E84B2C] text-[#F3F0E8] font-bold text-xs uppercase tracking-wider text-center"
             >
-              Build your advantage
+              Request Free Audit
             </button>
-            <p className="text-center text-xs text-[#A39E93]">
-              AI Operations & Growth Systems
-            </p>
-          </div>
+          </nav>
         </div>
       )}
     </>

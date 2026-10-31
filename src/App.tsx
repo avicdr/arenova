@@ -4,12 +4,9 @@ import { Navigation } from './components/Navigation';
 import { BackgroundCanvas } from './components/BackgroundCanvas';
 import { HeroSection } from './components/HeroSection';
 import { ProblemSection } from './components/ProblemSection';
-import { TransformationSection } from './components/TransformationSection';
 import { ServicesSection } from './components/ServicesSection';
-import { MarketingSection } from './components/MarketingSection';
 import { WorkflowDemoSection } from './components/WorkflowDemoSection';
 import { IndustriesSection } from './components/IndustriesSection';
-import { ApproachSection } from './components/ApproachSection';
 import { AscentSection } from './components/AscentSection';
 import { FooterSection } from './components/FooterSection';
 import { Analytics } from './components/Analytics';
@@ -22,7 +19,6 @@ export function App() {
 
   // Initialize Lenis Smooth Scroll
   useEffect(() => {
-    // Check for prefers-reduced-motion
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
       return;
@@ -75,12 +71,9 @@ export function App() {
     const sectionIds = [
       'awakening',
       'problem',
-      'transformation',
       'services',
-      'marketing',
       'workflow-demo',
       'industries',
-      'approach',
       'ascent',
     ];
 
@@ -144,37 +137,28 @@ export function App() {
         scrollProgress={scrollProgress}
       />
 
-      {/* MAIN STORYTELLING EXPERIENCE CONTENT */}
+      {/* MAIN PUNCHY CONTENT FLOW */}
       <main className="relative z-10 flex flex-col w-full max-w-7xl mx-auto">
-        {/* CHAPTER 01: AWAKENING (HERO) */}
+        {/* HERO */}
         <HeroSection onNavigate={handleNavigate} />
 
-        {/* CHAPTER 02: THE PROBLEM */}
+        {/* THE BOTTLENECKS */}
         <ProblemSection onNavigate={handleNavigate} />
 
-        {/* CHAPTER 03: TRANSFORMATION */}
-        <TransformationSection onNavigate={handleNavigate} />
-
-        {/* CHAPTER 04: OUR 5 SERVICES */}
+        {/* WHAT WE BUILD / 3 CORE PILLARS */}
         <ServicesSection onNavigate={handleNavigate} />
 
-        {/* CHAPTER 05: PERFORMANCE MARKETING & GROWTH ENGINES */}
-        <MarketingSection onNavigate={handleNavigate} />
-
-        {/* CHAPTER 06: SEE THE SYSTEM WORK (INTERACTIVE BROWSER LAB) */}
+        {/* SEE THE SYSTEM WORK (INTERACTIVE BROWSER LAB) */}
         <WorkflowDemoSection onNavigate={handleNavigate} />
 
-        {/* CHAPTER 06: INDUSTRIES */}
+        {/* INDUSTRIES */}
         <IndustriesSection onNavigate={handleNavigate} />
 
-        {/* CHAPTER 07: OUR APPROACH */}
-        <ApproachSection onNavigate={handleNavigate} />
-
-        {/* CHAPTER 08: THE ASCENT */}
+        {/* GET AN AUDIT / CONSULTATION BRIEF */}
         <AscentSection onNavigate={handleNavigate} />
       </main>
 
-      {/* CHAPTER 09: REFINED FOOTER */}
+      {/* FOOTER */}
       <FooterSection onNavigate={handleNavigate} />
     </div>
   );

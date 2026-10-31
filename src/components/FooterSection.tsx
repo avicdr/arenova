@@ -8,47 +8,52 @@ interface FooterSectionProps {
 
 export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
   return (
-    <footer className="relative w-full bg-[#0D0D0C] border-t border-[#F3F0E8]/08 pt-20 pb-12 px-6 sm:px-10 lg:px-16 z-10">
-      <div className="max-w-7xl mx-auto flex flex-col gap-16">
-        {/* TOP ROW: BRAND & MANIFESTO */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
-          <div className="lg:col-span-5 flex flex-col gap-6">
+    <footer className="relative w-full bg-[#0D0D0C] border-t border-[#F3F0E8]/08 pt-16 pb-12 px-6 sm:px-10 lg:px-16 z-10">
+      <div className="max-w-7xl mx-auto flex flex-col gap-12">
+        {/* TOP ROW: BRAND & COLUMNS */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+          <div className="lg:col-span-5 flex flex-col gap-5">
             <div className="flex items-center gap-3">
               <img
                 src={arenovaLogo}
-                alt="ARENOVA Brand Emblem"
-                width="40"
-                height="40"
-                className="h-10 w-auto object-contain drop-shadow-[0_0_15px_rgba(232,75,44,0.3)]"
+                alt="ARENOVA Logo"
+                width="36"
+                height="36"
+                className="h-9 w-auto object-contain drop-shadow-[0_0_15px_rgba(232,75,44,0.3)]"
               />
-              <span className="font-display tracking-[0.22em] text-2xl font-bold text-[#F3F0E8]">
+              <span className="font-display tracking-[0.2em] text-xl font-bold text-[#F3F0E8]">
                 ARENOVA
               </span>
             </div>
 
-            <p className="font-serif-display text-xl sm:text-2xl text-[#F3F0E8] leading-snug">
-              "RISE BEYOND ROUTINE."
-            </p>
-
             <p className="text-sm text-[#A39E93] leading-relaxed max-w-sm">
-              Arenova builds high-converting marketing engines (Meta & Google Ads), intelligent front desk
-              automation, and autonomous revenue systems that help businesses scale.
+              We build high-converting Meta & Google Ads paired with 24/7 AI front desk automation to capture qualified leads and scale enterprise revenue.
             </p>
 
             {/* LIVE SYSTEM STATUS */}
-            <div className="inline-flex items-center gap-2.5 px-3.5 py-1.5 rounded-full bg-[#161514] border border-[#F3F0E8]/08 text-xs font-mono text-[#A39E93] w-fit">
+            <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-[#161514] border border-[#F3F0E8]/08 text-xs font-mono text-[#A39E93] w-fit">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               <span>All marketing & automation clusters operational — 99.98% SLA</span>
             </div>
           </div>
 
           {/* COLUMNS */}
-          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-8 text-xs font-mono">
-            {/* CORE DISCIPLINES */}
-            <nav aria-label="Core Services" className="flex flex-col gap-3">
-              <span className="uppercase tracking-widest text-[#E84B2C] font-bold">
+          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-xs font-mono">
+            {/* SERVICES */}
+            <nav aria-label="Services" className="flex flex-col gap-2.5">
+              <span className="uppercase tracking-widest text-[#E84B2C] font-bold mb-1">
                 Services
               </span>
+              <a
+                href="#services"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onNavigate('services');
+                }}
+                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
+              >
+                Meta & Google Ads
+              </a>
               <a
                 href="#services"
                 onClick={(e) => {
@@ -79,102 +84,56 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
               >
                 Custom AI Agents
               </a>
-              <a
-                href="#marketing"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('marketing');
-                }}
-                className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                Meta & Google Ads
-              </a>
-              <a
-                href="#marketing"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('marketing');
-                }}
-                className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                Performance Marketing
-              </a>
-              <a
-                href="#services"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('services');
-                }}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                Websites That Convert
-              </a>
             </nav>
 
-            {/* ARENOVA ECOSYSTEM PRODUCTS */}
-            <nav aria-label="Ecosystem Products" className="flex flex-col gap-3">
-              <span className="uppercase tracking-widest text-[#E84B2C] font-bold">
+            {/* ECOSYSTEM */}
+            <nav aria-label="Ecosystem" className="flex flex-col gap-2.5">
+              <span className="uppercase tracking-widest text-[#E84B2C] font-bold mb-1">
                 Ecosystem
               </span>
               <a
                 href="https://frontdesk.arenova.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                title="Arenova Frontdesk — AI WhatsApp Receptionist & Clinic Automation"
-                className="group flex flex-col gap-0.5 text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
+                title="Arenova Frontdesk — AI WhatsApp Receptionist"
+                className="group flex flex-col text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
               >
-                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#E84B2C] transition-colors">
-                  Frontdesk <ArrowUpRight className="w-3 h-3 inline opacity-70 group-hover:opacity-100" />
+                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#E84B2C]">
+                  Frontdesk <ArrowUpRight className="w-3 h-3 opacity-70" />
                 </span>
-                <span className="text-[11px] text-[#A39E93] group-hover:text-[#D0CBC1]">
-                  AI WhatsApp Receptionist
-                </span>
+                <span className="text-[10px] text-[#A39E93]">AI WhatsApp Receptionist</span>
               </a>
               <a
                 href="https://arova.arenova.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                title="Arova — B2B Lead Intelligence & Qualified Business Discovery"
-                className="group flex flex-col gap-0.5 text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
+                title="Arova — B2B Lead Intelligence"
+                className="group flex flex-col text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
               >
-                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#FFAA3D] transition-colors">
-                  Arova <ArrowUpRight className="w-3 h-3 inline opacity-70 group-hover:opacity-100" />
+                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#FFAA3D]">
+                  Arova <ArrowUpRight className="w-3 h-3 opacity-70" />
                 </span>
-                <span className="text-[11px] text-[#A39E93] group-hover:text-[#D0CBC1]">
-                  B2B Lead Intelligence
-                </span>
+                <span className="text-[10px] text-[#A39E93]">B2B Lead Intelligence</span>
               </a>
               <a
                 href="https://outreacher.arenova.in"
                 target="_blank"
                 rel="noopener noreferrer"
-                title="Outreacher — Email Outreach & Sales Automation"
-                className="group flex flex-col gap-0.5 text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
+                title="Outreacher — Email Outreach"
+                className="group flex flex-col text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
               >
-                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#D4AF37] transition-colors">
-                  Outreacher <ArrowUpRight className="w-3 h-3 inline opacity-70 group-hover:opacity-100" />
+                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#D4AF37]">
+                  Outreacher <ArrowUpRight className="w-3 h-3 opacity-70" />
                 </span>
-                <span className="text-[11px] text-[#A39E93] group-hover:text-[#D0CBC1]">
-                  Sales Outreach Engine
-                </span>
+                <span className="text-[10px] text-[#A39E93]">Sales Outreach Engine</span>
               </a>
             </nav>
 
-            {/* EXPLORATION */}
-            <nav aria-label="Journey Sections" className="flex flex-col gap-3">
-              <span className="uppercase tracking-widest text-[#E84B2C] font-bold">
-                Journey
+            {/* NAVIGATION & AUDIT */}
+            <nav aria-label="Navigation" className="flex flex-col gap-2.5">
+              <span className="uppercase tracking-widest text-[#E84B2C] font-bold mb-1">
+                Navigation
               </span>
-              <a
-                href="#awakening"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('awakening');
-                }}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                01 Awakening
-              </a>
               <a
                 href="#problem"
                 onClick={(e) => {
@@ -183,17 +142,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                02 The Problem
-              </a>
-              <a
-                href="#transformation"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('transformation');
-                }}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                03 Transformation
+                Why Us
               </a>
               <a
                 href="#services"
@@ -203,17 +152,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                04 Services
-              </a>
-              <a
-                href="#marketing"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('marketing');
-                }}
-                className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                05 Marketing & Ads
+                Services
               </a>
               <a
                 href="#workflow-demo"
@@ -223,7 +162,7 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                06 System Demo
+                System Demo
               </a>
               <a
                 href="#industries"
@@ -233,62 +172,32 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
                 }}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                07 Industries
+                Industries
               </a>
-              <a
-                href="#approach"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('approach');
-                }}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                08 Delivery Approach
-              </a>
-              <a
-                href="#ascent"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('ascent');
-                }}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                09 The Ascent
-              </a>
-            </nav>
-
-            {/* HUBS & CONNECT */}
-            <div className="flex flex-col gap-3 col-span-2 sm:col-span-1">
-              <span className="uppercase tracking-widest text-[#E84B2C] font-bold">
-                Deployments
-              </span>
-              <p className="text-[#A39E93]">Global Inbound Systems</p>
-              <p className="text-[#A39E93]">Custom API Integrations</p>
-              <p className="text-[#A39E93]">Cloud Infrastructure</p>
-              <div className="pt-3">
+              <div className="pt-2">
                 <a
                   href="#contact-form"
                   onClick={(e) => {
                     e.preventDefault();
                     onNavigate('contact');
                   }}
-                  className="inline-flex items-center gap-1.5 text-[#E84B2C] hover:underline"
+                  className="inline-flex items-center gap-1 text-[#E84B2C] hover:underline font-bold"
                 >
-                  <span>Request System Audit</span>
+                  <span>Request Free Audit</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
                 </a>
               </div>
-            </div>
+            </nav>
           </div>
         </div>
 
         {/* BOTTOM METRICS & COPYRIGHT */}
-        <div className="pt-8 border-t border-[#F3F0E8]/08 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#A39E93]">
+        <div className="pt-6 border-t border-[#F3F0E8]/08 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#A39E93]">
           <p>© 2026 ARENOVA. All systems engineered with precision.</p>
-          <div className="flex items-center gap-6">
-            <span>Security: Zero-Trust TLS 1.3</span>
+          <div className="flex items-center gap-4">
+            <span>Direct: avi@arenova.in</span>
             <span>•</span>
-            <span>Engine: Three.js WebGL Core</span>
+            <span>Security: Zero-Trust TLS 1.3</span>
           </div>
         </div>
       </div>

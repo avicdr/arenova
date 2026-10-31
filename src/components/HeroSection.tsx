@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowRight, ChevronDown, Compass, ShieldCheck } from 'lucide-react';
+import { ArrowRight, ChevronDown, ShieldCheck, Zap } from 'lucide-react';
 
 interface HeroSectionProps {
   onNavigate: (sectionId: string) => void;
@@ -15,20 +15,19 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[#F3F0E8]/08 pb-6">
         <div className="flex items-center gap-3 text-xs tracking-[0.25em] text-[#9E9B93] uppercase font-mono">
           <span className="w-2 h-2 rounded-full bg-[#E84B2C] animate-ping" />
-          <span>CHAPTER 01 // AWAKENING</span>
+          <span>AI AUTOMATION & PERFORMANCE MARKETING</span>
         </div>
         <div className="flex items-center gap-6 text-xs text-[#A39E93]">
-          <span className="hidden md:inline">SYSTEMS ARCHITECTURE & AUTOMATION</span>
           <span className="text-[#E84B2C] font-mono">2026 EDITION</span>
         </div>
       </div>
 
       {/* CENTER EDITORIAL COMPOSITION */}
       <div className="my-auto py-12 max-w-5xl">
-        {/* NARRATIVE BADGE */}
+        {/* VALUE BADGE */}
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1A1918]/80 border border-[#E84B2C]/30 text-xs text-[#F3F0E8] mb-8 backdrop-blur-md">
-          <Compass className="w-3.5 h-3.5 text-[#E84B2C]" />
-          <span className="tracking-wide">AI Automation & Marketing Agency</span>
+          <Zap className="w-3.5 h-3.5 text-[#E84B2C]" />
+          <span className="tracking-wide">Turn Ad Spend Into Closed Revenue</span>
         </div>
 
         {/* OVERSIZED EDITORIAL HERO HEADLINE */}
@@ -39,17 +38,17 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
           </span>
         </h1>
 
-        {/* SUPPORTING HEADLINE & BODY WITH ASYMMETRIC GRID */}
+        {/* SUPPORTING HEADLINE & BODY */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start pt-2 border-t border-[#F3F0E8]/08">
           <div className="md:col-span-6">
             <h2 className="text-xl sm:text-2xl font-display font-medium text-[#F3F0E8] leading-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-              Intelligent AI systems. Seamless automation. Limitless possibilities.
+              High-converting ads. 24/7 AI front desk. Automated operations.
             </h2>
           </div>
 
           <div className="md:col-span-6 flex flex-col gap-6">
             <p className="text-sm sm:text-base text-[#D0CBC1] leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.95)]">
-              Arenova builds high-converting marketing engines (Meta Ads & Google Ads) paired with 24/7 AI front desk automation to capture qualified leads, accelerate conversions, and scale business revenue.
+              Arenova builds high-converting Meta & Google Ads paired with 24/7 AI receptionists that answer, qualify, and book clients instantly. Never lose another lead to slow follow-up.
             </p>
 
             {/* CTAs */}
@@ -58,22 +57,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
                 onClick={() => onNavigate('contact')}
                 className="btn-cinematic px-7 py-3.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-xs sm:text-sm tracking-wider uppercase transition-all shadow-xl shadow-[#E84B2C]/30 hover:shadow-[#E84B2C]/50 flex items-center gap-2 cursor-pointer"
               >
-                <span>Build your advantage</span>
+                <span>Get a Free Audit</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 
               <button
-                onClick={() => onNavigate('marketing')}
+                onClick={() => onNavigate('services')}
                 className="px-6 py-3.5 rounded-full bg-[#181716]/80 hover:bg-[#201F1D] text-[#F3F0E8] border border-[#F3F0E8]/15 hover:border-[#F3F0E8]/30 font-medium text-xs sm:text-sm tracking-wider uppercase transition-all backdrop-blur-md cursor-pointer"
               >
-                Marketing & Paid Ads
+                View Services
               </button>
             </div>
           </div>
         </div>
       </div>
 
-      {/* BOTTOM FOOTER TICKER & SCROLL GUIDE */}
+      {/* BOTTOM FOOTER TICKER */}
       <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-6 border-t border-[#F3F0E8]/08 pt-6">
         <div className="flex flex-wrap items-center gap-3 sm:gap-4 text-xs text-[#A39E93]">
           <div className="flex items-center gap-1.5">
@@ -84,13 +83,15 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onNavigate }) => {
           <span>4.8x Avg ROAS</span>
           <span className="text-[#F3F0E8]/20">•</span>
           <span>&lt;15s Lead Follow-up</span>
+          <span className="text-[#F3F0E8]/20">•</span>
+          <span>24/7 Voice & WhatsApp AI</span>
         </div>
 
         <button
           onClick={() => onNavigate('problem')}
           className="group flex items-center gap-3 text-xs tracking-widest uppercase text-[#A39E93] hover:text-[#E84B2C] transition-colors cursor-pointer"
         >
-          <span>Scroll to begin the flight</span>
+          <span>See The Difference</span>
           <div className="w-6 h-6 rounded-full border border-[#F3F0E8]/20 flex items-center justify-center group-hover:border-[#E84B2C] group-hover:translate-y-1 transition-all">
             <ChevronDown className="w-3.5 h-3.5 text-[#E84B2C]" />
           </div>

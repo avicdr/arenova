@@ -61,36 +61,13 @@ async function verify() {
   await page.waitForTimeout(1000);
   await page.screenshot({ path: 'screenshots/02-problem.png' });
 
-  // Click on a problem item
-  const problemItems = page.locator('#problem .cursor-pointer');
-  const problemCount = await problemItems.count();
-  console.log('Problem interactive items count:', problemCount);
-  if (problemCount > 2) {
-    await problemItems.nth(2).click();
-    await page.waitForTimeout(500);
-  }
-
-  // 5. Test Transformation Section
-  console.log('Scrolling to Transformation section...');
-  await page.locator('#transformation').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(1000);
-  await page.screenshot({ path: 'screenshots/03-transformation.png' });
-
-  // 6. Test Services Section
+  // 5. Test Services Section
   console.log('Scrolling to Services section...');
   await page.locator('#services').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1000);
-
-  // Click second service (Workflow Automation)
-  const serviceTabs = page.locator('#services button');
-  if (await serviceTabs.count() > 1) {
-    await serviceTabs.nth(1).click();
-    await page.waitForTimeout(600);
-    console.log('Clicked second service tab');
-  }
   await page.screenshot({ path: 'screenshots/04-services.png' });
 
-  // 7. Test Interactive Workflow Demo
+  // 6. Test Interactive Workflow Demo
   console.log('Scrolling to Workflow Demo section...');
   await page.locator('#workflow-demo').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1000);
@@ -106,27 +83,13 @@ async function verify() {
   }
   await page.screenshot({ path: 'screenshots/05-workflow-demo.png' });
 
-  // 8. Test Industries Section
+  // 7. Test Industries Section
   console.log('Scrolling to Industries section...');
   await page.locator('#industries').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1000);
-
-  // Click Real Estate industry
-  const industryTabs = page.locator('#industries button');
-  if (await industryTabs.count() > 2) {
-    await industryTabs.nth(2).click();
-    await page.waitForTimeout(500);
-    console.log('Clicked Real Estate industry tab');
-  }
   await page.screenshot({ path: 'screenshots/06-industries.png' });
 
-  // 9. Test Approach Section
-  console.log('Scrolling to Approach section...');
-  await page.locator('#approach').scrollIntoViewIfNeeded();
-  await page.waitForTimeout(1000);
-  await page.screenshot({ path: 'screenshots/07-approach.png' });
-
-  // 10. Test Ascent & Consultation Form
+  // 8. Test Ascent & Consultation Form
   console.log('Scrolling to Ascent section...');
   await page.locator('#ascent').scrollIntoViewIfNeeded();
   await page.waitForTimeout(1000);
@@ -134,10 +97,10 @@ async function verify() {
 
   // Test form validation
   console.log('Testing form validation...');
-  await page.fill('input[placeholder*="Julian Hayes"]', 'Alexander Wright');
-  await page.fill('input[placeholder*="julian@hayesdental.com"]', 'alexander@wrightcapital.com');
-  await page.fill('input[placeholder*="Hayes Specialist"]', 'Wright Capital Advisors');
-  await page.fill('textarea', 'We want to automate inbound investment advisory calls and connect our CRM with DocuSign.');
+  await page.fill('input[name="fullName"]', 'Alexander Wright');
+  await page.fill('input[name="workEmail"]', 'alexander@wrightcapital.com');
+  await page.fill('input[name="companyName"]', 'Wright Capital Advisors');
+  await page.fill('textarea[name="message"]', 'We want to automate inbound calls and connect our CRM with DocuSign.');
   
   await page.locator('button:has-text("Submit Architecture Brief")').click();
   console.log('Submitted consultation form');
