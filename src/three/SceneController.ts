@@ -16,7 +16,29 @@ export interface SceneController {
   dispose: () => void;
 }
 
+export type PerformanceTier = 'high' | 'medium' | 'low';
+
+export function detectPerformanceTier(): PerformanceTier {
+  if (typeof window === 'undefined') return 'high';
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 'low';
+
+  const cores = navigator.hardwareConcurrency || 4;
+  const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory || 4;
+  const isMobile = window.innerWidth < 768;
+
+  // Constrained devices
+  if (cores <= 2 || memory <= 2) {
+    return 'low';
+  }
+  // Standard mobile or laptops
+  if (isMobile || cores <= 4 || memory <= 4) {
+    return 'medium';
+  }
+  return 'high';
+}
+
 export function createSceneController(): SceneController {
+  const tier = detectPerformanceTier();
   let containerEl: HTMLElement | null = null;
   let renderer: THREE.WebGLRenderer | null = null;
   let scene: THREE.Scene | null = null;
@@ -25,6 +47,7 @@ export function createSceneController(): SceneController {
 
   let animFrameId: number = 0;
   let lastTime: number = performance.now();
+  let lastRenderTime: number = 0;
   let reducedMotion = false;
   let pageVisible = document.visibilityState === 'visible';
 
@@ -124,6 +147,10 @@ export function createSceneController(): SceneController {
   }
 
   function init(container: HTMLElement): boolean {
+    if (tier === 'low') {
+      return false;
+    }
+
     containerEl = container;
 
     // SCENE
@@ -142,12 +169,12 @@ export function createSceneController(): SceneController {
     // RENDERER
     try {
       renderer = new THREE.WebGLRenderer({
-        antialias: window.devicePixelRatio < 2,
+        antialias: window.devicePixelRatio < 2 && tier === 'high',
         powerPreference: 'high-performance',
         alpha: false,
       });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.15 : 1.5));
+      renderer.setPixelRatio(tier === 'medium' ? 1.0 : Math.min(window.devicePixelRatio, 1.5));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.05;
       renderer.shadowMap.enabled = false;
@@ -163,7 +190,8 @@ export function createSceneController(): SceneController {
     // BUILD THE FEATHERED PHOENIX, EMBERS, MATERIALS AND WARM LIGHT RIG
     // -------------------------------------------------------------
     try {
-      phoenix = createPhoenixExperience(renderer, scene, isMobile ? 160 : 520, isMobile);
+      const particleCount = tier === 'medium' ? 64 : 200;
+      phoenix = createPhoenixExperience(renderer, scene, particleCount, isMobile);
     } catch (error) {
       console.warn('Phoenix rendering is unavailable; using the atmospheric fallback.', error);
       renderer.domElement.remove();
@@ -177,14 +205,10 @@ export function createSceneController(): SceneController {
     phoenix.rootGroup.position.copy(startPos);
     phoenix.rootGroup.scale.setScalar(isMobile ? 0.86 : 1.03);
 
-    // Monolith slabs removed - celestial space is completely open and unobstructed so the Phoenix is never hidden
-
-
-
     // -------------------------------------------------------------
     // AMBIENT CELESTIAL DUST
     // -------------------------------------------------------------
-    const gridCount = isMobile ? 110 : 250;
+    const gridCount = tier === 'medium' ? 40 : 140;
     const gridGeo = new THREE.BufferGeometry();
     const gridPositions = new Float32Array(gridCount * 3);
     for (let g = 0; g < gridCount; g++) {
@@ -259,7 +283,7 @@ export function createSceneController(): SceneController {
     camera.fov = width < 768 ? 54 : 46;
     camera.updateProjectionMatrix();
     phoenix?.rootGroup.scale.setScalar(width < 768 ? 0.86 : 1.03);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, width < 768 ? 1.15 : 1.5));
+    renderer.setPixelRatio(tier === 'medium' ? 1.0 : Math.min(window.devicePixelRatio, width < 768 ? 1.0 : 1.5));
     renderer.setSize(width, height);
     if (reducedMotion && pageVisible && animFrameId === 0) {
       animFrameId = requestAnimationFrame(animate);
@@ -274,6 +298,13 @@ export function createSceneController(): SceneController {
     animFrameId = reducedMotion ? 0 : requestAnimationFrame(animate);
 
     const now = performance.now();
+
+    // On medium tier (mobile/tablet), when idle, throttle frame rate to ~36fps to keep main thread free
+    if (tier === 'medium' && scrollVelocity === 0 && now - lastRenderTime < 27) {
+      return;
+    }
+    lastRenderTime = now;
+
     const delta = reducedMotion ? 1 / 60 : Math.min((now - lastTime) / 1000, 0.1);
     lastTime = now;
     if (now - lastScrollSampleTime > 70) {

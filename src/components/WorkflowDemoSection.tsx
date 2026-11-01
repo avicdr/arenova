@@ -38,7 +38,7 @@ interface DemoScenario {
   };
 }
 
-export const WorkflowDemoSection: React.FC<WorkflowDemoSectionProps> = ({ onNavigate }) => {
+export const WorkflowDemoSection: React.FC<WorkflowDemoSectionProps> = React.memo(({ onNavigate }) => {
   const [activeTab, setActiveTab] = useState(0);
 
   const scenarios: DemoScenario[] = [
@@ -149,7 +149,7 @@ export const WorkflowDemoSection: React.FC<WorkflowDemoSectionProps> = ({ onNavi
               onClick={() => setActiveTab(idx)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs font-mono tracking-wider uppercase transition-all cursor-pointer border ${
                 isSelected
-                  ? 'bg-[#E84B2C] text-[#F3F0E8] border-[#E84B2C] shadow-md shadow-[#E84B2C]/25'
+                  ? 'bg-[#E84B2C] text-[#111110] font-bold border-[#E84B2C] shadow-md shadow-[#E84B2C]/25'
                   : 'bg-[#181716]/80 text-[#A39E93] border-[#F3F0E8]/08 hover:border-[#F3F0E8]/20 hover:text-[#F3F0E8]'
               }`}
             >
@@ -288,7 +288,7 @@ export const WorkflowDemoSection: React.FC<WorkflowDemoSectionProps> = ({ onNavi
       <div className="flex flex-wrap items-center gap-4">
         <button
           onClick={() => onNavigate('contact')}
-          className="btn-cinematic px-7 py-3.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-xs sm:text-sm tracking-wider uppercase transition-all shadow-xl shadow-[#E84B2C]/30 flex items-center gap-2 cursor-pointer"
+          className="btn-cinematic px-7 py-3.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs sm:text-sm tracking-wider uppercase transition-all shadow-xl shadow-[#E84B2C]/30 flex items-center gap-2 cursor-pointer"
         >
           <span>Get This Setup For Your Business</span>
           <ArrowRight className="w-4 h-4" />
@@ -296,4 +296,4 @@ export const WorkflowDemoSection: React.FC<WorkflowDemoSectionProps> = ({ onNavi
       </div>
     </section>
   );
-};
+});

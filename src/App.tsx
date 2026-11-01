@@ -1,5 +1,5 @@
-import { useEffect, useState, useRef } from 'react';
-import Lenis from 'lenis';
+import { useEffect, useState, useRef, useCallback } from 'react';
+import type Lenis from 'lenis';
 import { Navigation } from './components/Navigation';
 import { BackgroundCanvas } from './components/BackgroundCanvas';
 import { HeroSection } from './components/HeroSection';
@@ -12,56 +12,44 @@ import { FooterSection } from './components/FooterSection';
 import { Analytics } from './components/Analytics';
 
 export function App() {
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [activeSection, setActiveSection] = useState('awakening');
   const lenisRef = useRef<Lenis | null>(null);
-  const progressPercentRef = useRef(-1);
 
-  // Initialize Lenis Smooth Scroll
+  // Initialize Lenis Smooth Scroll conditionally on desktop with fine pointer only
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) {
+    const isTouchOrMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+    if (prefersReducedMotion || isTouchOrMobile) {
       return;
     }
 
-    const lenis = new Lenis({
-      duration: 1.0,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      orientation: 'vertical',
-      gestureOrientation: 'vertical',
-      smoothWheel: true,
-      wheelMultiplier: 1.15,
+    let disposed = false;
+    let rafId = 0;
+
+    import('lenis').then(({ default: LenisClass }) => {
+      if (disposed) return;
+      const lenis = new LenisClass({
+        duration: 1.0,
+        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1.15,
+      });
+
+      lenisRef.current = lenis;
+
+      function raf(time: number) {
+        lenis.raf(time);
+        rafId = requestAnimationFrame(raf);
+      }
+      rafId = requestAnimationFrame(raf);
     });
 
-    lenisRef.current = lenis;
-
-    let rafId = 0;
-    function raf(time: number) {
-      lenis.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-    rafId = requestAnimationFrame(raf);
-
-    const handleScroll = () => {
-      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const currentScrollY = window.scrollY;
-      const progress = totalHeight > 0 ? Math.max(0, Math.min(1, currentScrollY / totalHeight)) : 0;
-      const percent = Math.round(progress * 100);
-      if (percent !== progressPercentRef.current) {
-        progressPercentRef.current = percent;
-        setScrollProgress(progress);
-      }
-    };
-
-    handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', handleScroll, { passive: true });
-
     return () => {
-      cancelAnimationFrame(rafId);
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', handleScroll);
-      lenis.destroy();
+      disposed = true;
+      if (rafId) cancelAnimationFrame(rafId);
+      lenisRef.current?.destroy();
       lenisRef.current = null;
     };
   }, []);
@@ -99,7 +87,7 @@ export function App() {
     return () => observer.disconnect();
   }, []);
 
-  const handleNavigate = (sectionId: string) => {
+  const handleNavigate = useCallback((sectionId: string) => {
     if (sectionId === 'contact') {
       const contactEl = document.getElementById('contact-form') || document.getElementById('ascent');
       if (contactEl) {
@@ -120,7 +108,7 @@ export function App() {
         targetEl.scrollIntoView({ behavior: 'smooth' });
       }
     }
-  };
+  }, []);
 
   return (
     <div className="relative min-h-screen bg-[#111110] text-[#F3F0E8] overflow-x-hidden selection:bg-[#E84B2C] selection:text-white">
@@ -134,7 +122,6 @@ export function App() {
       <Navigation
         activeSection={activeSection}
         onNavigate={handleNavigate}
-        scrollProgress={scrollProgress}
       />
 
       {/* MAIN PUNCHY CONTENT FLOW */}

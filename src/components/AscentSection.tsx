@@ -15,7 +15,7 @@ interface AscentSectionProps {
   onNavigate: (sectionId: string) => void;
 }
 
-export const AscentSection: React.FC<AscentSectionProps> = () => {
+export const AscentSection: React.FC<AscentSectionProps> = React.memo(() => {
   const [formData, setFormData] = useState({
     fullName: '',
     workEmail: '',
@@ -159,11 +159,12 @@ export const AscentSection: React.FC<AscentSectionProps> = () => {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {/* FULL NAME */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
+                  <label htmlFor="fullName" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
                     <User className="w-3.5 h-3.5 text-[#E84B2C]" />
                     <span>Your Full Name *</span>
                   </label>
                   <input
+                    id="fullName"
                     type="text"
                     name="fullName"
                     autoComplete="name"
@@ -182,11 +183,12 @@ export const AscentSection: React.FC<AscentSectionProps> = () => {
 
                 {/* WORK EMAIL */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
+                  <label htmlFor="workEmail" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
                     <Mail className="w-3.5 h-3.5 text-[#E84B2C]" />
                     <span>Work Email *</span>
                   </label>
                   <input
+                    id="workEmail"
                     type="email"
                     name="workEmail"
                     autoComplete="email"
@@ -206,11 +208,12 @@ export const AscentSection: React.FC<AscentSectionProps> = () => {
 
               {/* COMPANY NAME */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
+                <label htmlFor="companyName" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
                   <Building className="w-3.5 h-3.5 text-[#E84B2C]" />
                   <span>Company or Practice Name *</span>
                 </label>
                 <input
+                  id="companyName"
                   type="text"
                   name="companyName"
                   autoComplete="organization"
@@ -230,12 +233,14 @@ export const AscentSection: React.FC<AscentSectionProps> = () => {
               {/* SERVICE OF INTEREST */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
+                  <label htmlFor="serviceInterest" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
                     <Layers className="w-3.5 h-3.5 text-[#E84B2C]" />
                     <span>Primary Service Needed</span>
                   </label>
                   <select
+                    id="serviceInterest"
                     name="serviceInterest"
+                    aria-label="Primary Service Needed"
                     value={formData.serviceInterest}
                     onChange={(e) => setFormData({ ...formData, serviceInterest: e.target.value })}
                     className="w-full px-4 py-3.5 rounded-xl bg-[#111110] border border-[#F3F0E8]/10 text-sm text-[#F3F0E8] focus:outline-none focus:border-[#E84B2C] transition-colors"
@@ -250,11 +255,13 @@ export const AscentSection: React.FC<AscentSectionProps> = () => {
 
                 {/* MONTHLY ENQUIRY VOLUME */}
                 <div className="flex flex-col gap-2">
-                  <label className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8]">
+                  <label htmlFor="monthlyVolume" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8]">
                     Monthly Inbound Enquiries
                   </label>
                   <select
+                    id="monthlyVolume"
                     name="monthlyVolume"
+                    aria-label="Monthly Inbound Enquiries"
                     value={formData.monthlyVolume}
                     onChange={(e) => setFormData({ ...formData, monthlyVolume: e.target.value })}
                     className="w-full px-4 py-3.5 rounded-xl bg-[#111110] border border-[#F3F0E8]/10 text-sm text-[#F3F0E8] focus:outline-none focus:border-[#E84B2C] transition-colors"
@@ -269,11 +276,12 @@ export const AscentSection: React.FC<AscentSectionProps> = () => {
 
               {/* MESSAGE / BOTTLENECK DESCRIPTION */}
               <div className="flex flex-col gap-2">
-                <label className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
+                <label htmlFor="message" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
                   <MessageSquare className="w-3.5 h-3.5 text-[#E84B2C]" />
                   <span>Current Bottleneck or Target *</span>
                 </label>
                 <textarea
+                  id="message"
                   rows={4}
                   name="message"
                   value={formData.message}
@@ -299,7 +307,7 @@ export const AscentSection: React.FC<AscentSectionProps> = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full sm:w-auto btn-cinematic px-8 py-4 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#E84B2C]/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
+                  className="w-full sm:w-auto btn-cinematic px-8 py-4 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#E84B2C]/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     <>
@@ -320,4 +328,4 @@ export const AscentSection: React.FC<AscentSectionProps> = () => {
       </div>
     </section>
   );
-};
+});

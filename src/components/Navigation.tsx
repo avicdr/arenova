@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
-import arenovaLogo from '../../arenova.png';
 
 interface NavigationProps {
   activeSection: string;
   onNavigate: (sectionId: string) => void;
-  scrollProgress: number;
 }
 
-export const Navigation: React.FC<NavigationProps> = ({
+export const Navigation: React.FC<NavigationProps> = React.memo(({
   activeSection,
   onNavigate,
 }) => {
@@ -16,8 +14,15 @@ export const Navigation: React.FC<NavigationProps> = ({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          setIsScrolled(window.scrollY > 40);
+          ticking = false;
+        });
+        ticking = true;
+      }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -50,13 +55,17 @@ export const Navigation: React.FC<NavigationProps> = ({
             className="group flex items-center justify-center shrink-0 cursor-pointer focus:outline-none transition-transform duration-300 hover:scale-105"
             aria-label="ARENOVA Home"
           >
-            <img
-              src={arenovaLogo}
-              alt="ARENOVA Logo"
-              width="48"
-              height="48"
-              className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_16px_rgba(232,75,44,0.35)] transition-all duration-300 group-hover:scale-105"
-            />
+            <picture>
+              <source type="image/webp" srcSet="/arenova-128.webp 1x, /arenova-256.webp 2x" />
+              <img
+                src="/arenova-128.png"
+                srcSet="/arenova-128.png 1x, /arenova-256.png 2x"
+                alt="ARENOVA Logo"
+                width="48"
+                height="48"
+                className="h-10 sm:h-12 w-auto object-contain drop-shadow-[0_0_16px_rgba(232,75,44,0.35)] transition-all duration-300 group-hover:scale-105"
+              />
+            </picture>
           </a>
 
           {/* DESKTOP STREAMLINED NAVIGATION */}
@@ -98,7 +107,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 e.preventDefault();
                 onNavigate('contact');
               }}
-              className="btn-cinematic px-5 py-2.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-xs tracking-wider uppercase whitespace-nowrap transition-all shadow-lg shadow-[#E84B2C]/25 hover:shadow-[#E84B2C]/40 flex items-center gap-2 cursor-pointer"
+              className="btn-cinematic px-5 py-2.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs tracking-wider uppercase whitespace-nowrap transition-all shadow-lg shadow-[#E84B2C]/25 hover:shadow-[#E84B2C]/40 flex items-center gap-2 cursor-pointer"
             >
               <span>Get an Audit</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
@@ -113,7 +122,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 e.preventDefault();
                 onNavigate('contact');
               }}
-              className="px-3.5 py-1.5 rounded-full bg-[#E84B2C] text-[#F3F0E8] text-[11px] uppercase tracking-wider font-semibold"
+              className="px-3.5 py-1.5 rounded-full bg-[#E84B2C] text-[#111110] text-[11px] uppercase tracking-wider font-bold"
             >
               Audit
             </a>
@@ -153,7 +162,7 @@ export const Navigation: React.FC<NavigationProps> = ({
                 onNavigate('contact');
                 setMobileMenuOpen(false);
               }}
-              className="btn-cinematic w-full py-3.5 mt-4 rounded-xl bg-[#E84B2C] text-[#F3F0E8] font-bold text-xs uppercase tracking-wider text-center"
+              className="btn-cinematic w-full py-3.5 mt-4 rounded-xl bg-[#E84B2C] text-[#111110] font-bold text-xs uppercase tracking-wider text-center"
             >
               Request Free Audit
             </button>
@@ -162,4 +171,4 @@ export const Navigation: React.FC<NavigationProps> = ({
       )}
     </>
   );
-};
+});

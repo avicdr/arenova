@@ -5,7 +5,7 @@ interface ServicesSectionProps {
   onNavigate: (sectionId: string) => void;
 }
 
-export const ServicesSection: React.FC<ServicesSectionProps> = ({ onNavigate }) => {
+export const ServicesSection: React.FC<ServicesSectionProps> = React.memo(({ onNavigate }) => {
   const services = [
     {
       id: 'marketing-paid-ads',
@@ -157,7 +157,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onNavigate }) 
       <div className="flex flex-wrap items-center gap-4">
         <button
           onClick={() => onNavigate('contact')}
-          className="btn-cinematic px-7 py-3.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-xs sm:text-sm tracking-wider uppercase transition-all shadow-xl shadow-[#E84B2C]/30 flex items-center gap-2 cursor-pointer"
+          className="btn-cinematic px-7 py-3.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs sm:text-sm tracking-wider uppercase transition-all shadow-xl shadow-[#E84B2C]/30 flex items-center gap-2 cursor-pointer"
         >
           <span>Request an Architecture Audit</span>
           <ArrowRight className="w-4 h-4" />
@@ -172,4 +172,4 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({ onNavigate }) 
       </div>
     </section>
   );
-};
+});

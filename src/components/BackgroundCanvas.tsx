@@ -18,72 +18,127 @@ export const BackgroundCanvas: React.FC = () => {
     let disposed = false;
     let controller: SceneController | null = null;
     let scrollFrame = 0;
-    let cleanupListeners = () => {};
+    let initialCleanup = () => {};
+    let activeCleanup = () => {};
 
-    import('../three/SceneController').then(({ createSceneController }) => {
-      if (disposed) return;
-      const sceneController = createSceneController();
-      if (!sceneController.init(container)) {
-        sceneController.dispose();
-        return;
-      }
-      controller = sceneController;
-      controllerRef.current = sceneController;
+    const startPhoenix = () => {
+      if (disposed || controller) return;
 
-      let lastScrollY = window.scrollY;
-      let lastScrollTime = performance.now();
+      import('../three/SceneController').then(({ createSceneController }) => {
+        if (disposed) return;
+        const sceneController = createSceneController();
+        if (!sceneController.init(container)) {
+          sceneController.dispose();
+          return;
+        }
+        controller = sceneController;
+        controllerRef.current = sceneController;
 
-      const progressAt = () => {
-        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-        return scrollable > 0 ? THREEClamp(window.scrollY / scrollable) : 0;
-      };
-      const syncScroll = () => {
-        const now = performance.now();
-        const dt = Math.max((now - lastScrollTime) / 1000, 0.001);
-        const scrollable = document.documentElement.scrollHeight - window.innerHeight;
-        const currentY = window.scrollY;
-        const velocity = scrollable > 0 ? ((currentY - lastScrollY) / scrollable) / dt : 0;
-        lastScrollY = currentY;
-        lastScrollTime = now;
-        sceneController.setScrollProgress(progressAt(), velocity);
-      };
-      const handleMouseMove = (event: MouseEvent) => {
-        sceneController.setMouse((event.clientX / window.innerWidth) * 2 - 1, -(event.clientY / window.innerHeight) * 2 + 1);
-      };
-      const handleResize = () => {
-        sceneController.resize();
-        syncScroll();
-      };
-      const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-      const handleMotionPreference = () => sceneController.setReducedMotion(motionPreference.matches);
-      const handleScroll = () => {
-        if (scrollFrame) return;
-        scrollFrame = requestAnimationFrame(() => {
-          scrollFrame = 0;
+        let lastScrollY = window.scrollY;
+        let lastScrollTime = performance.now();
+        let cachedScrollable = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+
+        const updateScrollMetrics = () => {
+          cachedScrollable = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+        };
+
+        const progressAt = () => {
+          return THREEClamp(window.scrollY / cachedScrollable);
+        };
+
+        const syncScroll = () => {
+          const now = performance.now();
+          const dt = Math.max((now - lastScrollTime) / 1000, 0.001);
+          const currentY = window.scrollY;
+          const velocity = ((currentY - lastScrollY) / cachedScrollable) / dt;
+          lastScrollY = currentY;
+          lastScrollTime = now;
+          sceneController.setScrollProgress(progressAt(), velocity);
+        };
+
+        let mouseTicking = false;
+        const handleMouseMove = (event: MouseEvent) => {
+          if (!mouseTicking) {
+            const mx = (event.clientX / window.innerWidth) * 2 - 1;
+            const my = -(event.clientY / window.innerHeight) * 2 + 1;
+            requestAnimationFrame(() => {
+              sceneController.setMouse(mx, my);
+              mouseTicking = false;
+            });
+            mouseTicking = true;
+          }
+        };
+
+        const handleResize = () => {
+          updateScrollMetrics();
+          sceneController.resize();
           syncScroll();
-        });
-      };
+        };
+        const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const handleMotionPreference = () => sceneController.setReducedMotion(motionPreference.matches);
+        const handleScroll = () => {
+          if (scrollFrame) return;
+          scrollFrame = requestAnimationFrame(() => {
+            scrollFrame = 0;
+            syncScroll();
+          });
+        };
 
-      sceneController.setReducedMotion(motionPreference.matches);
-      syncScroll();
-      window.addEventListener('mousemove', handleMouseMove, { passive: true });
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      window.addEventListener('resize', handleResize, { passive: true });
-      motionPreference.addEventListener('change', handleMotionPreference);
-      cleanupListeners = () => {
-        if (scrollFrame) cancelAnimationFrame(scrollFrame);
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('scroll', handleScroll);
-        window.removeEventListener('resize', handleResize);
-        motionPreference.removeEventListener('change', handleMotionPreference);
+        sceneController.setReducedMotion(motionPreference.matches);
+        syncScroll();
+        window.addEventListener('mousemove', handleMouseMove, { passive: true });
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('resize', handleResize, { passive: true });
+        motionPreference.addEventListener('change', handleMotionPreference);
+        activeCleanup = () => {
+          if (scrollFrame) cancelAnimationFrame(scrollFrame);
+          window.removeEventListener('mousemove', handleMouseMove);
+          window.removeEventListener('scroll', handleScroll);
+          window.removeEventListener('resize', handleResize);
+          motionPreference.removeEventListener('change', handleMotionPreference);
+        };
+      }).catch((error: unknown) => {
+        console.warn('Phoenix experience could not be loaded.', error);
+      });
+    };
+
+    const isMobile = typeof window !== 'undefined' && window.innerWidth < 768;
+
+    if (isMobile) {
+      // Defer Three.js initialization on mobile until after LCP/FCP
+      const trigger = () => {
+        window.removeEventListener('scroll', trigger);
+        window.removeEventListener('touchstart', trigger);
+        startPhoenix();
       };
-    }).catch((error: unknown) => {
-      console.warn('Phoenix experience could not be loaded.', error);
-    });
+      window.addEventListener('scroll', trigger, { passive: true, once: true });
+      window.addEventListener('touchstart', trigger, { passive: true, once: true });
+      const timer = setTimeout(startPhoenix, 1800);
+      initialCleanup = () => {
+        clearTimeout(timer);
+        window.removeEventListener('scroll', trigger);
+        window.removeEventListener('touchstart', trigger);
+      };
+    } else {
+      // Desktop: use requestIdleCallback with 600ms grace period so hero DOM renders first
+      if ('requestIdleCallback' in window) {
+        const idleId = (window as unknown as { requestIdleCallback: (cb: () => void, opts?: { timeout: number }) => number })
+          .requestIdleCallback(startPhoenix, { timeout: 600 });
+        initialCleanup = () => {
+          if ('cancelIdleCallback' in window) {
+            (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId);
+          }
+        };
+      } else {
+        const timer = setTimeout(startPhoenix, 300);
+        initialCleanup = () => clearTimeout(timer);
+      }
+    }
 
     return () => {
       disposed = true;
-      cleanupListeners();
+      initialCleanup();
+      activeCleanup();
       controller?.dispose();
       controllerRef.current = null;
     };

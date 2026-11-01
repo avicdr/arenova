@@ -1,12 +1,11 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
-import arenovaLogo from '../../arenova.png';
 
 interface FooterSectionProps {
   onNavigate: (sectionId: string) => void;
 }
 
-export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
+export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavigate }) => {
   return (
     <footer className="relative w-full bg-[#0D0D0C] border-t border-[#F3F0E8]/08 pt-16 pb-12 px-6 sm:px-10 lg:px-16 z-10">
       <div className="max-w-7xl mx-auto flex flex-col gap-12">
@@ -14,13 +13,16 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-5 flex flex-col gap-5">
             <div className="flex items-center gap-3">
-              <img
-                src={arenovaLogo}
-                alt="ARENOVA Logo"
-                width="36"
-                height="36"
-                className="h-9 w-auto object-contain drop-shadow-[0_0_15px_rgba(232,75,44,0.3)]"
-              />
+              <picture>
+                <source type="image/webp" srcSet="/arenova-128.webp" />
+                <img
+                  src="/arenova-128.png"
+                  alt="ARENOVA Logo"
+                  width="36"
+                  height="36"
+                  className="h-9 w-auto object-contain drop-shadow-[0_0_15px_rgba(232,75,44,0.3)]"
+                />
+              </picture>
               <span className="font-display tracking-[0.2em] text-xl font-bold text-[#F3F0E8]">
                 ARENOVA
               </span>
@@ -203,4 +205,4 @@ export const FooterSection: React.FC<FooterSectionProps> = ({ onNavigate }) => {
       </div>
     </footer>
   );
-};
+});

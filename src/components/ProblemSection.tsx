@@ -5,7 +5,7 @@ interface ProblemSectionProps {
   onNavigate: (sectionId: string) => void;
 }
 
-export const ProblemSection: React.FC<ProblemSectionProps> = ({ onNavigate }) => {
+export const ProblemSection: React.FC<ProblemSectionProps> = React.memo(({ onNavigate }) => {
   const problems = [
     {
       title: 'Missed Calls & Delayed Leads',
@@ -72,7 +72,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({ onNavigate }) =>
                   <div className="w-10 h-10 rounded-xl bg-[#E84B2C]/15 border border-[#E84B2C]/30 flex items-center justify-center text-[#E84B2C]">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#E84B2C] px-2 py-0.5 rounded-full bg-[#E84B2C]/10 border border-[#E84B2C]/20">
+                  <span className="text-[10px] font-mono uppercase tracking-wider text-[#FFAA3D] px-2 py-0.5 rounded-full bg-[#E84B2C]/10 border border-[#E84B2C]/30 font-semibold">
                     {p.tag}
                   </span>
                 </div>
@@ -81,7 +81,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({ onNavigate }) =>
                   {p.title}
                 </h3>
 
-                <p className="text-xs font-mono text-[#E84B2C] mb-4">
+                <p className="text-xs font-mono text-[#FF7043] font-semibold mb-4">
                   {p.metric}
                 </p>
 
@@ -103,7 +103,7 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({ onNavigate }) =>
       <div className="flex items-center gap-4">
         <button
           onClick={() => onNavigate('services')}
-          className="btn-cinematic px-6 py-3 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-xs tracking-wider uppercase transition-all shadow-md shadow-[#E84B2C]/20 flex items-center gap-2 cursor-pointer"
+          className="btn-cinematic px-6 py-3 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs tracking-wider uppercase transition-all shadow-md shadow-[#E84B2C]/20 flex items-center gap-2 cursor-pointer"
         >
           <span>See How We Fix This</span>
           <ArrowRight className="w-4 h-4" />
@@ -111,4 +111,4 @@ export const ProblemSection: React.FC<ProblemSectionProps> = ({ onNavigate }) =>
       </div>
     </section>
   );
-};
+});

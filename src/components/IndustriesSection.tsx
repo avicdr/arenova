@@ -5,7 +5,7 @@ interface IndustriesSectionProps {
   onNavigate: (sectionId: string) => void;
 }
 
-export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onNavigate }) => {
+export const IndustriesSection: React.FC<IndustriesSectionProps> = React.memo(({ onNavigate }) => {
   const industries = [
     {
       title: 'Clinics & Healthcare Practices',
@@ -107,7 +107,7 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onNavigate
       <div className="flex items-center gap-4">
         <button
           onClick={() => onNavigate('contact')}
-          className="btn-cinematic px-6 py-3 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#F3F0E8] font-medium text-xs tracking-wider uppercase transition-all shadow-md shadow-[#E84B2C]/20 flex items-center gap-2 cursor-pointer"
+          className="btn-cinematic px-6 py-3 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs tracking-wider uppercase transition-all shadow-md shadow-[#E84B2C]/20 flex items-center gap-2 cursor-pointer"
         >
           <span>Get Industry Blueprint</span>
           <ArrowRight className="w-4 h-4" />
@@ -115,4 +115,4 @@ export const IndustriesSection: React.FC<IndustriesSectionProps> = ({ onNavigate
       </div>
     </section>
   );
-};
+});
