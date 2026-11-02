@@ -319,8 +319,9 @@ function addBatch(
   isMobile: boolean,
   geometries: Set<THREE.BufferGeometry>,
   flames: THREE.Mesh[],
-  anchors: FeatherAnchor[],
+  anchors?: FeatherAnchor[],
 ) {
+  void anchors;
   if (placements.length === 0) return;
 
   const sourcePosition = source.getAttribute('position') as THREE.BufferAttribute;
@@ -404,7 +405,6 @@ function addBatch(
       flame.userData.baseScaleY = flame.scale.y;
       parent.add(flame);
       flames.push(flame);
-      anchors.push({ parent, point: tip });
     }
   });
 
@@ -491,7 +491,7 @@ function addBodyFlame(
   isMobile: boolean,
   geometries: Set<THREE.BufferGeometry>,
   flames: THREE.Mesh[],
-  anchors: FeatherAnchor[],
+  anchors?: FeatherAnchor[],
 ) {
   const geometry = createFlameGeometry(seed, isMobile);
   geometries.add(geometry);
@@ -504,10 +504,12 @@ function addBodyFlame(
   flame.userData.baseScaleY = flame.scale.y;
   parent.add(flame);
   flames.push(flame);
-  anchors.push({
-    parent,
-    point: position.clone().addScaledVector(direction, height),
-  });
+  if (anchors) {
+    anchors.push({
+      parent,
+      point: position.clone().addScaledVector(direction, height),
+    });
+  }
 }
 
 export function buildPhoenixModel(materials: PhoenixMaterialSet, isMobile = false): PhoenixModelInstance {
@@ -742,36 +744,23 @@ export function buildPhoenixModel(materials: PhoenixMaterialSet, isMobile = fals
   }
   addBatch(tailGroup, tailFeathers, featherSource, materials.feather, materials.flame, isMobile, geometries, tipFlames, emitterAnchors);
 
-  const bodyEmberSites = [
-    { x: -0.06, y: 1.04, back: false },
-    { x: 0.2, y: 0.76, back: false },
-    { x: -0.3, y: 0.48, back: false },
-    { x: 0.38, y: 0.28, back: false },
-    { x: -0.35, y: 0.02, back: false },
-    { x: 0.24, y: -0.2, back: false },
-    { x: -0.19, y: -0.43, back: false },
-    { x: 0.11, y: -0.68, back: false },
-    { x: -0.05, y: 0.86, back: true },
-    { x: 0.22, y: 0.53, back: true },
-    { x: -0.28, y: 0.2, back: true },
-    { x: 0.14, y: -0.14, back: true },
-    { x: -0.1, y: -0.51, back: true },
-  ];
-  const emitterLocals: FeatherAnchor[] = bodyEmberSites.map((site) => ({
-    parent: bodyGroup,
-    point: new THREE.Vector3(
-      site.x,
-      site.y,
-      (site.back ? backSurfaceDepth(site.x, site.y) : surfaceDepth(site.x, site.y)) + (site.back ? -0.02 : 0.02),
-    ),
-  }));
-  emitterLocals.push({ parent: headGroup, point: new THREE.Vector3(0, 0.72, -0.56) });
-  emitterAnchors.unshift(...emitterLocals);
-  const emitterPositions = emitterAnchors.map(() => new THREE.Vector3());
-
   const leftTip = leftWing.outerTip;
   const rightTip = rightWing.outerTip;
   const tipPositions = { left: new THREE.Vector3(), right: new THREE.Vector3() };
+
+  // Curated anatomical emitter sites: 8 key aerodynamic nodes instead of 200+
+  // Eliminates massive per-frame matrix transformation overhead while preserving ember density
+  const keyEmitterAnchors: FeatherAnchor[] = [
+    leftTip,
+    rightTip,
+    { parent: headGroup, point: new THREE.Vector3(0, 0.72, -0.56) },
+    { parent: bodyGroup, point: new THREE.Vector3(0, 0.2, 0.35) },
+    { parent: bodyGroup, point: new THREE.Vector3(0, -0.15, -0.2) },
+    { parent: tailGroup, point: new THREE.Vector3(0, -1.2, 0.05) },
+    { parent: leftWing.hierarchy.elbow, point: new THREE.Vector3(-0.7, 0.5, 0.0) },
+    { parent: rightWing.hierarchy.elbow, point: new THREE.Vector3(0.7, 0.5, 0.0) },
+  ];
+  const emitterPositions = keyEmitterAnchors.map(() => new THREE.Vector3());
 
   function getWingtipPositions() {
     flightGroup.updateMatrixWorld(true);
@@ -784,8 +773,8 @@ export function buildPhoenixModel(materials: PhoenixMaterialSet, isMobile = fals
 
   function getEmitterPositions() {
     flightGroup.updateMatrixWorld(true);
-    for (let index = 0; index < emitterAnchors.length; index++) {
-      const anchor = emitterAnchors[index];
+    for (let index = 0; index < keyEmitterAnchors.length; index++) {
+      const anchor = keyEmitterAnchors[index];
       anchor.parent.localToWorld(emitterPositions[index].copy(anchor.point));
       flightGroup.worldToLocal(emitterPositions[index]);
     }
@@ -823,7 +812,7 @@ function createWing(
   isMobile: boolean,
   geometries: Set<THREE.BufferGeometry>,
   flames: THREE.Mesh[],
-  anchors: FeatherAnchor[],
+  anchors?: FeatherAnchor[],
 ) {
   const shoulder = new THREE.Group();
   shoulder.name = side < 0 ? 'LeftWingShoulder' : 'RightWingShoulder';

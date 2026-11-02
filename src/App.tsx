@@ -1,21 +1,73 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useState, useRef, useCallback, lazy, Suspense } from 'react';
 import type Lenis from 'lenis';
 import { Navigation } from './components/Navigation';
 import { BackgroundCanvas } from './components/BackgroundCanvas';
 import { HeroSection } from './components/HeroSection';
 import { ProblemSection } from './components/ProblemSection';
 import { ServicesSection } from './components/ServicesSection';
-import { WorkflowDemoSection } from './components/WorkflowDemoSection';
-import { IndustriesSection } from './components/IndustriesSection';
-import { AscentSection } from './components/AscentSection';
-import { FooterSection } from './components/FooterSection';
 import { Analytics } from './components/Analytics';
+
+// Code-split heavy below-the-fold interactive components to eliminate main-thread long tasks during initial hydration
+const WorkflowDemoSection = lazy(() => import('./components/WorkflowDemoSection').then((m) => ({ default: m.WorkflowDemoSection })));
+const IndustriesSection = lazy(() => import('./components/IndustriesSection').then((m) => ({ default: m.IndustriesSection })));
+const AscentSection = lazy(() => import('./components/AscentSection').then((m) => ({ default: m.AscentSection })));
+const FooterSection = lazy(() => import('./components/FooterSection').then((m) => ({ default: m.FooterSection })));
+
+function LazySection({
+  children,
+  forceMount,
+  minHeight = '320px',
+}: {
+  children: React.ReactNode;
+  forceMount?: boolean;
+  minHeight?: string;
+}) {
+  const [inView, setInView] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (inView || forceMount) return;
+    const el = containerRef.current;
+    if (!el) return;
+
+    if (typeof IntersectionObserver === 'undefined') {
+      setInView(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { rootMargin: '600px 0px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [inView, forceMount]);
+
+  const shouldRender = inView || forceMount;
+
+  return (
+    <div ref={containerRef} style={shouldRender ? undefined : { minHeight }}>
+      {shouldRender ? (
+        <Suspense fallback={null}>
+          {children}
+        </Suspense>
+      ) : null}
+    </div>
+  );
+}
 
 export function App() {
   const [activeSection, setActiveSection] = useState('awakening');
+  const [mountBelowFold, setMountBelowFold] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
 
-  // Initialize Lenis Smooth Scroll conditionally on desktop with fine pointer only
+  // Initialize Lenis Smooth Scroll on desktop upon user interaction
   useEffect(() => {
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const isTouchOrMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
@@ -26,28 +78,42 @@ export function App() {
     let disposed = false;
     let rafId = 0;
 
-    import('lenis').then(({ default: LenisClass }) => {
-      if (disposed) return;
-      const lenis = new LenisClass({
-        duration: 1.0,
-        easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: 'vertical',
-        gestureOrientation: 'vertical',
-        smoothWheel: true,
-        wheelMultiplier: 1.15,
-      });
+    const startLenis = () => {
+      if (disposed || lenisRef.current) return;
+      cleanupTriggers();
 
-      lenisRef.current = lenis;
+      import('lenis').then(({ default: LenisClass }) => {
+        if (disposed || lenisRef.current) return;
+        const lenis = new LenisClass({
+          duration: 1.0,
+          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          orientation: 'vertical',
+          gestureOrientation: 'vertical',
+          smoothWheel: true,
+          wheelMultiplier: 1.15,
+        });
 
-      function raf(time: number) {
-        lenis.raf(time);
+        lenisRef.current = lenis;
+
+        function raf(time: number) {
+          lenis.raf(time);
+          rafId = requestAnimationFrame(raf);
+        }
         rafId = requestAnimationFrame(raf);
-      }
-      rafId = requestAnimationFrame(raf);
-    });
+      });
+    };
+
+    const cleanupTriggers = () => {
+      window.removeEventListener('wheel', startLenis);
+      window.removeEventListener('scroll', startLenis);
+    };
+
+    window.addEventListener('wheel', startLenis, { passive: true, once: true });
+    window.addEventListener('scroll', startLenis, { passive: true, once: true });
 
     return () => {
       disposed = true;
+      cleanupTriggers();
       if (rafId) cancelAnimationFrame(rafId);
       lenisRef.current?.destroy();
       lenisRef.current = null;
@@ -88,26 +154,29 @@ export function App() {
   }, []);
 
   const handleNavigate = useCallback((sectionId: string) => {
-    if (sectionId === 'contact') {
-      const contactEl = document.getElementById('contact-form') || document.getElementById('ascent');
-      if (contactEl) {
+    setMountBelowFold(true);
+    requestAnimationFrame(() => {
+      if (sectionId === 'contact') {
+        const contactEl = document.getElementById('contact-form') || document.getElementById('ascent');
+        if (contactEl) {
+          if (lenisRef.current) {
+            lenisRef.current.scrollTo(contactEl, { offset: -80 });
+          } else {
+            contactEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+        return;
+      }
+
+      const targetEl = document.getElementById(sectionId);
+      if (targetEl) {
         if (lenisRef.current) {
-          lenisRef.current.scrollTo(contactEl, { offset: -80 });
+          lenisRef.current.scrollTo(targetEl, { offset: -60 });
         } else {
-          contactEl.scrollIntoView({ behavior: 'smooth' });
+          targetEl.scrollIntoView({ behavior: 'smooth' });
         }
       }
-      return;
-    }
-
-    const targetEl = document.getElementById(sectionId);
-    if (targetEl) {
-      if (lenisRef.current) {
-        lenisRef.current.scrollTo(targetEl, { offset: -60 });
-      } else {
-        targetEl.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
+    });
   }, []);
 
   return (
@@ -136,17 +205,25 @@ export function App() {
         <ServicesSection onNavigate={handleNavigate} />
 
         {/* SEE THE SYSTEM WORK (INTERACTIVE BROWSER LAB) */}
-        <WorkflowDemoSection onNavigate={handleNavigate} />
+        <LazySection forceMount={mountBelowFold} minHeight="720px">
+          <WorkflowDemoSection onNavigate={handleNavigate} />
+        </LazySection>
 
-        {/* INDUSTRIES */}
-        <IndustriesSection onNavigate={handleNavigate} />
+        {/* PROVEN RESULTS ACROSS SECTORS */}
+        <LazySection forceMount={mountBelowFold} minHeight="540px">
+          <IndustriesSection onNavigate={handleNavigate} />
+        </LazySection>
 
-        {/* GET AN AUDIT / CONSULTATION BRIEF */}
-        <AscentSection onNavigate={handleNavigate} />
+        {/* CONSULTATION & APPOINTMENT BOOKING */}
+        <LazySection forceMount={mountBelowFold} minHeight="680px">
+          <AscentSection onNavigate={handleNavigate} />
+        </LazySection>
       </main>
 
       {/* FOOTER */}
-      <FooterSection onNavigate={handleNavigate} />
+      <LazySection forceMount={mountBelowFold} minHeight="240px">
+        <FooterSection onNavigate={handleNavigate} />
+      </LazySection>
     </div>
   );
 }

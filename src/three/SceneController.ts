@@ -12,6 +12,7 @@ export interface SceneController {
   setScrollProgress: (progress: number, velocity: number) => void;
   setMouse: (x: number, y: number) => void;
   setReducedMotion: (enabled: boolean) => void;
+  setVisible: (visible: boolean) => void;
   resize: () => void;
   dispose: () => void;
 }
@@ -47,9 +48,18 @@ export function createSceneController(): SceneController {
 
   let animFrameId: number = 0;
   let lastTime: number = performance.now();
-  let lastRenderTime: number = 0;
   let reducedMotion = false;
   let pageVisible = document.visibilityState === 'visible';
+  let isIntersecting = true;
+  let idleFramesCount = 0;
+
+  function wakeUp() {
+    idleFramesCount = 0;
+    if (animFrameId === 0 && pageVisible && isIntersecting && !reducedMotion) {
+      lastTime = performance.now();
+      animFrameId = requestAnimationFrame(animate);
+    }
+  }
 
   // Scroll tracking with smooth damping (lerp)
   let targetProgress = 0;
@@ -245,14 +255,13 @@ export function createSceneController(): SceneController {
     scrollVelocity = velocity || THREE.MathUtils.clamp(measuredVelocity, -5, 5);
     lastScrollTarget = nextProgress;
     lastScrollSampleTime = now;
-    if (reducedMotion && pageVisible && animFrameId === 0) {
-      animFrameId = requestAnimationFrame(animate);
-    }
+    wakeUp();
   }
 
   function setMouse(x: number, y: number) {
     targetMouse.x = reducedMotion ? 0 : x;
     targetMouse.y = reducedMotion ? 0 : y;
+    wakeUp();
   }
 
   function setReducedMotion(enabled: boolean) {
@@ -261,18 +270,32 @@ export function createSceneController(): SceneController {
     cancelAnimationFrame(animFrameId);
     animFrameId = 0;
     lastTime = performance.now();
-    if (pageVisible) animFrameId = requestAnimationFrame(animate);
+    if (pageVisible && !enabled) wakeUp();
   }
 
   function handleVisibilityChange() {
     pageVisible = document.visibilityState === 'visible';
     if (!pageVisible) {
-      cancelAnimationFrame(animFrameId);
-      animFrameId = 0;
-      return;
+      if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = 0;
+      }
+    } else {
+      wakeUp();
     }
-    lastTime = performance.now();
-    if (animFrameId === 0) animFrameId = requestAnimationFrame(animate);
+  }
+
+  function setVisible(visible: boolean) {
+    if (isIntersecting === visible) return;
+    isIntersecting = visible;
+    if (!visible) {
+      if (animFrameId) {
+        cancelAnimationFrame(animFrameId);
+        animFrameId = 0;
+      }
+    } else {
+      wakeUp();
+    }
   }
 
   function resize() {
@@ -285,25 +308,36 @@ export function createSceneController(): SceneController {
     phoenix?.rootGroup.scale.setScalar(width < 768 ? 0.86 : 1.03);
     renderer.setPixelRatio(tier === 'medium' ? 1.0 : Math.min(window.devicePixelRatio, width < 768 ? 1.0 : 1.5));
     renderer.setSize(width, height);
-    if (reducedMotion && pageVisible && animFrameId === 0) {
-      animFrameId = requestAnimationFrame(animate);
-    }
+    wakeUp();
   }
 
   function animate() {
-    if (!pageVisible) {
+    if (!pageVisible || !isIntersecting) {
       animFrameId = 0;
       return;
     }
-    animFrameId = reducedMotion ? 0 : requestAnimationFrame(animate);
 
     const now = performance.now();
+    const isScrollSettled = scrollVelocity === 0 && Math.abs(targetProgress - currentProgress) < 0.0003;
+    const isMouseSettled = Math.abs(targetMouse.x - mouse.x) < 0.001 && Math.abs(targetMouse.y - mouse.y) < 0.001;
 
-    // On medium tier (mobile/tablet), when idle, throttle frame rate to ~36fps to keep main thread free
-    if (tier === 'medium' && scrollVelocity === 0 && now - lastRenderTime < 27) {
-      return;
+    // Demand-based rendering:
+    // When scroll and mouse are settled, allow ~24 frames for damping to rest,
+    // render the final settled frame, and sleep until next user interaction.
+    if (isScrollSettled && isMouseSettled) {
+      idleFramesCount++;
+      if (idleFramesCount > 24) {
+        if (renderer && scene && camera) {
+          renderer.render(scene, camera);
+        }
+        animFrameId = 0;
+        return;
+      }
+    } else {
+      idleFramesCount = 0;
     }
-    lastRenderTime = now;
+
+    animFrameId = reducedMotion ? 0 : requestAnimationFrame(animate);
 
     const delta = reducedMotion ? 1 / 60 : Math.min((now - lastTime) / 1000, 0.1);
     lastTime = now;
@@ -429,6 +463,7 @@ export function createSceneController(): SceneController {
     setScrollProgress,
     setMouse,
     setReducedMotion,
+    setVisible,
     resize,
     dispose,
   };

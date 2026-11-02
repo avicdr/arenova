@@ -113,3 +113,4 @@
 
 7. **Production Verification & Lighthouse Audit:**
    - Verify build, TypeScript, zero console errors, and execute fresh Lighthouse audits on mobile and desktop.
+
