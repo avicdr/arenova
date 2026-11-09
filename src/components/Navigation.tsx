@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Menu, X, ArrowUpRight } from 'lucide-react';
+import { useRouter } from '../context/RouterContext';
 
 interface NavigationProps {
   activeSection: string;
@@ -10,6 +11,7 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
   activeSection,
   onNavigate,
 }) => {
+  const { pathname, navigate } = useRouter();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -29,11 +31,25 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
   }, []);
 
   const navLinks = [
-    { id: 'problem', label: 'Why Us' },
-    { id: 'services', label: 'Services' },
-    { id: 'workflow-demo', label: 'Live Demo' },
-    { id: 'industries', label: 'Industries' },
+    { id: 'problem', label: 'Why Us', href: '/#problem', type: 'section' },
+    { id: 'services', label: 'Services', href: '/#services', type: 'section' },
+    { id: 'workflow-demo', label: 'Live Demo', href: '/#workflow-demo', type: 'section' },
+    { id: 'pricing', label: 'Pricing', href: '/pricing', type: 'page' },
+    { id: 'about', label: 'About', href: '/about', type: 'page' },
   ];
+
+  const handleLinkClick = (link: (typeof navLinks)[0]) => {
+    if (link.type === 'page') {
+      navigate(link.href);
+    } else {
+      if (pathname === '/') {
+        onNavigate(link.id);
+      } else {
+        navigate(link.href);
+      }
+    }
+    setMobileMenuOpen(false);
+  };
 
   return (
     <>
@@ -47,10 +63,14 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
         <div className="w-full max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
           {/* BRAND LOGO */}
           <a
-            href="#awakening"
+            href="/"
             onClick={(e) => {
               e.preventDefault();
-              onNavigate('awakening');
+              if (pathname === '/') {
+                onNavigate('awakening');
+              } else {
+                navigate('/');
+              }
             }}
             className="group flex items-center justify-center shrink-0 cursor-pointer focus:outline-none transition-transform duration-300 hover:scale-105"
             aria-label="ARENOVA Home"
@@ -74,14 +94,18 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
             className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#181716]/80 border border-[#F3F0E8]/10 backdrop-blur-md shrink-0 shadow-lg shadow-black/25"
           >
             {navLinks.map((link) => {
-              const isActive = activeSection === link.id;
+              const isActive =
+                link.type === 'page'
+                  ? pathname === link.href
+                  : pathname === '/' && activeSection === link.id;
+
               return (
                 <a
                   key={link.id}
-                  href={`#${link.id}`}
+                  href={link.href}
                   onClick={(e) => {
                     e.preventDefault();
-                    onNavigate(link.id);
+                    handleLinkClick(link);
                   }}
                   className={`relative px-4 py-1.5 text-xs tracking-wider uppercase whitespace-nowrap transition-all duration-200 rounded-full cursor-pointer shrink-0 ${
                     isActive
@@ -102,10 +126,14 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
           {/* RIGHT ACTION: CTA BUTTON */}
           <div className="hidden sm:flex items-center gap-3 shrink-0">
             <a
-              href="#contact-form"
+              href="/#ascent"
               onClick={(e) => {
                 e.preventDefault();
-                onNavigate('contact');
+                if (pathname === '/') {
+                  onNavigate('contact');
+                } else {
+                  navigate('/#ascent');
+                }
               }}
               className="btn-cinematic px-5 py-2.5 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs tracking-wider uppercase whitespace-nowrap transition-all shadow-lg shadow-[#E84B2C]/25 hover:shadow-[#E84B2C]/40 flex items-center gap-2 cursor-pointer"
             >
@@ -117,10 +145,14 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
           {/* MOBILE MENU TOGGLE */}
           <div className="flex sm:hidden items-center gap-2">
             <a
-              href="#contact-form"
+              href="/#ascent"
               onClick={(e) => {
                 e.preventDefault();
-                onNavigate('contact');
+                if (pathname === '/') {
+                  onNavigate('contact');
+                } else {
+                  navigate('/#ascent');
+                }
               }}
               className="px-3.5 py-1.5 rounded-full bg-[#E84B2C] text-[#111110] text-[11px] uppercase tracking-wider font-bold"
             >
@@ -144,11 +176,10 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
             {navLinks.map((link) => (
               <a
                 key={link.id}
-                href={`#${link.id}`}
+                href={link.href}
                 onClick={(e) => {
                   e.preventDefault();
-                  onNavigate(link.id);
-                  setMobileMenuOpen(false);
+                  handleLinkClick(link);
                 }}
                 className="px-4 py-3 rounded-xl bg-[#181716]/60 border border-[#F3F0E8]/08 text-sm font-mono tracking-wider uppercase text-[#F3F0E8] flex items-center justify-between"
               >
@@ -159,7 +190,11 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
 
             <button
               onClick={() => {
-                onNavigate('contact');
+                if (pathname === '/') {
+                  onNavigate('contact');
+                } else {
+                  navigate('/#ascent');
+                }
                 setMobileMenuOpen(false);
               }}
               className="btn-cinematic w-full py-3.5 mt-4 rounded-xl bg-[#E84B2C] text-[#111110] font-bold text-xs uppercase tracking-wider text-center"

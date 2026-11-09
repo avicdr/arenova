@@ -1,11 +1,26 @@
 import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
+import { useRouter } from '../context/RouterContext';
 
 interface FooterSectionProps {
   onNavigate: (sectionId: string) => void;
 }
 
 export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavigate }) => {
+  const { pathname, navigate } = useRouter();
+
+  const handleNavClick = (target: string) => {
+    if (target.startsWith('/')) {
+      navigate(target);
+    } else {
+      if (pathname === '/') {
+        onNavigate(target);
+      } else {
+        navigate(`/#${target}`);
+      }
+    }
+  };
+
   return (
     <footer className="relative w-full bg-[#0D0D0C] border-t border-[#F3F0E8]/08 pt-16 pb-12 px-6 sm:px-10 lg:px-16 z-10">
       <div className="max-w-7xl mx-auto flex flex-col gap-12">
@@ -29,13 +44,13 @@ export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavig
             </div>
 
             <p className="text-sm text-[#A39E93] leading-relaxed max-w-sm">
-              We build high-converting Meta & Google Ads paired with 24/7 AI front desk automation to capture qualified leads and scale enterprise revenue.
+              We engineer enterprise AI automation: business workflow orchestration, autonomous cold outreach engines, and 24/7 front desk capture.
             </p>
 
             {/* LIVE SYSTEM STATUS */}
             <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-[#161514] border border-[#F3F0E8]/08 text-xs font-mono text-[#A39E93] w-fit">
               <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>All marketing & automation clusters operational — 99.98% SLA</span>
+              <span>All automation & outreach clusters operational — 99.98% SLA</span>
             </div>
           </div>
 
@@ -46,46 +61,30 @@ export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavig
               <span className="uppercase tracking-widest text-[#E84B2C] font-bold mb-1">
                 Services
               </span>
-              <a
-                href="#services"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('services');
-                }}
+              <button
+                onClick={() => handleNavClick('services')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                Meta & Google Ads
-              </a>
-              <a
-                href="#services"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('services');
-                }}
+                Business Automation
+              </button>
+              <button
+                onClick={() => handleNavClick('services')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                AI Front Desk Agents
-              </a>
-              <a
-                href="#services"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('services');
-                }}
+                Sales & Outreach
+              </button>
+              <button
+                onClick={() => handleNavClick('services')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
-                Workflow Automation
-              </a>
-              <a
-                href="#services"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('services');
-                }}
+                AI Frontdesk Agent
+              </button>
+              <button
+                onClick={() => handleNavClick('services')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Custom AI Agents
-              </a>
+              </button>
             </nav>
 
             {/* ECOSYSTEM */}
@@ -103,7 +102,7 @@ export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavig
                 <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#E84B2C]">
                   Frontdesk <ArrowUpRight className="w-3 h-3 opacity-70" />
                 </span>
-                <span className="text-[10px] text-[#A39E93]">AI WhatsApp Receptionist</span>
+                <span className="text-[10px] text-[#A39E93]">AI Voice & WhatsApp</span>
               </a>
               <a
                 href="https://arova.arenova.in"
@@ -136,58 +135,44 @@ export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavig
               <span className="uppercase tracking-widest text-[#E84B2C] font-bold mb-1">
                 Navigation
               </span>
-              <a
-                href="#problem"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('problem');
-                }}
+              <button
+                onClick={() => handleNavClick('problem')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Why Us
-              </a>
-              <a
-                href="#services"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('services');
-                }}
+              </button>
+              <button
+                onClick={() => handleNavClick('services')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Services
-              </a>
-              <a
-                href="#workflow-demo"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('workflow-demo');
-                }}
+              </button>
+              <button
+                onClick={() => handleNavClick('/pricing')}
+                className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer font-semibold"
+              >
+                Pricing
+              </button>
+              <button
+                onClick={() => handleNavClick('/about')}
+                className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer font-semibold"
+              >
+                About Us
+              </button>
+              <button
+                onClick={() => handleNavClick('workflow-demo')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 System Demo
-              </a>
-              <a
-                href="#industries"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('industries');
-                }}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                Industries
-              </a>
+              </button>
               <div className="pt-2">
-                <a
-                  href="#contact-form"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate('contact');
-                  }}
-                  className="inline-flex items-center gap-1 text-[#E84B2C] hover:underline font-bold"
+                <button
+                  onClick={() => handleNavClick('contact')}
+                  className="inline-flex items-center gap-1 text-[#E84B2C] hover:underline font-bold cursor-pointer"
                 >
                   <span>Request Free Audit</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
+                </button>
               </div>
             </nav>
           </div>

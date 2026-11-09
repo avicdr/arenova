@@ -8,31 +8,31 @@ interface ProblemSectionProps {
 export const ProblemSection: React.FC<ProblemSectionProps> = React.memo(({ onNavigate }) => {
   const problems = [
     {
-      title: 'Missed Calls & Delayed Leads',
-      metric: '67% Choose First Responder',
-      description:
-        'Inbound calls and messages arrive after-hours or when staff are busy. If you don’t reply within 5 minutes, 80% of high-intent prospects contact your competitor.',
-      icon: PhoneMissed,
-      tag: 'LEAD LEAK',
-      solution: '24/7 AI answers in <15s',
-    },
-    {
-      title: 'Wasted Ad Spend on Clicks',
-      metric: '98% Bounce Without Contact',
-      description:
-        'Expensive Meta and Google Ads traffic lands on static websites with confusing contact forms and zero instant answers, burning marketing budget without booked meetings.',
-      icon: MousePointerClick,
-      tag: 'CONVERSION FAILURE',
-      solution: 'High-converting funnels + instant booking',
-    },
-    {
       title: 'Manual Admin & Disjointed Tools',
-      metric: '15+ hrs/week Wasted',
+      metric: '20+ hrs/week Wasted',
       description:
-        'Teams drown in repetitive copy-paste between email, CRM, calendar ping-pong, and invoicing instead of delivering work and closing deals.',
+        'Teams drown in repetitive copy-paste between spreadsheets, CRM updates, invoice reconciliation, and manual onboarding instead of high-leverage growth.',
       icon: RefreshCw,
       tag: 'CAPACITY DRAIN',
       solution: 'Autonomous end-to-end sync',
+    },
+    {
+      title: 'Broken Outbound & Dry Pipeline',
+      metric: '82% of Cold Emails Fail',
+      description:
+        'Manual prospecting doesn’t scale and generic cold emails get flagged as spam. Without dedicated infrastructure and AI enrichment, outbound pipelines remain empty.',
+      icon: MousePointerClick,
+      tag: 'REVENUE CHOKEPOINT',
+      solution: 'Automated multi-channel outbound',
+    },
+    {
+      title: 'Missed Calls & Delayed Leads',
+      metric: '67% Choose First Responder',
+      description:
+        'Inbound calls and enquiries arrive after-hours or when staff are busy. If you don’t reply within 5 minutes, 80% of high-intent prospects hire your competitor.',
+      icon: PhoneMissed,
+      tag: 'LEAD LEAK',
+      solution: '24/7 AI answers in <15s',
     },
   ];
 

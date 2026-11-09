@@ -8,58 +8,58 @@ interface ServicesSectionProps {
 export const ServicesSection: React.FC<ServicesSectionProps> = React.memo(({ onNavigate }) => {
   const services = [
     {
-      id: 'marketing-paid-ads',
-      badge: 'DEMAND GENERATION',
-      title: 'Meta & Google Ads',
-      headline: 'Predictable Inbound Acquisition',
+      id: 'business-automation',
+      badge: 'ENTERPRISE OPERATIONS',
+      title: 'Business & Workflow Automation',
+      headline: 'Eliminate Repetitive Manual Work',
       description:
-        'We build high-converting paid social (Facebook & Instagram) and high-intent Google Search campaigns that capture qualified prospects ready to buy.',
-      icon: TrendingUp,
+        'We connect your CRM, ERP, billing, and communication tools into an autonomous operational pipeline. Automate client onboarding, invoice dispatch, document parsing, and internal approvals.',
+      icon: Workflow,
       color: '#E84B2C',
-      metric: '4.8x Avg ROAS',
+      metric: '20+ hrs/wk Saved',
       highlights: [
-        'Dynamic creative testing across Meta Ads',
-        'Google Search & PMax high-intent capture',
-        'Server-side CAPI & GA4 attribution tracking',
-        'Conversion-optimized landing pages',
+        'Cross-platform API orchestration (CRM, ERP, Slack, Google)',
+        'Automated contract & invoice generation upon deal sign-off',
+        'Document intelligence & receipt/invoice data extraction',
+        'Custom internal AI agents with proprietary company knowledge',
       ],
-      integrations: ['Meta Ads', 'Google Ads', 'Google Analytics 4', 'Shopify / CRM'],
+      integrations: ['Make.com / n8n', 'Zapier Enterprise', 'PostgreSQL / Supabase', 'Stripe / Xero'],
+    },
+    {
+      id: 'sales-outreach-automation',
+      badge: 'REVENUE ACCELERATION',
+      title: 'Sales & Outreach Automation',
+      headline: 'Outbound Pipeline on Autopilot',
+      description:
+        'Dedicated cold outreach architecture powered by Outreacher & Arova. Multi-channel sequences (Cold Email + LinkedIn + WhatsApp) with 99%+ deliverability, hyper-personalized copy, and automated booking.',
+      icon: TrendingUp,
+      color: '#FFAA3D',
+      metric: '20-40+ Calls/Mo',
+      highlights: [
+        'Dedicated cold infrastructure (15+ warmed domains, SPF/DKIM)',
+        'AI personalization & B2B lead enrichment (Clay, Apollo)',
+        'Automated multi-touch follow-ups that handle objections',
+        'Direct calendar booking & CRM deal pipeline synchronization',
+      ],
+      integrations: ['Outreacher Engine', 'Arova Intelligence', 'HubSpot / Salesforce', 'Apollo / Clay'],
     },
     {
       id: 'ai-front-desk',
-      badge: '24/7 COMMUNICATION',
-      title: 'AI Front Desk Agents',
-      headline: 'Every Call & Message Answered in <15s',
+      badge: '24/7 INBOUND TRIAGE',
+      title: 'AI Front Desk & Receptionist',
+      headline: 'Every Lead Answered in <15s',
       description:
-        'Voice telephony and WhatsApp receptionists that answer routine questions accurately, screen budget and territory, and schedule appointments straight into your calendar 24/7.',
+        'Voice telephony and WhatsApp receptionists that answer client enquiries accurately 24/7, qualify budget and timeline, and schedule appointments directly into your calendar without human intervention.',
       icon: Bot,
-      color: '#FFAA3D',
-      metric: '<15s Response Time',
+      color: '#D4AF37',
+      metric: '<15s Response',
       highlights: [
-        '24/7 instant response across phone, WhatsApp, SMS & web',
-        'Accurate FAQ answers trained strictly on your pricing & policies',
-        'Custom lead qualification scorecard (no tire-kickers)',
+        '24/7 voice phone answering, WhatsApp, SMS & web chat',
+        'Strict zero-hallucination FAQ answers trained on your business',
+        'Custom lead qualification scorecard & emergency escalation',
         'Direct calendar booking (Calendly, Acuity, Dentrix, Cliniko)',
       ],
-      integrations: ['Twilio Voice', 'WhatsApp Business', 'Calendly', 'HubSpot'],
-    },
-    {
-      id: 'workflow-automation',
-      badge: 'OPERATIONS',
-      title: 'Workflow Automation',
-      headline: 'Eliminate Repetitive Manual Work',
-      description:
-        'Connect your fragmented tools into a friction-free operational pipeline. Automate lead routing, client onboarding, invoicing, and team notifications.',
-      icon: Workflow,
-      color: '#D4AF37',
-      metric: '15+ hrs/wk Saved',
-      highlights: [
-        'End-to-end API orchestration (CRM, billing, scheduling)',
-        'Automated contract & invoice dispatch upon client sign-off',
-        'Two-way data sync eliminating human data entry errors',
-        'Real-time team notification triggers via Slack or SMS',
-      ],
-      integrations: ['Make.com', 'Zapier Enterprise', 'PostgreSQL', 'Stripe'],
+      integrations: ['Twilio Voice', 'WhatsApp Business', 'Calendly', 'Acuity / Cliniko'],
     },
   ];
 
@@ -76,12 +76,12 @@ export const ServicesSection: React.FC<ServicesSectionProps> = React.memo(({ onN
         </div>
 
         <h2 className="font-display font-bold text-4xl sm:text-6xl tracking-[-0.02em] text-[#F3F0E8] leading-[0.96] mb-6">
-          Three systems. <br />
-          <span className="text-[#A39E93]">Built to drive revenue.</span>
+          End-to-End Automation. <br />
+          <span className="text-[#A39E93]">Built to scale enterprise revenue.</span>
         </h2>
 
         <p className="text-base sm:text-lg text-[#A39E93] max-w-2xl leading-relaxed">
-          We combine customer acquisition, 24/7 lead capture, and automated backend execution into one synchronized engine.
+          We combine complete business workflow automation, autonomous outbound acquisition, and 24/7 front desk triage into one synchronized engine.
         </p>
       </div>
 

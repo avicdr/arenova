@@ -108,73 +108,14 @@ export const BackgroundCanvas: React.FC = () => {
       });
     };
 
-    // User gesture triggers: boot immediately on any real user interaction
-    const interactionEvents = [
-      'scroll',
-      'wheel',
-      'touchstart',
-      'touchmove',
-      'pointerdown',
-      'mousemove',
-      'keydown',
-    ] as const;
-
-    let cleanupTriggers = () => {};
-
-    const onUserInteraction = () => {
-      cleanupTriggers();
+    // Start Phoenix immediately on mount so the hero kinetic sculpture is visible right away
+    const initTimer = requestAnimationFrame(() => {
       startPhoenix();
-    };
-
-    interactionEvents.forEach((evt) => {
-      window.addEventListener(evt, onUserInteraction, { passive: true, once: true });
     });
 
-    // Idle fallback for users who arrive without immediate input:
-    // Allows synthetic benchmark audits (Lighthouse / CWV) to measure pristine initial load
-    // while real user interactions (scroll, touch, mouse) boot the phoenix instantly.
-    let idleTimer: ReturnType<typeof setTimeout> | null = null;
-    let idleId: number | null = null;
-
-    const scheduleIdle = () => {
-      if ('requestIdleCallback' in window) {
-        idleId = (window as unknown as { requestIdleCallback: (cb: (d: { timeRemaining: () => number }) => void) => number })
-          .requestIdleCallback((deadline) => {
-            if (deadline.timeRemaining() > 15 || !('timeRemaining' in deadline)) {
-              cleanupTriggers();
-              startPhoenix();
-            } else {
-              idleTimer = setTimeout(scheduleIdle, 1000);
-            }
-          });
-      } else {
-        cleanupTriggers();
-        startPhoenix();
-      }
+    initialCleanup = () => {
+      cancelAnimationFrame(initTimer);
     };
-
-    const idleDelay = 7000;
-
-    if (document.readyState === 'complete') {
-      idleTimer = setTimeout(scheduleIdle, idleDelay);
-    } else {
-      const handleLoad = () => {
-        window.removeEventListener('load', handleLoad);
-        idleTimer = setTimeout(scheduleIdle, idleDelay);
-      };
-      window.addEventListener('load', handleLoad);
-    }
-
-    cleanupTriggers = () => {
-      interactionEvents.forEach((evt) => {
-        window.removeEventListener(evt, onUserInteraction);
-      });
-      if (idleTimer) clearTimeout(idleTimer);
-      if (idleId !== null && 'cancelIdleCallback' in window) {
-        (window as unknown as { cancelIdleCallback: (id: number) => void }).cancelIdleCallback(idleId);
-      }
-    };
-    initialCleanup = cleanupTriggers;
 
     return () => {
       disposed = true;

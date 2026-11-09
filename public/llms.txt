@@ -1,35 +1,29 @@
 # ARENOVA
 
-> AI Automation & Marketing Agency — Enterprise Systems Architecture, Performance Marketing, and Autonomous Operations.
+> Enterprise AI Automation Agency — Business Workflow Automation, Sales & Outreach Pipelines, 24/7 AI Frontdesk, and Autonomous Systems Architecture.
 
-ARENOVA builds high-converting marketing engines (Meta Ads & Google Ads) paired with 24/7 AI front desk automation and autonomous operations to capture qualified leads, eliminate manual data entry, and scale enterprise revenue.
+ARENOVA designs, builds, and deploys custom AI automation systems for modern enterprises. We automate sales pipelines, multi-channel cold outreach, internal business operations, and 24/7 customer triage — eliminating manual bottlenecks so companies scale on autopilot.
 
-## Core Capabilities & Services
+## Core Services & Systems
 
-- [AI Front Desk Agents](https://arenova.in/#services): 24/7 voice and chat agents that greet, qualify, book, and route inquiries across phone, web chat, SMS, and WhatsApp with zero hallucination. Integrates with Twilio Voice, WhatsApp Business, Calendly, Acuity, and HubSpot.
-- [Workflow Automation](https://arenova.in/#services): End-to-end operational pipelines connecting CRMs, payment gateways, scheduling, and fulfillment without manual re-entry. Two-way data synchronization across Make.com, Zapier Enterprise, Stripe, and PostgreSQL.
-- [Custom AI Agents](https://arenova.in/#services): Domain-specific autonomous agents trained on proprietary company knowledge, vector embeddings, and enterprise SOPs with human-in-the-loop checkpoints.
-- [Performance Marketing & Revenue Engines](https://arenova.in/#marketing): High-impact Meta Ads (paid social) and high-intent Google Ads (Search & PMax) paired with conversion-engineered landing pages and sub-15-second automated lead response.
-- [Conversion-Engineered Web Experiences](https://arenova.in/#services): High-speed, cinematic, high-converting digital platforms engineered for enterprise credibility and conversion optimization.
+- [Business & Operations Automation](https://arenova.in/#services): End-to-end operational pipelines connecting CRMs, ERPs, Slack, Google Workspace/Microsoft 365, and billing gateways without human data entry. Document extraction AI, invoice reconciliation, and approval hierarchies.
+- [Sales & Multichannel Outreach Automation](https://arenova.in/#services): Dedicated cold outreach infrastructure (15+ warmed secondary domains, SPF/DKIM/DMARC) paired with AI hyper-personalization, lead enrichment (Clay, Apollo), and automated follow-ups booking 20–40+ sales calls/month.
+- [24/7 AI Front Desk & Receptionist](https://arenova.in/#services): Telephony voice and WhatsApp receptionists that answer inquiries in <15s, qualify leads, answer FAQs with zero hallucination, and book appointments directly into calendars.
+- [Pricing & Tiers](https://arenova.in/pricing): Transparent, ROI-focused monthly and quarterly investment packages for Sales & Outreach, Business Automation, and Autonomous Enterprise.
+- [About Arenova](https://arenova.in/about): Engineering philosophy, four architectural pillars (deterministic logic, deep integration, speed, security), and founder background.
 
 ## Arenova Product Ecosystem
 
-Arenova is the parent company and systems engineering agency. The ecosystem includes specialized products:
-
-- [Arenova Frontdesk](https://frontdesk.arenova.in): AI-powered WhatsApp receptionist and appointment automation for clinics and service businesses.
-- [Arova](https://arova.arenova.in): B2B lead intelligence and qualified business leads discovery platform.
-- [Outreacher](https://outreacher.arenova.in): Email outreach and sales automation platform for high-velocity teams.
-
-## Key Operational Metrics
-
-- Lead-to-Contact Velocity: Under 15 seconds
-- Average Campaign ROAS: 4.8x across active paid social campaigns
-- Wasted Spend Reduction: -38% through negative keyword moats and intent filtering
-- System Availability: 99.98% SLA across marketing and automation clusters
+- [Arenova Frontdesk](https://frontdesk.arenova.in): AI-powered voice & WhatsApp receptionist and calendar booking for clinics and service businesses.
+- [Arova](https://arova.arenova.in): B2B lead intelligence and intent detection platform.
+- [Outreacher](https://outreacher.arenova.in): Multi-channel cold sales outreach and email deliverability engine.
 
 ## Contact & Architecture Briefs
 
 - Website: https://arenova.in/
+- Pricing: https://arenova.in/pricing
+- About: https://arenova.in/about
 - Consultation: https://arenova.in/#ascent
 - Contact Email: avi@arenova.in
+
 

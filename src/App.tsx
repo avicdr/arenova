@@ -1,68 +1,19 @@
 import { useEffect, useState, useRef, useCallback, lazy, Suspense } from 'react';
 import type Lenis from 'lenis';
+import { RouterProvider, useRouter } from './context/RouterContext';
 import { Navigation } from './components/Navigation';
 import { BackgroundCanvas } from './components/BackgroundCanvas';
-import { HeroSection } from './components/HeroSection';
-import { ProblemSection } from './components/ProblemSection';
-import { ServicesSection } from './components/ServicesSection';
 import { Analytics } from './components/Analytics';
+import { HomePage } from './pages/HomePage';
+import { PricingPage } from './pages/PricingPage';
+import { AboutPage } from './pages/AboutPage';
 
-// Code-split heavy below-the-fold interactive components to eliminate main-thread long tasks during initial hydration
-const WorkflowDemoSection = lazy(() => import('./components/WorkflowDemoSection').then((m) => ({ default: m.WorkflowDemoSection })));
-const IndustriesSection = lazy(() => import('./components/IndustriesSection').then((m) => ({ default: m.IndustriesSection })));
-const AscentSection = lazy(() => import('./components/AscentSection').then((m) => ({ default: m.AscentSection })));
-const FooterSection = lazy(() => import('./components/FooterSection').then((m) => ({ default: m.FooterSection })));
+const FooterSection = lazy(() =>
+  import('./components/FooterSection').then((m) => ({ default: m.FooterSection }))
+);
 
-function LazySection({
-  children,
-  forceMount,
-  minHeight = '320px',
-}: {
-  children: React.ReactNode;
-  forceMount?: boolean;
-  minHeight?: string;
-}) {
-  const [inView, setInView] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (inView || forceMount) return;
-    const el = containerRef.current;
-    if (!el) return;
-
-    if (typeof IntersectionObserver === 'undefined') {
-      setInView(true);
-      return;
-    }
-
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setInView(true);
-          observer.disconnect();
-        }
-      },
-      { rootMargin: '600px 0px' }
-    );
-
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [inView, forceMount]);
-
-  const shouldRender = inView || forceMount;
-
-  return (
-    <div ref={containerRef} style={shouldRender ? undefined : { minHeight }}>
-      {shouldRender ? (
-        <Suspense fallback={null}>
-          {children}
-        </Suspense>
-      ) : null}
-    </div>
-  );
-}
-
-export function App() {
+function AppContent() {
+  const { pathname, navigate } = useRouter();
   const [activeSection, setActiveSection] = useState('awakening');
   const [mountBelowFold, setMountBelowFold] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
@@ -120,8 +71,10 @@ export function App() {
     };
   }, []);
 
-  // Update active section based on scroll position
+  // Update active section based on scroll position (when on homepage)
   useEffect(() => {
+    if (pathname !== '/') return;
+
     const sectionIds = [
       'awakening',
       'problem',
@@ -151,33 +104,42 @@ export function App() {
     });
 
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
-  const handleNavigate = useCallback((sectionId: string) => {
-    setMountBelowFold(true);
-    requestAnimationFrame(() => {
-      if (sectionId === 'contact') {
-        const contactEl = document.getElementById('contact-form') || document.getElementById('ascent');
-        if (contactEl) {
-          if (lenisRef.current) {
-            lenisRef.current.scrollTo(contactEl, { offset: -80 });
-          } else {
-            contactEl.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
+  const handleNavigate = useCallback(
+    (sectionId: string) => {
+      setMountBelowFold(true);
+
+      if (pathname !== '/') {
+        navigate(`/#${sectionId === 'contact' ? 'ascent' : sectionId}`);
         return;
       }
 
-      const targetEl = document.getElementById(sectionId);
-      if (targetEl) {
-        if (lenisRef.current) {
-          lenisRef.current.scrollTo(targetEl, { offset: -60 });
-        } else {
-          targetEl.scrollIntoView({ behavior: 'smooth' });
+      requestAnimationFrame(() => {
+        if (sectionId === 'contact') {
+          const contactEl = document.getElementById('contact-form') || document.getElementById('ascent');
+          if (contactEl) {
+            if (lenisRef.current) {
+              lenisRef.current.scrollTo(contactEl, { offset: -80 });
+            } else {
+              contactEl.scrollIntoView({ behavior: 'smooth' });
+            }
+          }
+          return;
         }
-      }
-    });
-  }, []);
+
+        const targetEl = document.getElementById(sectionId);
+        if (targetEl) {
+          if (lenisRef.current) {
+            lenisRef.current.scrollTo(targetEl, { offset: -60 });
+          } else {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      });
+    },
+    [pathname, navigate]
+  );
 
   return (
     <div className="relative min-h-screen bg-[#111110] text-[#F3F0E8] overflow-x-hidden selection:bg-[#E84B2C] selection:text-white">
@@ -188,43 +150,30 @@ export function App() {
       <BackgroundCanvas />
 
       {/* TOP FLOATING NAVIGATION */}
-      <Navigation
-        activeSection={activeSection}
-        onNavigate={handleNavigate}
-      />
+      <Navigation activeSection={activeSection} onNavigate={handleNavigate} />
 
-      {/* MAIN PUNCHY CONTENT FLOW */}
-      <main className="relative z-10 flex flex-col w-full max-w-7xl mx-auto">
-        {/* HERO */}
-        <HeroSection onNavigate={handleNavigate} />
-
-        {/* THE BOTTLENECKS */}
-        <ProblemSection onNavigate={handleNavigate} />
-
-        {/* WHAT WE BUILD / 3 CORE PILLARS */}
-        <ServicesSection onNavigate={handleNavigate} />
-
-        {/* SEE THE SYSTEM WORK (INTERACTIVE BROWSER LAB) */}
-        <LazySection forceMount={mountBelowFold} minHeight="720px">
-          <WorkflowDemoSection onNavigate={handleNavigate} />
-        </LazySection>
-
-        {/* PROVEN RESULTS ACROSS SECTORS */}
-        <LazySection forceMount={mountBelowFold} minHeight="540px">
-          <IndustriesSection onNavigate={handleNavigate} />
-        </LazySection>
-
-        {/* CONSULTATION & APPOINTMENT BOOKING */}
-        <LazySection forceMount={mountBelowFold} minHeight="680px">
-          <AscentSection onNavigate={handleNavigate} />
-        </LazySection>
-      </main>
+      {/* ROUTE-BASED CONTENT */}
+      {pathname === '/pricing' ? (
+        <PricingPage onNavigate={handleNavigate} />
+      ) : pathname === '/about' ? (
+        <AboutPage onNavigate={handleNavigate} />
+      ) : (
+        <HomePage onNavigate={handleNavigate} mountBelowFold={mountBelowFold} />
+      )}
 
       {/* FOOTER */}
-      <LazySection forceMount={mountBelowFold} minHeight="240px">
+      <Suspense fallback={null}>
         <FooterSection onNavigate={handleNavigate} />
-      </LazySection>
+      </Suspense>
     </div>
+  );
+}
+
+export function App() {
+  return (
+    <RouterProvider>
+      <AppContent />
+    </RouterProvider>
   );
 }
 

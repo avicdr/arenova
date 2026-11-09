@@ -51,10 +51,8 @@ export function createSceneController(): SceneController {
   let reducedMotion = false;
   let pageVisible = document.visibilityState === 'visible';
   let isIntersecting = true;
-  let idleFramesCount = 0;
 
   function wakeUp() {
-    idleFramesCount = 0;
     if (animFrameId === 0 && pageVisible && isIntersecting && !reducedMotion) {
       lastTime = performance.now();
       animFrameId = requestAnimationFrame(animate);
@@ -157,10 +155,6 @@ export function createSceneController(): SceneController {
   }
 
   function init(container: HTMLElement): boolean {
-    if (tier === 'low') {
-      return false;
-    }
-
     containerEl = container;
 
     // SCENE
@@ -184,7 +178,7 @@ export function createSceneController(): SceneController {
         alpha: false,
       });
       renderer.setSize(width, height);
-      renderer.setPixelRatio(tier === 'medium' ? 1.0 : Math.min(window.devicePixelRatio, 1.5));
+      renderer.setPixelRatio(tier === 'high' ? Math.min(window.devicePixelRatio, 1.5) : 1.0);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1.05;
       renderer.shadowMap.enabled = false;
@@ -200,7 +194,7 @@ export function createSceneController(): SceneController {
     // BUILD THE FEATHERED PHOENIX, EMBERS, MATERIALS AND WARM LIGHT RIG
     // -------------------------------------------------------------
     try {
-      const particleCount = tier === 'medium' ? 64 : 200;
+      const particleCount = tier === 'high' ? 160 : tier === 'medium' ? 64 : 40;
       phoenix = createPhoenixExperience(renderer, scene, particleCount, isMobile);
     } catch (error) {
       console.warn('Phoenix rendering is unavailable; using the atmospheric fallback.', error);
@@ -318,24 +312,6 @@ export function createSceneController(): SceneController {
     }
 
     const now = performance.now();
-    const isScrollSettled = scrollVelocity === 0 && Math.abs(targetProgress - currentProgress) < 0.0003;
-    const isMouseSettled = Math.abs(targetMouse.x - mouse.x) < 0.001 && Math.abs(targetMouse.y - mouse.y) < 0.001;
-
-    // Demand-based rendering:
-    // When scroll and mouse are settled, allow ~24 frames for damping to rest,
-    // render the final settled frame, and sleep until next user interaction.
-    if (isScrollSettled && isMouseSettled) {
-      idleFramesCount++;
-      if (idleFramesCount > 24) {
-        if (renderer && scene && camera) {
-          renderer.render(scene, camera);
-        }
-        animFrameId = 0;
-        return;
-      }
-    } else {
-      idleFramesCount = 0;
-    }
 
     animFrameId = reducedMotion ? 0 : requestAnimationFrame(animate);
 

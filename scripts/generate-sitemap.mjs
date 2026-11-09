@@ -14,7 +14,18 @@ const routes = [
     path: '/',
     changefreq: 'weekly',
     priority: '1.0',
-    // Uses latest git/file modification or release date
+    lastmod: new Date().toISOString().split('T')[0],
+  },
+  {
+    path: '/pricing',
+    changefreq: 'weekly',
+    priority: '0.9',
+    lastmod: new Date().toISOString().split('T')[0],
+  },
+  {
+    path: '/about',
+    changefreq: 'monthly',
+    priority: '0.8',
     lastmod: new Date().toISOString().split('T')[0],
   },
 ];
