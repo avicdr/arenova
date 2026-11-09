@@ -337,3 +337,4 @@ export const AboutPage: React.FC<AboutPageProps> = React.memo(() => {
 });
 
 AboutPage.displayName = 'AboutPage';
+

@@ -95,3 +95,4 @@ export const HomePage: React.FC<HomePageProps> = React.memo(({ onNavigate, mount
 });
 
 HomePage.displayName = 'HomePage';
+

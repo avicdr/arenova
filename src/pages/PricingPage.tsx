@@ -31,7 +31,7 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
       badge: 'OUTBOUND REVENUE',
       name: 'Sales & Outreach Engine',
       subtitle: 'For B2B companies requiring predictable sales pipeline and qualified meetings on autopilot.',
-      monthlyBasePrice: 2290,
+      monthlyBasePrice: 999,
       icon: TrendingUp,
       accentColor: '#FFAA3D',
       featured: false,
@@ -52,7 +52,7 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
       badge: 'MOST POPULAR',
       name: 'Business & Operations Automation',
       subtitle: 'For businesses ready to eliminate repetitive clerical work, disconnected apps, and operational drag.',
-      monthlyBasePrice: 3890,
+      monthlyBasePrice: 1999,
       icon: Workflow,
       accentColor: '#E84B2C',
       featured: true,
@@ -73,7 +73,7 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
       badge: 'FULL-STACK ECOSYSTEM',
       name: 'Autonomous Enterprise',
       subtitle: 'The complete AI operating system: growth marketing, outbound sales, 24/7 frontdesk, and deep operations.',
-      monthlyBasePrice: 6490,
+      monthlyBasePrice: 3499,
       icon: Layers,
       accentColor: '#D4AF37',
       featured: false,
@@ -106,7 +106,7 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
     },
     {
       q: 'Can we add the 24/7 AI Frontdesk Receptionist as an add-on?',
-      a: 'Yes. If you select the Sales & Outreach Engine or Business Automation tier, you can add our 24/7 Voice & WhatsApp Frontdesk Receptionist for $990/month, fully unified with your calendar and CRM.',
+      a: 'Yes. If you select the Sales & Outreach Engine or Business Automation tier, you can add our 24/7 Voice & WhatsApp Frontdesk Receptionist for $490/month, fully unified with your calendar and CRM.',
     },
     {
       q: 'What is your security and data governance policy?',
@@ -141,7 +141,7 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
     {
       category: 'Inbound & Frontdesk Communication',
       items: [
-        { name: '24/7 Inbound Telephony Voice AI', tier1: 'Add-on ($990/mo)', tier2: 'Add-on ($990/mo)', tier3: 'Fully Included' },
+        { name: '24/7 Inbound Telephony Voice AI', tier1: 'Add-on ($490/mo)', tier2: 'Add-on ($490/mo)', tier3: 'Fully Included' },
         { name: 'WhatsApp & Web Chat Triage (<15s)', tier1: 'Add-on', tier2: 'Add-on', tier3: 'Fully Included' },
         { name: 'Automated Calendar Scheduling', tier1: 'Outbound only', tier2: 'Internal only', tier3: 'Full Inbound & Outbound' },
       ],
@@ -326,7 +326,7 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
         <div className="flex sm:flex-col items-center sm:items-end justify-between w-full lg:w-auto gap-4 shrink-0 border-t lg:border-t-0 lg:border-l border-[#F3F0E8]/10 pt-4 lg:pt-0 lg:pl-8">
           <div>
             <span className="font-display font-bold text-3xl sm:text-4xl text-[#F3F0E8]">
-              $990
+              $490
             </span>
             <span className="text-xs font-mono text-[#A39E93] uppercase"> / mo</span>
           </div>
