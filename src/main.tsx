@@ -1,10 +1,21 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.tsx'
+import { StrictMode } from 'react';
+import { createRoot, hydrateRoot } from 'react-dom/client';
+import './index.css';
+import App from './App.tsx';
 
-createRoot(document.getElementById('root')!).render(
+const rootEl = document.getElementById('root')!;
+const hasPrerenderedContent = Array.from(rootEl.childNodes).some(
+  (node) => node.nodeType === Node.ELEMENT_NODE
+);
+
+const appElement = (
   <StrictMode>
     <App />
-  </StrictMode>,
-)
+  </StrictMode>
+);
+
+if (hasPrerenderedContent) {
+  hydrateRoot(rootEl, appElement);
+} else {
+  createRoot(rootEl).render(appElement);
+}

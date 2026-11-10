@@ -1,7 +1,29 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import { ROUTE_SEO } from '../config/seo';
+import { generateSchemaGraph } from '../seo/schema';
+
+type CanonicalRouteKey = '/' | '/pricing' | '/about';
+
+function normalizeRouteKey(rawPath: string): CanonicalRouteKey {
+  const cleaned = rawPath
+    .split('#')[0]
+    .split('?')[0]
+    .replace(/\/index\.html$/, '')
+    .replace(/\/+$/, '');
+
+  if (cleaned === '/pricing') return '/pricing';
+  if (cleaned === '/about') return '/about';
+  return '/';
+}
+
+function getCanonicalHrefPath(routeKey: CanonicalRouteKey): string {
+  if (routeKey === '/pricing') return '/pricing/';
+  if (routeKey === '/about') return '/about/';
+  return '/';
+}
 
 interface RouterContextType {
-  pathname: string;
+  pathname: CanonicalRouteKey;
   navigate: (to: string) => void;
 }
 
@@ -10,16 +32,55 @@ const RouterContext = createContext<RouterContextType>({
   navigate: () => {},
 });
 
-export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [pathname, setPathname] = useState(() => {
-    if (typeof window === 'undefined') return '/';
-    return window.location.pathname.replace(/\/$/, '') || '/';
+function syncHeadForRoute(routeKey: CanonicalRouteKey) {
+  if (typeof document === 'undefined') return;
+  const meta = ROUTE_SEO[routeKey];
+
+  document.title = meta.title;
+
+  const setMeta = (selector: string, attr: string, value: string) => {
+    const el = document.querySelector(selector);
+    if (el) {
+      el.setAttribute(attr, value);
+    }
+  };
+
+  setMeta('meta[name="title"]', 'content', meta.title);
+  setMeta('meta[name="description"]', 'content', meta.description);
+  setMeta('meta[name="keywords"]', 'content', meta.keywords);
+  setMeta('link[rel="canonical"]', 'href', meta.canonicalUrl);
+  setMeta('meta[property="og:url"]', 'content', meta.canonicalUrl);
+  setMeta('meta[property="og:title"]', 'content', meta.title);
+  setMeta('meta[property="og:description"]', 'content', meta.description);
+  setMeta('meta[name="twitter:url"]', 'content', meta.canonicalUrl);
+  setMeta('meta[name="twitter:title"]', 'content', meta.title);
+  setMeta('meta[name="twitter:description"]', 'content', meta.description);
+
+  const jsonLdScript = document.querySelector('script[type="application/ld+json"]');
+  if (jsonLdScript) {
+    jsonLdScript.textContent = JSON.stringify(generateSchemaGraph(routeKey));
+  }
+}
+
+export const RouterProvider: React.FC<{
+  children: React.ReactNode;
+  initialPathname?: string;
+}> = ({ children, initialPathname }) => {
+  const [pathname, setPathname] = useState<CanonicalRouteKey>(() => {
+    if (typeof window === 'undefined') {
+      return normalizeRouteKey(initialPathname || '/');
+    }
+    return normalizeRouteKey(window.location.pathname);
   });
+
+  // Synchronize <head> canonical, title, description, OG & JSON-LD with active route
+  useEffect(() => {
+    syncHeadForRoute(pathname);
+  }, [pathname]);
 
   useEffect(() => {
     const handlePopState = () => {
-      const clean = window.location.pathname.replace(/\/$/, '') || '/';
-      setPathname(clean);
+      setPathname(normalizeRouteKey(window.location.pathname));
     };
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
@@ -32,10 +93,12 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
 
     const [pathPart, hashPart] = to.split('#');
-    const targetPath = (pathPart.replace(/\/$/, '') || '/');
-    const currentPath = (window.location.pathname.replace(/\/$/, '') || '/');
+    const targetRoute = normalizeRouteKey(pathPart || '/');
+    const canonicalPath = getCanonicalHrefPath(targetRoute);
+    const currentRoute = normalizeRouteKey(window.location.pathname);
+    const browserTarget = hashPart ? `${canonicalPath}#${hashPart}` : canonicalPath;
 
-    if (targetPath === currentPath) {
+    if (targetRoute === currentRoute) {
       if (hashPart) {
         const el = document.getElementById(hashPart);
         if (el) {
@@ -45,11 +108,11 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
         }
       } else {
         window.scrollTo({ top: 0, behavior: 'smooth' });
-        window.history.pushState(null, '', targetPath);
+        window.history.pushState(null, '', canonicalPath);
       }
     } else {
-      window.history.pushState(null, '', to);
-      setPathname(targetPath);
+      window.history.pushState(null, '', browserTarget);
+      setPathname(targetRoute);
       if (hashPart) {
         setTimeout(() => {
           const el = document.getElementById(hashPart);
@@ -73,4 +136,3 @@ export const RouterProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 };
 
 export const useRouter = () => useContext(RouterContext);
-

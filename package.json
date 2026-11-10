@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build && node scripts/generate-sitemap.mjs && node scripts/validate-seo.mjs",
+    "build": "tsc -b && vite build && node scripts/prerender.mjs && node scripts/generate-sitemap.mjs && node scripts/validate-seo.mjs",
     "lint": "oxlint",
     "sitemap:generate": "node scripts/generate-sitemap.mjs",
     "validate:seo": "node scripts/validate-seo.mjs",

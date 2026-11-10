@@ -138,3 +138,16 @@
 .btn-cinematic:hover::before {
   left: 100%;
 }
+
+/* Skip offscreen layout & paint work while keeping full SSR DOM indexable */
+@supports (content-visibility: auto) {
+  .cv-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 760px;
+  }
+
+  .cv-auto-footer {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 380px;
+  }
+}

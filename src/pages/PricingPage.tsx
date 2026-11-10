@@ -245,9 +245,9 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
                   </span>
                 </div>
 
-                <h3 className="font-display font-bold text-2xl text-[#F3F0E8] mb-2">
+                <h2 className="font-display font-bold text-2xl text-[#F3F0E8] mb-2">
                   {tier.name}
-                </h3>
+                </h2>
                 <p className="text-xs text-[#A39E93] leading-relaxed mb-6 min-h-[36px]">
                   {tier.subtitle}
                 </p>
@@ -262,7 +262,7 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
                       / month
                     </span>
                   </div>
-                  <p className="text-[11px] font-mono text-[#7D7970] mt-1">
+                  <p className="text-[11px] font-mono text-[#A39E93] mt-1">
                     {billingCycle === 'quarterly'
                       ? 'Billed quarterly ($' + (price * 3).toLocaleString() + ' total)'
                       : 'Billed monthly. Cancel with 30 days notice.'}
@@ -287,8 +287,12 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
 
               {/* ACTION BUTTON */}
               <div>
-                <button
-                  onClick={() => navigate('/#ascent')}
+                <a
+                  href="/#ascent"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate('/#ascent');
+                  }}
                   className={`w-full py-4 rounded-full font-bold text-xs sm:text-sm tracking-wider uppercase transition-all flex items-center justify-center gap-2 cursor-pointer ${
                     tier.featured
                       ? 'btn-cinematic bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] shadow-xl shadow-[#E84B2C]/30'
@@ -297,7 +301,7 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
                 >
                   <span>{tier.ctaText}</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </a>
               </div>
             </div>
           );
@@ -314,9 +318,9 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
             <div className="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-[#FFAA3D]/10 border border-[#FFAA3D]/20 text-[10px] font-mono text-[#FFAA3D] uppercase tracking-wider mb-2">
               Standalone or Add-on Module
             </div>
-            <h3 className="font-display font-bold text-2xl text-[#F3F0E8] mb-1">
+            <h2 className="font-display font-bold text-2xl text-[#F3F0E8] mb-1">
               24/7 Autonomous AI Frontdesk & Inbound Receptionist
-            </h3>
+            </h2>
             <p className="text-xs sm:text-sm text-[#A39E93] max-w-2xl leading-relaxed">
               Inbound telephony voice agent & WhatsApp triage receptionist. Answers inquiries in &lt;15 seconds, qualifies prospects, books appointments directly into your calendar, and dispatches emergency escalations 24/7/365.
             </p>
@@ -330,13 +334,17 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
             </span>
             <span className="text-xs font-mono text-[#A39E93] uppercase"> / mo</span>
           </div>
-          <button
-            onClick={() => navigate('/#ascent')}
+          <a
+            href="/#ascent"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/#ascent');
+            }}
             className="px-6 py-3 rounded-full bg-[#FFAA3D] hover:bg-[#E59930] text-[#111110] font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 cursor-pointer shadow-lg shadow-[#FFAA3D]/20"
           >
             <span>Add Frontdesk AI</span>
             <ArrowRight className="w-3.5 h-3.5" />
-          </button>
+          </a>
         </div>
       </div>
 
@@ -461,13 +469,17 @@ export const PricingPage: React.FC<PricingPageProps> = React.memo(() => {
         <p className="text-sm sm:text-base text-[#A39E93] max-w-xl leading-relaxed mb-8">
           We inspect your current manual bottlenecks, tools, and acquisition pipeline to design a custom systems blueprint before you invest a dollar.
         </p>
-        <button
-          onClick={() => navigate('/#ascent')}
+        <a
+          href="/#ascent"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/#ascent');
+          }}
           className="btn-cinematic px-8 py-4 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs sm:text-sm tracking-wider uppercase transition-all shadow-xl shadow-[#E84B2C]/30 flex items-center gap-2 cursor-pointer"
         >
           <span>Claim Your Free Architecture Audit</span>
           <ArrowUpRight className="w-4 h-4" />
-        </button>
+        </a>
       </div>
     </div>
   );

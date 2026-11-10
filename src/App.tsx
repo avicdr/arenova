@@ -1,21 +1,17 @@
-import { useEffect, useState, useRef, useCallback, lazy, Suspense } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import type Lenis from 'lenis';
 import { RouterProvider, useRouter } from './context/RouterContext';
 import { Navigation } from './components/Navigation';
 import { BackgroundCanvas } from './components/BackgroundCanvas';
 import { Analytics } from './components/Analytics';
+import { FooterSection } from './components/FooterSection';
 import { HomePage } from './pages/HomePage';
 import { PricingPage } from './pages/PricingPage';
 import { AboutPage } from './pages/AboutPage';
 
-const FooterSection = lazy(() =>
-  import('./components/FooterSection').then((m) => ({ default: m.FooterSection }))
-);
-
 function AppContent() {
   const { pathname, navigate } = useRouter();
   const [activeSection, setActiveSection] = useState('awakening');
-  const [mountBelowFold, setMountBelowFold] = useState(false);
   const lenisRef = useRef<Lenis | null>(null);
 
   // Initialize Lenis Smooth Scroll on desktop upon user interaction
@@ -108,8 +104,6 @@ function AppContent() {
 
   const handleNavigate = useCallback(
     (sectionId: string) => {
-      setMountBelowFold(true);
-
       if (pathname !== '/') {
         navigate(`/#${sectionId === 'contact' ? 'ascent' : sectionId}`);
         return;
@@ -158,20 +152,18 @@ function AppContent() {
       ) : pathname === '/about' ? (
         <AboutPage onNavigate={handleNavigate} />
       ) : (
-        <HomePage onNavigate={handleNavigate} mountBelowFold={mountBelowFold} />
+        <HomePage onNavigate={handleNavigate} />
       )}
 
       {/* FOOTER */}
-      <Suspense fallback={null}>
-        <FooterSection onNavigate={handleNavigate} />
-      </Suspense>
+      <FooterSection onNavigate={handleNavigate} />
     </div>
   );
 }
 
-export function App() {
+export function App({ initialPathname }: { initialPathname?: string }) {
   return (
-    <RouterProvider>
+    <RouterProvider initialPathname={initialPathname}>
       <AppContent />
     </RouterProvider>
   );

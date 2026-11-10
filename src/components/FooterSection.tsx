@@ -9,7 +9,8 @@ interface FooterSectionProps {
 export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavigate }) => {
   const { pathname, navigate } = useRouter();
 
-  const handleNavClick = (target: string) => {
+  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
+    e.preventDefault();
     if (target.startsWith('/')) {
       navigate(target);
     } else {
@@ -22,12 +23,16 @@ export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavig
   };
 
   return (
-    <footer className="relative w-full bg-[#0D0D0C] border-t border-[#F3F0E8]/08 pt-16 pb-12 px-6 sm:px-10 lg:px-16 z-10">
+    <footer className="cv-auto-footer relative w-full bg-[#0D0D0C] border-t border-[#F3F0E8]/08 pt-16 pb-12 px-6 sm:px-10 lg:px-16 z-10">
       <div className="max-w-7xl mx-auto flex flex-col gap-12">
         {/* TOP ROW: BRAND & COLUMNS */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           <div className="lg:col-span-5 flex flex-col gap-5">
-            <div className="flex items-center gap-3">
+            <a
+              href="/"
+              onClick={(e) => handleLinkClick(e, '/')}
+              className="flex items-center gap-3 w-fit"
+            >
               <picture>
                 <source type="image/webp" srcSet="/arenova-128.webp" />
                 <img
@@ -41,7 +46,7 @@ export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavig
               <span className="font-display tracking-[0.2em] text-xl font-bold text-[#F3F0E8]">
                 ARENOVA
               </span>
-            </div>
+            </a>
 
             <p className="text-sm text-[#A39E93] leading-relaxed max-w-sm">
               We engineer enterprise AI automation: business workflow orchestration, autonomous cold outreach engines, and 24/7 front desk capture.
@@ -61,30 +66,34 @@ export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavig
               <span className="uppercase tracking-widest text-[#E84B2C] font-bold mb-1">
                 Services
               </span>
-              <button
-                onClick={() => handleNavClick('services')}
+              <a
+                href="/#services"
+                onClick={(e) => handleLinkClick(e, 'services')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Business Automation
-              </button>
-              <button
-                onClick={() => handleNavClick('services')}
+              </a>
+              <a
+                href="/#services"
+                onClick={(e) => handleLinkClick(e, 'services')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Sales & Outreach
-              </button>
-              <button
-                onClick={() => handleNavClick('services')}
+              </a>
+              <a
+                href="/#services"
+                onClick={(e) => handleLinkClick(e, 'services')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 AI Frontdesk Agent
-              </button>
-              <button
-                onClick={() => handleNavClick('services')}
+              </a>
+              <a
+                href="/pricing/"
+                onClick={(e) => handleLinkClick(e, '/pricing/')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Custom AI Agents
-              </button>
+              </a>
             </nav>
 
             {/* ECOSYSTEM */}
@@ -105,21 +114,20 @@ export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavig
                 <span className="text-[10px] text-[#A39E93]">AI Voice & WhatsApp</span>
               </a>
               <a
-                href="https://arova.arenova.in"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/#ascent"
+                onClick={(e) => handleLinkClick(e, 'contact')}
                 title="Arova — B2B Lead Intelligence"
                 className="group flex flex-col text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
               >
                 <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#FFAA3D]">
-                  Arova <ArrowUpRight className="w-3 h-3 opacity-70" />
+                  Arova Intelligence <ArrowUpRight className="w-3 h-3 opacity-70" />
                 </span>
                 <span className="text-[10px] text-[#A39E93]">B2B Lead Intelligence</span>
               </a>
               <a
                 href="https://outreacher.arenova.in"
                 target="_blank"
-                rel="noopener noreferrer"
+                rel="nofollow noopener noreferrer"
                 title="Outreacher — Email Outreach"
                 className="group flex flex-col text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
               >
@@ -135,44 +143,50 @@ export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavig
               <span className="uppercase tracking-widest text-[#E84B2C] font-bold mb-1">
                 Navigation
               </span>
-              <button
-                onClick={() => handleNavClick('problem')}
+              <a
+                href="/#problem"
+                onClick={(e) => handleLinkClick(e, 'problem')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Why Us
-              </button>
-              <button
-                onClick={() => handleNavClick('services')}
+              </a>
+              <a
+                href="/#services"
+                onClick={(e) => handleLinkClick(e, 'services')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 Services
-              </button>
-              <button
-                onClick={() => handleNavClick('/pricing')}
+              </a>
+              <a
+                href="/pricing/"
+                onClick={(e) => handleLinkClick(e, '/pricing/')}
                 className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer font-semibold"
               >
                 Pricing
-              </button>
-              <button
-                onClick={() => handleNavClick('/about')}
+              </a>
+              <a
+                href="/about/"
+                onClick={(e) => handleLinkClick(e, '/about/')}
                 className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer font-semibold"
               >
                 About Us
-              </button>
-              <button
-                onClick={() => handleNavClick('workflow-demo')}
+              </a>
+              <a
+                href="/#workflow-demo"
+                onClick={(e) => handleLinkClick(e, 'workflow-demo')}
                 className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
               >
                 System Demo
-              </button>
+              </a>
               <div className="pt-2">
-                <button
-                  onClick={() => handleNavClick('contact')}
+                <a
+                  href="/#ascent"
+                  onClick={(e) => handleLinkClick(e, 'contact')}
                   className="inline-flex items-center gap-1 text-[#E84B2C] hover:underline font-bold cursor-pointer"
                 >
                   <span>Request Free Audit</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
+                </a>
               </div>
             </nav>
           </div>
@@ -182,7 +196,9 @@ export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavig
         <div className="pt-6 border-t border-[#F3F0E8]/08 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#A39E93]">
           <p>© 2026 ARENOVA. All systems engineered with precision.</p>
           <div className="flex items-center gap-4">
-            <span>Direct: avi@arenova.in</span>
+            <a href="mailto:avi@arenova.in" className="hover:text-[#F3F0E8] transition-colors">
+              Direct: avi@arenova.in
+            </a>
             <span>•</span>
             <span>Security: Zero-Trust TLS 1.3</span>
           </div>

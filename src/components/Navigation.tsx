@@ -31,11 +31,11 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
   }, []);
 
   const navLinks = [
-    { id: 'problem', label: 'Why Us', href: '/#problem', type: 'section' },
-    { id: 'services', label: 'Services', href: '/#services', type: 'section' },
-    { id: 'workflow-demo', label: 'Live Demo', href: '/#workflow-demo', type: 'section' },
-    { id: 'pricing', label: 'Pricing', href: '/pricing', type: 'page' },
-    { id: 'about', label: 'About', href: '/about', type: 'page' },
+    { id: 'problem', routeKey: '/', label: 'Why Us', href: '/#problem', type: 'section' },
+    { id: 'services', routeKey: '/', label: 'Services', href: '/#services', type: 'section' },
+    { id: 'workflow-demo', routeKey: '/', label: 'Live Demo', href: '/#workflow-demo', type: 'section' },
+    { id: 'pricing', routeKey: '/pricing', label: 'Pricing', href: '/pricing/', type: 'page' },
+    { id: 'about', routeKey: '/about', label: 'About', href: '/about/', type: 'page' },
   ];
 
   const handleLinkClick = (link: (typeof navLinks)[0]) => {
@@ -96,7 +96,7 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
             {navLinks.map((link) => {
               const isActive =
                 link.type === 'page'
-                  ? pathname === link.href
+                  ? pathname === link.routeKey
                   : pathname === '/' && activeSection === link.id;
 
               return (
@@ -188,8 +188,10 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
               </a>
             ))}
 
-            <button
-              onClick={() => {
+            <a
+              href="/#ascent"
+              onClick={(e) => {
+                e.preventDefault();
                 if (pathname === '/') {
                   onNavigate('contact');
                 } else {
@@ -200,7 +202,7 @@ export const Navigation: React.FC<NavigationProps> = React.memo(({
               className="btn-cinematic w-full py-3.5 mt-4 rounded-xl bg-[#E84B2C] text-[#111110] font-bold text-xs uppercase tracking-wider text-center"
             >
               Request Free Audit
-            </button>
+            </a>
           </nav>
         </div>
       )}

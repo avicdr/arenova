@@ -61,7 +61,9 @@ export const AboutPage: React.FC<AboutPageProps> = React.memo(() => {
     {
       name: 'Arenova Automation Agency',
       tag: 'CORE CONSULTANCY',
-      url: 'https://arenova.in',
+      url: '/',
+      isExternal: false,
+      rel: undefined as string | undefined,
       description:
         'Bespoke AI architecture, end-to-end workflow automation, and custom agent engineering tailored for high-growth enterprises.',
       icon: Workflow,
@@ -71,6 +73,8 @@ export const AboutPage: React.FC<AboutPageProps> = React.memo(() => {
       name: 'Arenova Frontdesk',
       tag: 'INBOUND VOICE & CHAT',
       url: 'https://frontdesk.arenova.in',
+      isExternal: true,
+      rel: 'noopener noreferrer',
       description:
         'Autonomous 24/7 telephony voice agent and WhatsApp receptionist that screens enquiries, answers FAQs, and books appointments.',
       icon: Bot,
@@ -79,7 +83,9 @@ export const AboutPage: React.FC<AboutPageProps> = React.memo(() => {
     {
       name: 'Arova Intelligence',
       tag: 'B2B LEAD DISCOVERY',
-      url: 'https://arova.arenova.in',
+      url: '/#ascent',
+      isExternal: false,
+      rel: undefined as string | undefined,
       description:
         'Deep B2B account discovery, multi-signal buying intent detection, and automated contact enrichment engine.',
       icon: TrendingUp,
@@ -89,6 +95,8 @@ export const AboutPage: React.FC<AboutPageProps> = React.memo(() => {
       name: 'Outreacher Engine',
       tag: 'OUTBOUND ACCELERATION',
       url: 'https://outreacher.arenova.in',
+      isExternal: true,
+      rel: 'nofollow noopener noreferrer',
       description:
         'Multi-channel cold acquisition infrastructure, dedicated domain warmup, automated inbox rotation, and AI personalization.',
       icon: Layers,
@@ -246,8 +254,16 @@ export const AboutPage: React.FC<AboutPageProps> = React.memo(() => {
               <a
                 key={idx}
                 href={prod.url}
-                target={prod.url.startsWith('http') ? '_blank' : undefined}
-                rel="noopener noreferrer"
+                target={prod.isExternal ? '_blank' : undefined}
+                rel={prod.rel}
+                onClick={
+                  prod.isExternal
+                    ? undefined
+                    : (e) => {
+                        e.preventDefault();
+                        navigate(prod.url);
+                      }
+                }
                 className="p-6 rounded-2xl bg-[#161514]/90 border border-[#F3F0E8]/08 hover:border-[#FFAA3D]/40 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div>
@@ -299,20 +315,26 @@ export const AboutPage: React.FC<AboutPageProps> = React.memo(() => {
             We partner with ambitious founders, clinics, professional services, and high-growth companies to replace manual drag with mission-critical digital workforces. Every line of code, webhook, and agent prompt is vetted for production resilience.
           </p>
           <div className="flex items-center gap-4 text-xs font-mono text-[#A39E93] pt-2">
-            <span>Direct: avi@arenova.in</span>
+            <a href="mailto:avi@arenova.in" className="hover:text-[#F3F0E8] transition-colors">
+              Direct: avi@arenova.in
+            </a>
             <span>•</span>
             <span>HQ: Bangalore, India / Global Delivery</span>
           </div>
         </div>
 
         <div className="shrink-0">
-          <button
-            onClick={() => navigate('/#ascent')}
+          <a
+            href="/#ascent"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/#ascent');
+            }}
             className="btn-cinematic px-8 py-4 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs sm:text-sm tracking-wider uppercase transition-all shadow-xl shadow-[#E84B2C]/30 flex items-center gap-2 cursor-pointer"
           >
             <span>Book Founder Architecture Session</span>
             <ArrowRight className="w-4 h-4" />
-          </button>
+          </a>
         </div>
       </div>
 
@@ -324,13 +346,17 @@ export const AboutPage: React.FC<AboutPageProps> = React.memo(() => {
         <p className="text-sm sm:text-base text-[#A39E93] max-w-xl leading-relaxed mb-8">
           Request a complimentary technical audit of your current operations, outbound pipelines, and software tools.
         </p>
-        <button
-          onClick={() => navigate('/#ascent')}
+        <a
+          href="/#ascent"
+          onClick={(e) => {
+            e.preventDefault();
+            navigate('/#ascent');
+          }}
           className="btn-cinematic px-8 py-4 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs sm:text-sm tracking-wider uppercase transition-all shadow-xl shadow-[#E84B2C]/30 flex items-center gap-2 cursor-pointer"
         >
           <span>Claim Your Free Architecture Audit</span>
           <ArrowUpRight className="w-4 h-4" />
-        </button>
+        </a>
       </div>
     </div>
   );

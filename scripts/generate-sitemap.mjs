@@ -8,7 +8,7 @@ const rootDir = path.resolve(__dirname, '..');
 
 const DOMAIN = 'https://arenova.in';
 
-// Define all valid, canonical, indexable public routes (NO hash fragments)
+// Define all valid, canonical, 200 OK public routes (strict trailing-slash alignment for GitHub Pages)
 const routes = [
   {
     path: '/',
@@ -17,13 +17,13 @@ const routes = [
     lastmod: new Date().toISOString().split('T')[0],
   },
   {
-    path: '/pricing',
+    path: '/pricing/',
     changefreq: 'weekly',
     priority: '0.9',
     lastmod: new Date().toISOString().split('T')[0],
   },
   {
-    path: '/about',
+    path: '/about/',
     changefreq: 'monthly',
     priority: '0.8',
     lastmod: new Date().toISOString().split('T')[0],
@@ -62,4 +62,3 @@ if (fs.existsSync(path.join(rootDir, 'dist'))) {
   fs.writeFileSync(distPath, sitemapContent, 'utf-8');
   console.log(`[SEO SITEMAP] Copied sitemap to dist: ${distPath}`);
 }
-

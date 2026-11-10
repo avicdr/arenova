@@ -1,8 +1,8 @@
 /**
  * ARENOVA ECOSYSTEM SEO CONFIGURATION
- * 
- * Centralized, production-grade SEO parameters for the Arenova parent domain (https://arenova.in).
- * All metadata, canonical policies, Schema.org entities, and ecosystem links are configured here.
+ *
+ * Centralized, production-grade SEO parameters for the Arenova parent domain (https://arenova.in/).
+ * Canonical URLs strictly match the GitHub Pages 200 OK trailing-slash endpoints (/, /pricing/, /about/).
  */
 
 export interface EcosystemProduct {
@@ -23,6 +23,48 @@ export interface ServiceOffering {
   url: string;
 }
 
+export interface RouteSeoMeta {
+  routeKey: '/' | '/pricing' | '/about';
+  canonicalUrl: string;
+  title: string;
+  description: string;
+  keywords: string;
+  ogType: 'website';
+}
+
+export const ROUTE_SEO: Record<'/' | '/pricing' | '/about', RouteSeoMeta> = {
+  '/': {
+    routeKey: '/',
+    canonicalUrl: 'https://arenova.in/',
+    title: 'ARENOVA | Enterprise AI Automation, Sales Outreach & Autonomous Systems',
+    description:
+      'Arenova engineers custom AI automation systems for modern businesses: end-to-end business workflow automation, cold outreach engines, and 24/7 AI frontdesk capture.',
+    keywords:
+      'AI automation agency, business workflow automation, cold outreach automation, AI front desk receptionist, CRM automation, enterprise AI agents, Arenova',
+    ogType: 'website',
+  },
+  '/pricing': {
+    routeKey: '/pricing',
+    canonicalUrl: 'https://arenova.in/pricing/',
+    title: 'ARENOVA Pricing | Enterprise AI Automation & Revenue Systems',
+    description:
+      'Transparent pricing for enterprise AI automation: Sales & Outreach ($999/mo), Business Automation ($1,999/mo), Autonomous Enterprise ($3,499/mo), and AI Frontdesk ($490/mo).',
+    keywords:
+      'AI automation pricing, workflow automation cost, cold outreach agency pricing, AI front desk cost, enterprise AI ROI, Arenova pricing',
+    ogType: 'website',
+  },
+  '/about': {
+    routeKey: '/about',
+    canonicalUrl: 'https://arenova.in/about/',
+    title: 'About ARENOVA | Engineering the Autonomous Enterprise',
+    description:
+      'Discover Arenova’s engineering philosophy: eliminating brittle software duct tape with deterministic AI automation across workflows, outreach, and 24/7 triage.',
+    keywords:
+      'About Arenova, AI automation agency, systems architecture, deterministic AI, workflow automation engineering, Avi Arenova',
+    ogType: 'website',
+  },
+};
+
 export const SEO_CONFIG = {
   domain: 'https://arenova.in',
   siteUrl: 'https://arenova.in',
@@ -31,41 +73,37 @@ export const SEO_CONFIG = {
   locale: 'en_US',
   language: 'English',
   themeColor: '#111110',
-  title: 'ARENOVA | Enterprise AI Automation, Meta & Google Ads, and Lead Generation Systems',
+  title: ROUTE_SEO['/'].title,
   titleTemplate: '%s | ARENOVA',
-  description:
-    'Arenova builds high-converting marketing engines (Meta Ads & Google Ads) paired with 24/7 AI front desk automation and autonomous operations to capture qualified leads and scale enterprise revenue.',
+  description: ROUTE_SEO['/'].description,
   keywords: [
     'AI automation agency',
-    'Meta ads agency',
-    'Google ads management',
-    'lead generation agency',
-    'AI front desk',
-    'conversion rate optimization',
-    'performance marketing',
-    'B2B lead generation',
-    'paid social ads',
+    'business workflow automation',
+    'sales and outreach automation',
+    'AI front desk receptionist',
     'enterprise AI agents',
+    'CRM and ERP synchronization',
+    'B2B outbound systems',
+    'deterministic AI architecture',
     'Arenova',
   ],
-  slogan: 'Transform the way your business works',
+  slogan: 'Autonomous systems that scale revenue',
   manifesto: 'RISE BEYOND ROUTINE.',
   contactEmail: 'avi@arenova.in',
-  
+
   openGraph: {
     type: 'website',
     url: 'https://arenova.in/',
-    title: 'ARENOVA | Enterprise AI Automation, Meta & Google Ads, and Lead Generation Systems',
-    description:
-      'Turn ad spend into closed revenue. High-converting Meta & Google Ads, 24/7 AI front desk agents, workflow automation, and digital growth engines.',
+    title: ROUTE_SEO['/'].title,
+    description: ROUTE_SEO['/'].description,
     siteName: 'ARENOVA',
     images: [
       {
         url: 'https://arenova.in/metadata.png',
         secureUrl: 'https://arenova.in/metadata.png',
-        width: 2912,
-        height: 1440,
-        alt: 'ARENOVA — Transform The Way Your Business Works',
+        width: 1200,
+        height: 630,
+        alt: 'ARENOVA — Autonomous Systems That Scale Revenue',
         type: 'image/png',
       },
     ],
@@ -73,11 +111,10 @@ export const SEO_CONFIG = {
 
   twitter: {
     card: 'summary_large_image',
-    title: 'ARENOVA | AI Automation, Meta & Google Ads, and Lead Generation',
-    description:
-      'Turn ad spend into closed revenue. High-converting Meta & Google Ads, 24/7 AI front desk agents, workflow automation, and digital growth engines.',
+    title: ROUTE_SEO['/'].title,
+    description: ROUTE_SEO['/'].description,
     image: 'https://arenova.in/metadata.png',
-    imageAlt: 'ARENOVA — Transform The Way Your Business Works',
+    imageAlt: 'ARENOVA — Autonomous Systems That Scale Revenue',
   },
 
   robots: {
@@ -94,15 +131,15 @@ export const SEO_CONFIG = {
       name: 'Arenova Frontdesk',
       url: 'https://frontdesk.arenova.in',
       badge: 'WHATSAPP RECEPTIONIST',
-      tagline: 'AI WhatsApp receptionist and appointment booking for clinics & businesses.',
+      tagline: 'AI voice & WhatsApp receptionist and appointment booking for clinics & businesses.',
       description:
-        'Automated WhatsApp patient enquiries, triage, instant calendar scheduling, and 24/7 multi-turn clinic support.',
+        'Automated WhatsApp patient enquiries, triage, instant calendar scheduling, and 24/7 multi-turn client support.',
       category: 'BusinessApplication',
     },
     {
       id: 'arova',
-      name: 'Arova',
-      url: 'https://arova.arenova.in',
+      name: 'Arova Intelligence',
+      url: '/#ascent',
       badge: 'LEAD INTELLIGENCE',
       tagline: 'B2B lead intelligence and qualified business leads discovery platform.',
       description:
@@ -123,19 +160,27 @@ export const SEO_CONFIG = {
 
   services: [
     {
-      id: 'ai-front-desk',
-      name: 'AI Front Desk Agents',
-      headline: 'Every enquiry deserves an answer.',
+      id: 'business-automation',
+      name: 'Business & Workflow Automation',
+      headline: 'Eliminate repetitive manual work.',
       description:
-        '24/7 voice and chat agents that greet, qualify, book, and route inquiries across phone, web chat, SMS, and WhatsApp with zero hallucination.',
+        'End-to-end operational pipelines connecting CRMs, ERPs, payment gateways, Slack, and scheduling without manual data re-entry.',
       url: 'https://arenova.in/#services',
     },
     {
-      id: 'workflow-automation',
-      name: 'Workflow Automation',
-      headline: 'Let the work move itself.',
+      id: 'sales-outreach',
+      name: 'Sales & Outreach Automation',
+      headline: 'Outbound pipeline on autopilot.',
       description:
-        'End-to-end operational pipelines connecting CRMs, payment gateways, scheduling, and fulfillment without manual data re-entry.',
+        'Dedicated cold outreach infrastructure (15+ warmed domains, SPF/DKIM/DMARC), AI hyper-personalization, lead enrichment, and automated calendar booking.',
+      url: 'https://arenova.in/#services',
+    },
+    {
+      id: 'ai-front-desk',
+      name: '24/7 AI Front Desk & Receptionist',
+      headline: 'Every lead answered in under 15 seconds.',
+      description:
+        'Voice telephony, WhatsApp, SMS, and web receptionists that greet, qualify, book, and route inquiries 24/7 with zero hallucination.',
       url: 'https://arenova.in/#services',
     },
     {
@@ -143,24 +188,8 @@ export const SEO_CONFIG = {
       name: 'Custom AI Agents',
       headline: 'Intelligence with a purpose.',
       description:
-        'Domain-specific autonomous agents trained on proprietary company knowledge, vector databases, and enterprise SOPs.',
-      url: 'https://arenova.in/#services',
-    },
-    {
-      id: 'performance-marketing',
-      name: 'Performance Marketing & Revenue Engines',
-      headline: 'Engineered to capture. Trained to convert.',
-      description:
-        'High-converting Meta Ads and Google Ads paired with conversion-engineered funnels and <15 second lead follow-up.',
-      url: 'https://arenova.in/#marketing',
-    },
-    {
-      id: 'web-experiences',
-      name: 'Conversion-Engineered Web Experiences',
-      headline: 'Cinematic digital flagships.',
-      description:
-        'High-speed, cinematic, high-converting digital platforms engineered for enterprise credibility and maximum commercial capture.',
-      url: 'https://arenova.in/#services',
+        'Domain-specific autonomous agents trained on proprietary company knowledge, vector databases, and deterministic enterprise SOPs.',
+      url: 'https://arenova.in/pricing/',
     },
   ] as ServiceOffering[],
 
@@ -172,4 +201,3 @@ export const SEO_CONFIG = {
     ga4MeasurementId: import.meta.env?.VITE_GA4_ID || '',
   },
 };
-

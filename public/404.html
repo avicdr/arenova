@@ -3,16 +3,13 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/x-icon" href="./arenova.ico" />
-    <link rel="shortcut icon" href="./arenova.ico" />
-    <link rel="icon" type="image/png" href="./arenova.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="./arenova.png" />
+    <link rel="icon" type="image/x-icon" href="/arenova.ico" />
+    <link rel="shortcut icon" href="/arenova.ico" />
+    <link rel="icon" type="image/png" href="/arenova.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/arenova.png" />
     <title>404 - Page Not Found | ARENOVA</title>
-    <meta name="description" content="The page you were looking for does not exist. Redirecting you to ARENOVA." />
+    <meta name="description" content="The requested page could not be found on ARENOVA." />
     <meta name="robots" content="noindex, nofollow" />
-    
-
-
 
     <!-- Self-Hosted Fonts -->
     <style>
@@ -64,11 +61,10 @@
         min-height: 100vh;
       }
 
-      /* Subtle Grid Background */
       .grid-overlay {
         position: fixed;
         inset: 0;
-        background-image: 
+        background-image:
           linear-gradient(to right, rgba(243, 240, 232, 0.025) 1px, transparent 1px),
           linear-gradient(to bottom, rgba(243, 240, 232, 0.025) 1px, transparent 1px);
         background-size: 60px 60px;
@@ -76,11 +72,10 @@
         z-index: 1;
       }
 
-      /* Radial Glows */
       .ambient-glow {
         position: fixed;
         inset: 0;
-        background: 
+        background:
           radial-gradient(circle at 50% 40%, rgba(232, 75, 44, 0.16) 0%, transparent 60%),
           radial-gradient(circle at 20% 80%, rgba(214, 186, 147, 0.08) 0%, transparent 50%),
           radial-gradient(circle at 80% 20%, rgba(232, 75, 44, 0.08) 0%, transparent 50%);
@@ -88,7 +83,6 @@
         z-index: 2;
       }
 
-      /* Canvas for floating embers */
       #particles-canvas {
         position: fixed;
         inset: 0;
@@ -98,7 +92,6 @@
         z-index: 3;
       }
 
-      /* Main Content Container */
       .content-wrapper {
         position: relative;
         z-index: 10;
@@ -116,7 +109,7 @@
         border-radius: 24px;
         padding: 48px 36px;
         text-align: center;
-        box-shadow: 
+        box-shadow:
           0 20px 60px -15px rgba(0, 0, 0, 0.8),
           0 0 40px -10px rgba(232, 75, 44, 0.2);
         position: relative;
@@ -133,7 +126,6 @@
         background: linear-gradient(90deg, transparent, rgba(232, 75, 44, 0.8), transparent);
       }
 
-      /* Header Logo */
       .brand-header {
         display: inline-flex;
         align-items: center;
@@ -157,7 +149,6 @@
         color: var(--color-text-main);
       }
 
-      /* Status Badge */
       .status-badge {
         display: inline-flex;
         align-items: center;
@@ -175,12 +166,6 @@
         border-radius: 50%;
         background-color: var(--color-flame);
         box-shadow: 0 0 10px var(--color-flame);
-        animation: pulse 1.8s infinite;
-      }
-
-      @keyframes pulse {
-        0%, 100% { opacity: 1; transform: scale(1); }
-        50% { opacity: 0.4; transform: scale(0.85); }
       }
 
       .status-text {
@@ -191,7 +176,6 @@
         text-transform: uppercase;
       }
 
-      /* Large 404 Display */
       .glitch-404 {
         font-family: 'Syne', sans-serif;
         font-size: clamp(84px, 16vw, 130px);
@@ -202,7 +186,6 @@
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         margin-bottom: 16px;
-        text-shadow: 0 0 35px rgba(232, 75, 44, 0.35);
         user-select: none;
       }
 
@@ -223,69 +206,6 @@
         margin: 0 auto 32px auto;
       }
 
-      /* Countdown Ring Container */
-      .countdown-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 32px;
-      }
-
-      .ring-wrapper {
-        position: relative;
-        width: 72px;
-        height: 72px;
-        margin-bottom: 12px;
-      }
-
-      .ring-svg {
-        transform: rotate(-90deg);
-        width: 72px;
-        height: 72px;
-      }
-
-      .ring-track {
-        fill: none;
-        stroke: rgba(243, 240, 232, 0.08);
-        stroke-width: 4;
-      }
-
-      .ring-progress {
-        fill: none;
-        stroke: var(--color-flame);
-        stroke-width: 4;
-        stroke-linecap: round;
-        stroke-dasharray: 201;
-        stroke-dashoffset: 0;
-        transition: stroke-dashoffset 0.1s linear;
-        filter: drop-shadow(0 0 6px rgba(232, 75, 44, 0.6));
-      }
-
-      .ring-number {
-        position: absolute;
-        inset: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-family: 'Syne', sans-serif;
-        font-size: 26px;
-        font-weight: 700;
-        color: var(--color-text-main);
-      }
-
-      .countdown-label {
-        font-size: 13px;
-        color: var(--color-text-muted);
-        letter-spacing: 0.04em;
-      }
-
-      .countdown-label strong {
-        color: var(--color-flame-light);
-        font-weight: 600;
-      }
-
-      /* Actions */
       .action-buttons {
         display: flex;
         flex-direction: column;
@@ -312,26 +232,29 @@
         border-radius: 12px;
         box-shadow: 0 4px 20px -2px rgba(232, 75, 44, 0.5);
         transition: all 0.25s ease;
-        border: none;
-        cursor: pointer;
       }
 
       .btn-primary:hover {
         transform: translateY(-2px);
         box-shadow: 0 8px 25px rgba(232, 75, 44, 0.65);
-        background: linear-gradient(135deg, #F25A38 0%, #E84B2C 100%);
       }
 
-      .btn-primary:active {
-        transform: translateY(0);
+      .secondary-links {
+        display: flex;
+        justify-content: center;
+        gap: 18px;
+        margin-top: 8px;
+        font-size: 13px;
       }
 
-      .btn-primary svg {
-        transition: transform 0.2s ease;
+      .secondary-links a {
+        color: var(--color-text-muted);
+        text-decoration: none;
+        transition: color 0.2s ease;
       }
 
-      .btn-primary:hover svg {
-        transform: translateX(4px);
+      .secondary-links a:hover {
+        color: var(--color-text-main);
       }
 
       @media (max-width: 480px) {
@@ -355,13 +278,11 @@
 
     <main class="content-wrapper">
       <div class="card">
-        <!-- Brand -->
-        <a id="brand-link" href="./" class="brand-header">
-          <img src="./arenova.png" alt="ARENOVA Logo" class="brand-logo" onerror="this.src='./arenova.ico'" />
+        <a href="/" class="brand-header">
+          <img src="/arenova-128.png" alt="ARENOVA Logo" class="brand-logo" onerror="this.src='/arenova.png'" />
           <span class="brand-name">ARENOVA</span>
         </a>
 
-        <!-- Status Pill -->
         <div>
           <div class="status-badge">
             <span class="status-dot"></span>
@@ -369,159 +290,74 @@
           </div>
         </div>
 
-        <!-- 404 Graphic -->
         <div class="glitch-404">404</div>
 
-        <h1 class="title">Lost Beyond the Frontier</h1>
+        <h1 class="title">Page Not Found</h1>
         <p class="description">
-          The requested system node does not exist or has been shifted into another dimension. 
+          The requested page does not exist or has moved. Navigate to our main platform below.
         </p>
 
-        <!-- 4 Second Countdown Display -->
-        <div class="countdown-container">
-          <div class="ring-wrapper">
-            <svg class="ring-svg" viewBox="0 0 72 72">
-              <circle class="ring-track" cx="36" cy="36" r="32" />
-              <circle id="ring-progress" class="ring-progress" cx="36" cy="36" r="32" />
-            </svg>
-            <div id="countdown-num" class="ring-number">4</div>
-          </div>
-          <p class="countdown-label">
-            Auto-redirecting to Home in <strong id="countdown-text">4 seconds</strong>...
-          </p>
-        </div>
-
-        <!-- Action Button -->
         <div class="action-buttons">
-          <button id="return-btn" class="btn-primary" type="button">
-            <span>Return to Home Now</span>
+          <a href="/" class="btn-primary">
+            <span>Return to Home</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"></line>
               <polyline points="12 5 19 12 12 19"></polyline>
             </svg>
-          </button>
+          </a>
+          <div class="secondary-links">
+            <a href="/pricing/">Pricing</a>
+            <a href="/about/">About Us</a>
+            <a href="/#ascent">Get an Audit</a>
+          </div>
         </div>
       </div>
     </main>
 
     <script>
-      // 1. Determine Home URL dynamically for GitHub Pages (/arenova-web/) or Root Domain (/)
-      function getHomeUrl() {
-        const path = window.location.pathname;
-        if (path.startsWith('/arenova-web')) {
-          return '/arenova-web/';
-        }
-        return '/';
-      }
-
-      const targetHomeUrl = getHomeUrl();
-
-      // Update brand link and button destination
-      document.getElementById('brand-link').setAttribute('href', targetHomeUrl);
-
-      let redirected = false;
-      function performRedirect() {
-        if (redirected) return;
-        redirected = true;
-        window.location.replace(targetHomeUrl);
-      }
-
-      document.getElementById('return-btn').addEventListener('click', performRedirect);
-
-      // 2. Precise 4-Second Animated Countdown
-      const DURATION = 4000; // 4 seconds exactly
-      const startTime = performance.now();
-      const circleRadius = 32;
-      const circumference = 2 * Math.PI * circleRadius; // ~201.06
-
-      const ringProgress = document.getElementById('ring-progress');
-      const countdownNum = document.getElementById('countdown-num');
-      const countdownText = document.getElementById('countdown-text');
-
-      ringProgress.style.strokeDasharray = circumference;
-      ringProgress.style.strokeDashoffset = 0;
-
-      function updateCountdown(now) {
-        const elapsed = now - startTime;
-        const remaining = Math.max(0, DURATION - elapsed);
-        const secondsCeil = Math.max(0, Math.ceil(remaining / 1000));
-
-        // Update Text
-        countdownNum.textContent = secondsCeil;
-        countdownText.textContent = secondsCeil + (secondsCeil === 1 ? ' second' : ' seconds');
-
-        // Update Ring Offset (smoothly drains over 4 seconds)
-        const progress = remaining / DURATION;
-        const offset = circumference * (1 - progress);
-        ringProgress.style.strokeDashoffset = offset;
-
-        if (remaining <= 0) {
-          performRedirect();
-        } else {
-          requestAnimationFrame(updateCountdown);
-        }
-      }
-
-      requestAnimationFrame(updateCountdown);
-
-      // Fallback timer in case requestAnimationFrame is throttled in background tab
-      setTimeout(performRedirect, DURATION + 200);
-
-      // 3. Ambient Floating Ember Particles
       const canvas = document.getElementById('particles-canvas');
-      const ctx = canvas.getContext('2d');
+      const ctx = canvas && canvas.getContext ? canvas.getContext('2d') : null;
+      if (ctx) {
+        function resizeCanvas() {
+          canvas.width = window.innerWidth;
+          canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas, { passive: true });
+        resizeCanvas();
 
-      function resizeCanvas() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-      }
-      window.addEventListener('resize', resizeCanvas);
-      resizeCanvas();
-
-      const particles = [];
-      const particleCount = 38;
-
-      for (let i = 0; i < particleCount; i++) {
-        particles.push({
+        const particles = Array.from({ length: 32 }, () => ({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           radius: Math.random() * 2 + 0.8,
           speedY: -(Math.random() * 0.6 + 0.2),
           speedX: (Math.random() - 0.5) * 0.3,
           alpha: Math.random() * 0.6 + 0.2,
-          pulse: Math.random() * 0.02 + 0.005,
           color: Math.random() > 0.4 ? '232, 75, 44' : '214, 186, 147'
-        });
-      }
+        }));
 
-      function drawParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        for (let i = 0; i < particles.length; i++) {
-          const p = particles[i];
-          p.y += p.speedY;
-          p.x += p.speedX;
-          p.alpha += Math.sin(Date.now() * p.pulse) * 0.01;
-
-          if (p.y < -10) {
-            p.y = canvas.height + 10;
-            p.x = Math.random() * canvas.width;
+        function drawParticles() {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          for (let i = 0; i < particles.length; i++) {
+            const p = particles[i];
+            p.y += p.speedY;
+            p.x += p.speedX;
+            if (p.y < -10) {
+              p.y = canvas.height + 10;
+              p.x = Math.random() * canvas.width;
+            }
+            if (p.x < -10) p.x = canvas.width + 10;
+            if (p.x > canvas.width + 10) p.x = -10;
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(' + p.color + ', ' + p.alpha + ')';
+            ctx.fill();
           }
-          if (p.x < -10) p.x = canvas.width + 10;
-          if (p.x > canvas.width + 10) p.x = -10;
-
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-          ctx.fillStyle = 'rgba(' + p.color + ', ' + Math.max(0.1, Math.min(0.8, p.alpha)) + ')';
-          ctx.shadowBlur = 8;
-          ctx.shadowColor = 'rgba(' + p.color + ', 0.6)';
-          ctx.fill();
+          requestAnimationFrame(drawParticles);
         }
-
-        requestAnimationFrame(drawParticles);
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          requestAnimationFrame(drawParticles);
+        }
       }
-
-      requestAnimationFrame(drawParticles);
     </script>
   </body>
 </html>
