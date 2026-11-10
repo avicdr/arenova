@@ -260,9 +260,9 @@ export const AboutPage: React.FC<AboutPageProps> = React.memo(() => {
                   prod.isExternal
                     ? undefined
                     : (e) => {
-                        e.preventDefault();
-                        navigate(prod.url);
-                      }
+                      e.preventDefault();
+                      navigate(prod.url);
+                    }
                 }
                 className="p-6 rounded-2xl bg-[#161514]/90 border border-[#F3F0E8]/08 hover:border-[#FFAA3D]/40 transition-all duration-300 flex flex-col justify-between group"
               >

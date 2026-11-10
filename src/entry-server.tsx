@@ -9,3 +9,4 @@ export function render(pathname: '/' | '/pricing' | '/about'): string {
     </StrictMode>
   );
 }
+
