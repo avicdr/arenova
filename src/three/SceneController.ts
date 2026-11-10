@@ -21,7 +21,6 @@ export type PerformanceTier = 'high' | 'medium' | 'low';
 
 export function detectPerformanceTier(): PerformanceTier {
   if (typeof window === 'undefined') return 'high';
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return 'low';
 
   const cores = navigator.hardwareConcurrency || 4;
   const memory = (navigator as Navigator & { deviceMemory?: number }).deviceMemory || 4;
@@ -53,7 +52,7 @@ export function createSceneController(): SceneController {
   let isIntersecting = true;
 
   function wakeUp() {
-    if (animFrameId === 0 && pageVisible && isIntersecting && !reducedMotion) {
+    if (animFrameId === 0 && pageVisible && isIntersecting) {
       lastTime = performance.now();
       animFrameId = requestAnimationFrame(animate);
     }
@@ -209,6 +208,10 @@ export function createSceneController(): SceneController {
     phoenix.rootGroup.position.copy(startPos);
     phoenix.rootGroup.scale.setScalar(isMobile ? 0.86 : 1.03);
 
+    if (import.meta.env.DEV) {
+      (window as unknown as Record<string, unknown>).__scene3d = { renderer, scene, camera, phoenix };
+    }
+
     // -------------------------------------------------------------
     // AMBIENT CELESTIAL DUST
     // -------------------------------------------------------------
@@ -259,12 +262,7 @@ export function createSceneController(): SceneController {
   }
 
   function setReducedMotion(enabled: boolean) {
-    if (reducedMotion === enabled) return;
     reducedMotion = enabled;
-    cancelAnimationFrame(animFrameId);
-    animFrameId = 0;
-    lastTime = performance.now();
-    if (pageVisible && !enabled) wakeUp();
   }
 
   function handleVisibilityChange() {
@@ -313,9 +311,9 @@ export function createSceneController(): SceneController {
 
     const now = performance.now();
 
-    animFrameId = reducedMotion ? 0 : requestAnimationFrame(animate);
+    animFrameId = requestAnimationFrame(animate);
 
-    const delta = reducedMotion ? 1 / 60 : Math.min((now - lastTime) / 1000, 0.1);
+    const delta = Math.min((now - lastTime) / 1000, 0.1);
     lastTime = now;
     if (now - lastScrollSampleTime > 70) {
       scrollVelocity *= Math.exp(-delta * 7.5);
@@ -324,17 +322,11 @@ export function createSceneController(): SceneController {
 
     // Smooth input with responsive damping so it reacts immediately to scroll
     const ease = 1 - Math.exp(-delta * 8.5);
-    if (reducedMotion) currentProgress = targetProgress;
-    else currentProgress += (targetProgress - currentProgress) * ease;
+    currentProgress += (targetProgress - currentProgress) * ease;
 
     // Smooth mouse interpolation
-    if (reducedMotion) {
-      mouse.x = 0;
-      mouse.y = 0;
-    } else {
-      mouse.x += (targetMouse.x - mouse.x) * (1 - Math.exp(-delta * 4.5));
-      mouse.y += (targetMouse.y - mouse.y) * (1 - Math.exp(-delta * 4.5));
-    }
+    mouse.x += (targetMouse.x - mouse.x) * (1 - Math.exp(-delta * 4.5));
+    mouse.y += (targetMouse.y - mouse.y) * (1 - Math.exp(-delta * 4.5));
 
     // -------------------------------------------------------------
     // SCROLL LAYOUT: keep chapter composition on the outer experience group.
@@ -351,7 +343,7 @@ export function createSceneController(): SceneController {
       orientationTarget.lookAt(orientationLookTarget);
       const orientationBlend = THREE.MathUtils.smoothstep(currentProgress, 0.08, 0.28);
       phoenix.rootGroup.quaternion.slerpQuaternions(heroOrientation, orientationTarget.quaternion, orientationBlend);
-      phoenix.update(delta, scrollVelocity, currentProgress, mouse, reducedMotion);
+      phoenix.update(delta, scrollVelocity, currentProgress, mouse, false);
     }
 
     // -------------------------------------------------------------

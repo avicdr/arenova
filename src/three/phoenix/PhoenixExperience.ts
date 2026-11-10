@@ -48,9 +48,9 @@ export function createPhoenixExperience(
   const model = buildPhoenixModel(materials, isMobile);
   rootGroup.add(model.rootGroup);
 
-  // 3. Add one soft atmosphere halo behind the fused sculpture.
-  const fire = createPhoenixFire();
-  model.bodyGroup.add(fire.mesh);
+  // 3. Living flame field: billboard tongues born from every burning quill.
+  const fire = createPhoenixFire(isMobile ? 70 : 140);
+  model.flightGroup.add(fire.mesh);
 
   // 4. Attach Floating Ember Particle System
   const particles = createPhoenixParticles(particleCount);
@@ -62,6 +62,11 @@ export function createPhoenixExperience(
   // 6. Setup Cinematic Lighting Rig
   const lighting = createPhoenixLighting(scene);
   let elapsed = 0;
+
+  // TEMP DEBUG: expose the live rig for visual QA captures.
+  if (typeof window !== 'undefined') {
+    (window as unknown as Record<string, unknown>).__phoenix = { model, fire, particles, materials, update };
+  }
 
   function update(
     delta: number,
@@ -77,7 +82,10 @@ export function createPhoenixExperience(
     materials.update(elapsed, scrollProgress, wingPower);
 
     const scrollEnergy = THREE.MathUtils.clamp(Math.abs(speed) * 1.35, 0, 1);
-    fire.update(scrollProgress, elapsed, wingPower, scrollEnergy);
+
+    // The flame field is born on the live quill tips, crest and ember seams.
+    const flamePositions = model.getFlamePositions();
+    fire.update(elapsed, delta, scrollProgress, model.flameSites, flamePositions, wingPower, scrollEnergy);
 
     // Emit from the live feather tips, shoulders, breast, crest, and tail.
     const emitters = model.getEmitterPositions();
@@ -91,7 +99,7 @@ export function createPhoenixExperience(
     scene.remove(rootGroup);
     materials.dispose();
     scene.environment = null;
-    model.bodyGroup.remove(fire.mesh);
+    fire.mesh.removeFromParent();
     model.dispose();
     fire.dispose();
     particles.dispose();

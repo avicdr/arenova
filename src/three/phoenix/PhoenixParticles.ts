@@ -35,7 +35,7 @@ export function createPhoenixParticles(count = 180): PhoenixParticlesSystem {
     const b = fract(index * 0.75487766625 + 0.39);
     const c = fract(index * 0.56984029099 + 0.71);
     seeds.push({ a, b, c, source: 0 });
-    sizes[index] = index % 13 === 0 ? 0.17 + c * 0.065 : 0.07 + c * 0.08;
+    sizes[index] = index % 17 === 0 ? 0.16 + c * 0.05 : 0.05 + c * 0.065;
     warmth[index] = a;
     ageSeconds[index] = -1;
   }
@@ -50,7 +50,7 @@ export function createPhoenixParticles(count = 180): PhoenixParticlesSystem {
   geometry.setAttribute('life', lifeAttribute);
 
   const material = new THREE.ShaderMaterial({
-    uniforms: { uIntensity: { value: 0.2 } },
+    uniforms: { uIntensity: { value: 0.2 }, uTime: { value: 0 } },
     vertexShader: [
       'attribute float size;',
       'attribute float warmth;',
@@ -63,30 +63,35 @@ export function createPhoenixParticles(count = 180): PhoenixParticlesSystem {
       '  vLife = life;',
       '  vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);',
       '  vDepth = clamp(1.0 - (-mvPosition.z / 32.0), 0.18, 1.0);',
-      '  gl_PointSize = size * (560.0 / max(1.0, -mvPosition.z));',
+      '  float growth = 0.6 + 0.55 * sin(3.14159 * clamp(1.0 - life, 0.0, 1.0));',
+      '  gl_PointSize = size * growth * (560.0 / max(1.0, -mvPosition.z));',
       '  gl_Position = projectionMatrix * mvPosition;',
       '}',
     ].join('\n'),
     fragmentShader: [
       'uniform float uIntensity;',
+      'uniform float uTime;',
       'varying float vWarmth;',
       'varying float vLife;',
       'varying float vDepth;',
       'void main() {',
       '  vec2 p = gl_PointCoord - vec2(0.5);',
-      '  p.y *= 1.28;',
+      '  p.y *= 1.55;',
       '  float d = length(p);',
-      '  float irregular = 0.035 * sin(atan(p.y, p.x) * 5.0 + vWarmth * 16.0);',
-      '  float radial = 1.0 - smoothstep(0.16 + irregular, 0.5, d);',
-      '  float core = exp(-d * d * 58.0);',
-      '  float ageFade = smoothstep(0.0, 0.13, vLife) * smoothstep(0.0, 0.13, 1.0 - vLife);',
-      '  vec3 emberRed = vec3(0.72, 0.045, 0.012);',
-      '  vec3 orange = vec3(1.0, 0.23, 0.025);',
-      '  vec3 gold = vec3(1.0, 0.78, 0.3);',
-      '  vec3 color = mix(emberRed, orange, smoothstep(0.02, 0.78, vLife));',
-      '  color = mix(color, gold, smoothstep(0.72, 1.0, vLife) * (0.6 + vWarmth * 0.25));',
-      '  float alpha = (radial * 0.55 + core * 0.72) * ageFade * uIntensity * vDepth;',
-      '  gl_FragColor = vec4(color * (0.72 + core * 0.52), alpha);',
+      '  if (d > 0.5) discard;',
+      '  float irregular = 0.03 * sin(atan(p.y, p.x) * 5.0 + vWarmth * 16.0);',
+      '  float core = exp(-d * d * 120.0);',
+      '  float glow = exp(-d * d * 16.0);',
+      '  float ageFade = smoothstep(0.0, 0.1, vLife) * smoothstep(0.0, 0.22, 1.0 - vLife);',
+      '  float twinkle = 0.82 + 0.18 * sin(uTime * 17.0 + vWarmth * 40.0);',
+      '  vec3 emberRed = vec3(0.32, 0.008, 0.001);',
+      '  vec3 orange = vec3(1.0, 0.13, 0.008);',
+      '  vec3 gold = vec3(1.0, 0.52, 0.13);',
+      '  vec3 color = mix(emberRed, orange, smoothstep(0.02, 0.7, vLife));',
+      '  color = mix(color, gold, smoothstep(0.66, 1.0, vLife) * (0.55 + vWarmth * 0.25));',
+      '  color = mix(color, vec3(1.0, 0.85, 0.5), core * 0.45);',
+      '  float alpha = (glow * 0.42 + core * 0.85) * ageFade * uIntensity * vDepth;',
+      '  gl_FragColor = vec4(color * twinkle, alpha);',
       '  #include <tonemapping_fragment>',
       '  #include <colorspace_fragment>',
       '}',
@@ -96,7 +101,7 @@ export function createPhoenixParticles(count = 180): PhoenixParticlesSystem {
     depthWrite: false,
     depthTest: true,
   });
-  material.toneMapped = false;
+  material.toneMapped = true;
 
   const points = new THREE.Points(geometry, material);
   points.name = 'PhoenixAnatomicalEmbers';
@@ -124,7 +129,8 @@ export function createPhoenixParticles(count = 180): PhoenixParticlesSystem {
     const opening = THREE.MathUtils.smoothstep(scrollProgress, 0.04, 0.34);
     const ascent = THREE.MathUtils.smoothstep(scrollProgress, 0.8, 1);
     const strokePower = THREE.MathUtils.clamp(wingPower, 0, 1);
-    material.uniforms.uIntensity.value = 0.52 + opening * 0.16 + ascent * 0.12 + strokePower * 0.1 + scrollEnergy * 0.2;
+    material.uniforms.uIntensity.value = 0.62 + opening * 0.18 + ascent * 0.12 + strokePower * 0.14 + scrollEnergy * 0.22;
+    material.uniforms.uTime.value = time;
 
     for (let index = 0; index < count; index++) {
       if (ageSeconds[index] < 0 || ageSeconds[index] >= lifetimes[index]) respawn(index, emitters);

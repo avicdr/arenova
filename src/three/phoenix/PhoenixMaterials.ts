@@ -3,7 +3,7 @@ import * as THREE from 'three';
 export interface PhoenixMotionUniforms {
   uWingSweep: THREE.IUniform<number>;
   uWingLift: THREE.IUniform<number>;
-  uTailSway: THREE.IUniform<number>;
+  uTailFlow: THREE.IUniform<number>;
   uHeadTurn: THREE.IUniform<number>;
   uHeadNod: THREE.IUniform<number>;
   uBreath: THREE.IUniform<number>;
@@ -20,13 +20,19 @@ export interface PhoenixMaterialSet {
   beak: THREE.MeshPhysicalMaterial;
   eyeSocket: THREE.MeshStandardMaterial;
   eye: THREE.MeshStandardMaterial;
-  flame: THREE.ShaderMaterial;
+  haze: THREE.ShaderMaterial;
   motion: PhoenixMotionUniforms;
   envMap: THREE.Texture;
   update: (time: number, scrollProgress: number, wingPower?: number) => void;
   dispose: () => void;
 }
 
+/**
+ * PHOENIX MATERIAL SYSTEM
+ * Ember-plumage shading: deep oxblood feathers with incandescent rims, a
+ * velvet body that never reads as plastic, and a slow travelling flow wave
+ * that ripples down every vane.
+ */
 export function createPhoenixMaterials(renderer: THREE.WebGLRenderer): PhoenixMaterialSet {
   const canvas = document.createElement('canvas');
   canvas.width = 768;
@@ -35,22 +41,22 @@ export function createPhoenixMaterials(renderer: THREE.WebGLRenderer): PhoenixMa
   if (!context) throw new Error('Could not create the phoenix reflection environment.');
 
   const background = context.createLinearGradient(0, 0, 0, canvas.height);
-  background.addColorStop(0, '#160807');
-  background.addColorStop(0.5, '#090505');
-  background.addColorStop(1, '#210b06');
+  background.addColorStop(0, '#140706');
+  background.addColorStop(0.5, '#070404');
+  background.addColorStop(1, '#1d0905');
   context.fillStyle = background;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   const key = context.createRadialGradient(170, 96, 10, 170, 96, 250);
-  key.addColorStop(0, 'rgba(255,224,176,0.82)');
-  key.addColorStop(0.38, 'rgba(255,130,52,0.34)');
-  key.addColorStop(1, 'rgba(255,72,20,0)');
+  key.addColorStop(0, 'rgba(255,196,132,0.62)');
+  key.addColorStop(0.38, 'rgba(255,104,40,0.24)');
+  key.addColorStop(1, 'rgba(255,60,16,0)');
   context.fillStyle = key;
   context.fillRect(0, 0, canvas.width, canvas.height);
 
   const rim = context.createLinearGradient(520, 0, 700, canvas.height);
-  rim.addColorStop(0, 'rgba(255,183,88,0.46)');
-  rim.addColorStop(1, 'rgba(224,45,18,0)');
+  rim.addColorStop(0, 'rgba(255,163,74,0.34)');
+  rim.addColorStop(1, 'rgba(214,38,14,0)');
   context.fillStyle = rim;
   context.fillRect(470, 0, 250, canvas.height);
 
@@ -66,219 +72,281 @@ export function createPhoenixMaterials(renderer: THREE.WebGLRenderer): PhoenixMa
   const motion: PhoenixMotionUniforms = {
     uWingSweep: { value: 0 },
     uWingLift: { value: 0 },
-    uTailSway: { value: 0 },
+    uTailFlow: { value: 0 },
     uHeadTurn: { value: 0 },
     uHeadNod: { value: 0 },
     uBreath: { value: 0 },
     uTime: { value: 0 },
     uProgress: { value: 0 },
-    uHeat: { value: 0.28 },
+    uHeat: { value: 0.3 },
   };
 
+  // ---------------------------------------------------------------
+  // BODY: velvet ember skin, not lacquer. Sheen supplies the soft
+  // feather-like falloff that reads as plumage at any distance.
+  // ---------------------------------------------------------------
   const sculpture = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
     vertexColors: true,
-    roughness: 0.49,
-    metalness: 0.025,
-    clearcoat: 0.12,
-    clearcoatRoughness: 0.5,
+    roughness: 0.74,
+    metalness: 0.015,
+    clearcoat: 0.04,
+    clearcoatRoughness: 0.72,
+    sheen: 0.8,
+    sheenColor: new THREE.Color(0xff6a2a),
+    sheenRoughness: 0.62,
     envMap,
-    envMapIntensity: 0.42,
+    envMapIntensity: 0.18,
     side: THREE.DoubleSide,
   });
 
   sculpture.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, motion);
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', [
+      .replace(
         '#include <common>',
-        'uniform float uBreath;',
-        'varying vec3 vPhoenixBodyLocal;',
-      ].join('\n'))
-      .replace('#include <begin_vertex>', [
+        ['#include <common>', 'uniform float uBreath;', 'varying vec3 vPhoenixBodyLocal;'].join('\n'),
+      )
+      .replace(
         '#include <begin_vertex>',
-        'vPhoenixBodyLocal = position;',
-        'transformed.z += uBreath * smoothstep(-0.2, 0.85, position.y) * max(position.z, 0.0) * 0.18;',
-      ].join('\n'));
+        [
+          '#include <begin_vertex>',
+          'vPhoenixBodyLocal = position;',
+          'transformed.z += uBreath * smoothstep(-0.2, 0.85, position.y) * max(position.z, 0.0) * 0.16;',
+        ].join('\n'),
+      );
 
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', [
+      .replace(
         '#include <common>',
-        'uniform float uTime;',
-        'uniform float uHeat;',
-        'uniform float uWingLift;',
-        'varying vec3 vPhoenixBodyLocal;',
-      ].join('\n'))
-      .replace('#include <color_fragment>', [
+        [
+          '#include <common>',
+          'uniform float uTime;',
+          'uniform float uHeat;',
+          'uniform float uWingLift;',
+          'varying vec3 vPhoenixBodyLocal;',
+        ].join('\n'),
+      )
+      .replace(
         '#include <color_fragment>',
-        'float frontMask = 0.16 + 0.84 * smoothstep(-0.32, 0.38, vPhoenixBodyLocal.z);',
-        'float heatFlow = sin(vPhoenixBodyLocal.x * 15.0 + sin(vPhoenixBodyLocal.y * 10.0 + vPhoenixBodyLocal.z * 12.0) * 1.7)',
-        '  * cos(vPhoenixBodyLocal.y * 14.0 - vPhoenixBodyLocal.z * 11.0 + uTime * 0.24);',
-        'float emberSeam = smoothstep(0.972, 0.997, abs(heatFlow)) * frontMask * (0.35 + 0.65 * smoothstep(-0.72, 0.55, vPhoenixBodyLocal.y));',
-        'diffuseColor.rgb *= 0.96 + 0.035 * sin(vPhoenixBodyLocal.y * 8.0 + vPhoenixBodyLocal.z * 9.0);',
-        'diffuseColor.rgb += vec3(0.12, 0.022, 0.003) * emberSeam * (0.35 + uHeat * 0.42);',
-      ].join('\n'))
-      .replace('#include <emissivemap_fragment>', [
+        [
+          '#include <color_fragment>',
+          'float frontMask = 0.2 + 0.8 * smoothstep(-0.4, 0.42, vPhoenixBodyLocal.z);',
+          'float emberVein = pow(max(0.0, sin(vPhoenixBodyLocal.y * 21.0 + sin(vPhoenixBodyLocal.x * 15.0) * 1.2)), 26.0);',
+          'float motes = sin(vPhoenixBodyLocal.x * 38.0 + uTime * 0.7) * sin(vPhoenixBodyLocal.y * 34.0 - uTime * 0.52);',
+          'float glowMote = smoothstep(0.86, 0.995, motes) * frontMask;',
+          'diffuseColor.rgb *= 0.95 + 0.05 * sin(vPhoenixBodyLocal.y * 9.0 + vPhoenixBodyLocal.z * 7.0);',
+          'diffuseColor.rgb += vec3(0.16, 0.02, 0.002) * emberVein * frontMask * (0.4 + uHeat * 0.55);',
+          'diffuseColor.rgb += vec3(0.1, 0.017, 0.002) * glowMote * (0.3 + uHeat * 0.4);',
+        ].join('\n'),
+      )
+      .replace(
         '#include <emissivemap_fragment>',
-        'totalEmissiveRadiance += vec3(0.95, 0.16, 0.018) * emberSeam * (0.2 + uHeat * 0.42 + uWingLift * 0.04);',
-      ].join('\n'));
+        [
+          '#include <emissivemap_fragment>',
+          'totalEmissiveRadiance += vec3(1.0, 0.06, 0.004) * emberVein * frontMask * (0.22 + uHeat * 0.4);',
+          'totalEmissiveRadiance += vec3(1.0, 0.14, 0.012) * glowMote * (0.16 + uHeat * 0.34 + uWingLift * 0.05);',
+          'float bodyFresnel = pow(1.0 - clamp(dot(normalize(normal), normalize(vViewPosition)), 0.0, 1.0), 3.2);',
+          'totalEmissiveRadiance += vec3(1.0, 0.07, 0.006) * bodyFresnel * (0.32 + uHeat * 0.5);',
+          'totalEmissiveRadiance += vec3(0.2, 0.014, 0.001) * (0.42 + uHeat * 0.5);',
+        ].join('\n'),
+      );
   };
-  sculpture.customProgramCacheKey = () => 'arenova-phoenix-sculpted-core-v4-ember-flight';
+  sculpture.customProgramCacheKey = () => 'arenova-phoenix-ember-skin-v5';
 
+  // ---------------------------------------------------------------
+  // FEATHERS: dark vanes, incandescent rims, travelling flow wave.
+  // ---------------------------------------------------------------
   const feather = new THREE.MeshPhysicalMaterial({
     color: 0xffffff,
     vertexColors: true,
-    roughness: 0.47,
-    metalness: 0.018,
-    clearcoat: 0.16,
-    clearcoatRoughness: 0.42,
+    roughness: 0.68,
+    metalness: 0.0,
+    clearcoat: 0.0,
+    clearcoatRoughness: 0.8,
+    sheen: 0.7,
+    sheenColor: new THREE.Color(0xff7a30),
+    sheenRoughness: 0.6,
     envMap,
-    envMapIntensity: 0.38,
+    envMapIntensity: 0.16,
     side: THREE.DoubleSide,
+    transparent: false,
+    depthWrite: true,
   });
 
   feather.onBeforeCompile = (shader) => {
     Object.assign(shader.uniforms, motion);
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', [
+      .replace(
         '#include <common>',
-        'attribute vec3 aFeatherAxis;',
-        'attribute vec3 aFeatherPerp;',
-        'attribute float aFeatherSeed;',
-        'attribute float aFlutter;',
-        'attribute float aBurn;',
-        'uniform float uTime;',
-        'uniform float uWingSweep;',
-        'uniform float uWingLift;',
-        'varying vec2 vFeatherUv;',
-        'varying float vFeatherBurn;',
-        'varying float vFeatherSeed;',
-      ].join('\n'))
-      .replace('#include <begin_vertex>', [
+        [
+          '#include <common>',
+          'attribute vec3 aFeatherAxis;',
+          'attribute vec3 aFeatherPerp;',
+          'attribute float aFeatherSeed;',
+          'attribute float aFlutter;',
+          'attribute float aBurn;',
+          'attribute float aFlow;',
+          'uniform float uTime;',
+          'uniform float uWingSweep;',
+          'uniform float uWingLift;',
+          'uniform float uTailFlow;',
+          'varying vec2 vFeatherUv;',
+          'varying float vFeatherBurn;',
+          'varying float vFeatherSeed;',
+          'varying float vFeatherFlow;',
+        ].join('\n'),
+      )
+      .replace(
         '#include <begin_vertex>',
-        'vFeatherUv = uv;',
-        'vFeatherBurn = aBurn;',
-        'vFeatherSeed = aFeatherSeed;',
-        'float lag = sin(uTime * 5.15 - 0.62 + aFeatherSeed * 0.18);',
-        'float strokeFlex = uWingSweep * 0.62 - uWingLift * 0.24;',
-        'transformed += aFeatherPerp * (lag * 0.22 + strokeFlex) * aFlutter * uv.y * uv.y;',
-        'transformed += aFeatherAxis * (sin(uTime * 4.2 - 0.48 + aFeatherSeed * 0.2) * 0.08 + uWingLift * 0.08) * aFlutter * uv.y * uv.y;',
-      ].join('\n'));
+        [
+          '#include <begin_vertex>',
+          'vFeatherUv = uv;',
+          'vFeatherBurn = aBurn;',
+          'vFeatherSeed = aFeatherSeed;',
+          'vFeatherFlow = aFlow;',
+          'float seedPhase = aFeatherSeed * 6.28318;',
+          'float strokeFlex = uWingSweep * 0.42 - uWingLift * 0.18;',
+          'float waveA = sin(uTime * 2.6 - uv.y * 3.4 + seedPhase);',
+          'float waveB = sin(uTime * 4.1 - uv.y * 6.1 + seedPhase * 1.7) * 0.42;',
+          'float flowWave = (waveA + waveB) * (0.25 + uv.y * 0.85);',
+          'float tailPush = uTailFlow * 0.55 * uv.y;',
+          'transformed += aFeatherPerp * (strokeFlex + flowWave * aFlow * 0.16 + tailPush) * aFlutter * uv.y * uv.y;',
+          'transformed += aFeatherAxis * (sin(uTime * 3.3 - uv.y * 4.8 + seedPhase) * 0.05 + uWingLift * 0.05) * aFlutter * uv.y * uv.y;',
+        ].join('\n'),
+      );
 
     shader.fragmentShader = shader.fragmentShader
-      .replace('#include <common>', [
+      .replace(
         '#include <common>',
-        'uniform float uTime;',
-        'uniform float uHeat;',
-        'varying vec2 vFeatherUv;',
-        'varying float vFeatherBurn;',
-        'varying float vFeatherSeed;',
-      ].join('\n'))
-      .replace('#include <color_fragment>', [
+        [
+          '#include <common>',
+          'uniform float uTime;',
+          'uniform float uHeat;',
+          'uniform float uWingLift;',
+          'varying vec2 vFeatherUv;',
+          'varying float vFeatherBurn;',
+          'varying float vFeatherSeed;',
+          'varying float vFeatherFlow;',
+        ].join('\n'),
+      )
+      .replace(
         '#include <color_fragment>',
-        'float across = abs(vFeatherUv.x - 0.5);',
-        'float rachis = 1.0 - smoothstep(0.012, 0.035, across);',
-        'float barbPhase = across * 72.0 - vFeatherUv.y * 8.2 + sin(vFeatherUv.y * 18.0 + vFeatherSeed) * 0.32;',
-        'float barb = pow(max(0.0, cos(barbPhase)), 20.0) * smoothstep(0.055, 0.15, across);',
-        'float grain = sin(vFeatherUv.y * 47.0 + vFeatherSeed * 19.0) * sin(vFeatherUv.x * 23.0 + vFeatherSeed * 11.0);',
-        'float veinHeat = smoothstep(0.975, 0.999, sin(vFeatherUv.y * 19.0 + vFeatherSeed * 5.0 + uTime * 0.32));',
-        'diffuseColor.rgb *= 0.93 + grain * 0.018 - barb * 0.065;',
-        'diffuseColor.rgb += vec3(0.11, 0.026, 0.006) * rachis;',
-        'diffuseColor.rgb += vec3(0.18, 0.035, 0.004) * veinHeat * vFeatherBurn * (0.22 + uHeat * 0.35);',
-      ].join('\n'))
-      .replace('#include <emissivemap_fragment>', [
+        [
+          '#include <color_fragment>',
+          'float across = abs(vFeatherUv.x - 0.5);',
+          'float rachis = 1.0 - smoothstep(0.008, 0.03, across);',
+          'float barbPhase = across * 64.0 - vFeatherUv.y * 7.4 + sin(vFeatherUv.y * 16.0 + vFeatherSeed) * 0.28;',
+          'float barb = pow(max(0.0, cos(barbPhase)), 16.0) * smoothstep(0.05, 0.14, across);',
+          'float grain = sin(vFeatherUv.y * 41.0 + vFeatherSeed * 19.0) * sin(vFeatherUv.x * 21.0 + vFeatherSeed * 11.0);',
+          'float tip = smoothstep(0.62, 1.0, vFeatherUv.y);',
+          'float rim = smoothstep(0.33, 0.5, across) * (0.18 + 0.82 * tip);',
+          'float emberPulse = 0.78 + 0.22 * sin(uTime * 1.35 + vFeatherSeed * 12.0);',
+          'float perFeather = 0.88 + 0.12 * sin(vFeatherSeed * 53.0 + 1.7);',
+          'float rootDepth = mix(0.74, 1.0, smoothstep(0.02, 0.62, vFeatherUv.y));',
+          'diffuseColor.rgb *= perFeather * rootDepth;',
+          'diffuseColor.rgb *= 0.9 + grain * 0.022 - barb * 0.05;',
+          'diffuseColor.rgb += vec3(0.09, 0.014, 0.004) * rachis;',
+          'diffuseColor.rgb += vec3(0.2, 0.035, 0.004) * rim * vFeatherBurn * (0.25 + uHeat * 0.45);',
+          '// Soft vanes: edges melt together and the tips dissolve into the fire.',
+          'float edgeX = smoothstep(0.0, 0.12, vFeatherUv.x) * smoothstep(0.0, 0.12, 1.0 - vFeatherUv.x);',
+          'float distal = 1.0 - smoothstep(0.3, 1.0, vFeatherUv.y) * 0.42;',
+          'float edgeRoot = smoothstep(0.0, 0.035, vFeatherUv.y);',
+          'diffuseColor.a *= edgeX * distal * edgeRoot * 0.94;',
+        ].join('\n'),
+      )
+      .replace(
         '#include <emissivemap_fragment>',
-        'float shaftGlow = (rachis * 0.12 + veinHeat * 0.46) * vFeatherBurn;',
-        'float tipGlow = smoothstep(0.82, 1.0, vFeatherUv.y) * vFeatherBurn;',
-        'totalEmissiveRadiance += vec3(1.0, 0.18, 0.018) * shaftGlow * (0.28 + uHeat * 0.42);',
-        'totalEmissiveRadiance += vec3(1.0, 0.42, 0.055) * tipGlow * (0.3 + uHeat * 0.38);',
-      ].join('\n'));
+        [
+          '#include <emissivemap_fragment>',
+          'float rimGlow = smoothstep(0.36, 0.5, across) * (0.2 + 0.8 * tip);',
+          'float tipGlow = smoothstep(0.78, 1.0, vFeatherUv.y);',
+          'totalEmissiveRadiance += vec3(1.0, 0.09, 0.004) * rimGlow * vFeatherBurn * emberPulse * (0.4 + uHeat * 0.55);',
+          'totalEmissiveRadiance += vec3(1.0, 0.3, 0.025) * tipGlow * vFeatherBurn * (0.45 + uHeat * 0.6);',
+          'totalEmissiveRadiance += vec3(0.42, 0.03, 0.003) * rachis * vFeatherBurn * 0.22;',
+          'float featherFresnel = pow(1.0 - clamp(dot(normalize(normal), normalize(vViewPosition)), 0.0, 1.0), 2.8);',
+          'totalEmissiveRadiance += vec3(1.0, 0.07, 0.005) * featherFresnel * (0.28 + uHeat * 0.48);',
+          'totalEmissiveRadiance += vec3(0.26, 0.019, 0.0015) * (0.4 + uHeat * 0.5);',
+        ].join('\n'),
+      );
   };
-  feather.customProgramCacheKey = () => 'arenova-individual-feather-plumage-v3-flight';
+  feather.customProgramCacheKey = () => 'arenova-phoenix-ember-plumage-v5';
+  // Double-sided transparency is drawn twice by default; one pass is enough
+  // here because every vane is nearly flat and depth-tested.
+  feather.forceSinglePass = true;
 
   const wingBone = new THREE.MeshPhysicalMaterial({
-    color: 0x681721,
-    roughness: 0.58,
-    metalness: 0.02,
-    clearcoat: 0.12,
-    clearcoatRoughness: 0.5,
+    color: 0x6a160c,
+    roughness: 0.72,
+    metalness: 0.0,
+    emissive: 0xff4a12,
+    emissiveIntensity: 0.55,
+    sheen: 0.7,
+    sheenColor: new THREE.Color(0xb03217),
+    sheenRoughness: 0.7,
+    envMap,
+    envMapIntensity: 0.22,
+  });
+  const head = new THREE.MeshPhysicalMaterial({
+    color: 0x7a1216,
+    roughness: 0.68,
+    metalness: 0.0,
+    emissive: 0x8a1a08,
+    emissiveIntensity: 0.22,
+    sheen: 0.85,
+    sheenColor: new THREE.Color(0xff6a34),
+    sheenRoughness: 0.5,
     envMap,
     envMapIntensity: 0.3,
   });
-  const head = new THREE.MeshPhysicalMaterial({
-    color: 0xb72a31,
-    roughness: 0.42,
-    metalness: 0.025,
-    clearcoat: 0.18,
-    clearcoatRoughness: 0.38,
-    envMap,
-    envMapIntensity: 0.4,
-  });
   const beak = new THREE.MeshPhysicalMaterial({
-    color: 0x331813,
-    roughness: 0.36,
-    metalness: 0.08,
-    clearcoat: 0.26,
-    clearcoatRoughness: 0.28,
+    color: 0x9c5a24,
+    roughness: 0.34,
+    metalness: 0.32,
+    clearcoat: 0.24,
+    clearcoatRoughness: 0.3,
     envMap,
-    envMapIntensity: 0.35,
+    envMapIntensity: 0.5,
   });
-  const eyeSocket = new THREE.MeshStandardMaterial({ color: 0x280c0b, roughness: 0.62 });
+  const eyeSocket = new THREE.MeshStandardMaterial({ color: 0x1a0707, roughness: 0.7 });
   const eye = new THREE.MeshStandardMaterial({
-    color: 0xffa62c,
-    emissive: 0xff5b08,
-    emissiveIntensity: 1.55,
-    roughness: 0.2,
+    color: 0xffb347,
+    emissive: 0xff6a10,
+    emissiveIntensity: 1.35,
+    roughness: 0.18,
   });
 
-  const flame = new THREE.ShaderMaterial({
-    uniforms: { uTime: motion.uTime, uHeat: motion.uHeat, uWingLift: motion.uWingLift },
+  // ---------------------------------------------------------------
+  // WING / TAIL HAZE: soft additive ember light that fills the gaps
+  // between vanes so the plumage never reads as black cut-outs.
+  // ---------------------------------------------------------------
+  const haze = new THREE.ShaderMaterial({
+    uniforms: {
+      uTime: motion.uTime,
+      uHeat: motion.uHeat,
+      uStrength: { value: 0.6 },
+    },
     vertexShader: [
-      'attribute float aFlameSeed;',
-      'uniform float uTime;',
-      'uniform float uHeat;',
-      'uniform float uWingLift;',
       'varying vec2 vUv;',
-      'varying float vSeed;',
       'void main() {',
       '  vUv = uv;',
-      '  vSeed = aFlameSeed;',
-      '  vec3 p = position;',
-      '  float pulse = 0.5 + 0.5 * sin(uTime * 4.1 + aFlameSeed * 6.28318);',
-      '  p.x += sin(p.y * 13.0 + uTime * 3.1 + aFlameSeed * 9.0) * (0.032 + 0.085 * p.y) * (0.65 + uHeat);',
-      '  p.x += sin(p.y * 25.0 - uTime * 4.2 + aFlameSeed * 4.0) * 0.018 * p.y;',
-      '  p.z += cos(p.y * 10.0 - uTime * 2.7 + aFlameSeed * 7.0) * 0.032 * p.y * pulse;',
-      '  p.y += sin(p.y * 8.0 + uTime * 3.0 + aFlameSeed * 5.0) * 0.04 * p.y * uHeat + uWingLift * 0.024 * p.y;',
-      '  gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);',
+      '  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);',
       '}',
     ].join('\n'),
     fragmentShader: [
       'uniform float uTime;',
       'uniform float uHeat;',
-      'uniform float uWingLift;',
+      'uniform float uStrength;',
       'varying vec2 vUv;',
-      'varying float vSeed;',
       'void main() {',
-      '  float u = vUv.x;',
-      '  float h = vUv.y;',
-      '  float edge = smoothstep(0.0, 0.16, u) * (1.0 - smoothstep(0.84, 1.0, u));',
-      '  float baseFade = smoothstep(0.0, 0.07, h) * (1.0 - smoothstep(0.88, 1.0, h));',
-      '  float ripple = 0.72 + 0.28 * sin(h * 22.0 - uTime * 4.2 + vSeed * 12.0);',
-      '  float sideCore = exp(-abs(u - 0.5) * 34.0);',
-      '  float hotCore = exp(-abs(u - 0.5) * 48.0) * smoothstep(0.1, 0.4, h) * (1.0 - smoothstep(0.72, 0.96, h));',
-      '  vec3 ember = vec3(0.62, 0.018, 0.004);',
-      '  vec3 scarlet = vec3(1.0, 0.095, 0.008);',
-      '  vec3 orange = vec3(1.0, 0.36, 0.025);',
-      '  vec3 gold = vec3(1.0, 0.92, 0.58);',
-      '  vec3 color = mix(ember, scarlet, smoothstep(0.02, 0.36, h));',
-      '  color = mix(color, orange, smoothstep(0.28, 0.72, h));',
-      '  color = mix(color, gold, smoothstep(0.76, 0.99, h) * 0.92);',
-      '  color += vec3(0.9, 0.64, 0.22) * sideCore * smoothstep(0.2, 0.78, h) * 0.42;',
-      '  color = mix(color, vec3(1.0, 0.78, 0.42), hotCore * 0.38);',
-      '  color = mix(color, vec3(1.0, 0.96, 0.76), sideCore * smoothstep(0.72, 0.96, h) * 0.3);',
-      '  float alpha = edge * baseFade * ripple * (0.82 + uHeat * 0.24 + uWingLift * 0.06);',
-      '  float brightness = 1.32 + sideCore * 0.58 + 0.12 * sin(uTime * 6.0 + vSeed * 20.0) + uWingLift * 0.08;',
-      '  gl_FragColor = vec4(color * brightness * 1.25, alpha);',
+      '  vec2 p = vUv * 2.0 - 1.0;',
+      '  float r = length(p * vec2(0.82, 1.0));',
+      '  float falloff = 1.0 - smoothstep(0.25, 1.0, r);',
+      '  float swirl = 0.86 + 0.14 * sin(p.x * 5.0 + p.y * 3.2 + uTime * 1.4);',
+      '  float alpha = falloff * swirl * uStrength * (0.35 + uHeat * 0.55);',
+      '  if (alpha < 0.006) discard;',
+      '  vec3 color = mix(vec3(0.85, 0.06, 0.003), vec3(1.0, 0.28, 0.02), (1.0 - r) * 0.8);',
+      '  gl_FragColor = vec4(color, alpha);',
       '  #include <tonemapping_fragment>',
       '  #include <colorspace_fragment>',
       '}',
@@ -289,15 +357,18 @@ export function createPhoenixMaterials(renderer: THREE.WebGLRenderer): PhoenixMa
     depthTest: true,
     side: THREE.DoubleSide,
   });
-  flame.toneMapped = false;
+  haze.toneMapped = false;
 
   function update(time: number, scrollProgress: number, wingPower = 0) {
     const progress = THREE.MathUtils.clamp(scrollProgress, 0, 1);
     const awakening = THREE.MathUtils.smoothstep(progress, 0.02, 0.3);
-    const ascent = THREE.MathUtils.smoothstep(progress, 0.78, 1);
+    const rekindle = THREE.MathUtils.smoothstep(progress, 0.7, 1);
     motion.uTime.value = time;
     motion.uProgress.value = progress;
-    motion.uHeat.value = 0.34 + awakening * 0.22 + ascent * 0.28 + THREE.MathUtils.clamp(wingPower, 0, 1) * 0.09;
+    motion.uHeat.value =
+      0.38 + awakening * 0.2 + rekindle * 0.26 + THREE.MathUtils.clamp(wingPower, 0, 1) * 0.1;
+    // Tail flow leans on the same spring that drives the tail rig.
+    motion.uTailFlow.value = Math.sin(time * 1.1) * 0.12 + wingPower * 0.1;
   }
 
   function dispose() {
@@ -308,9 +379,22 @@ export function createPhoenixMaterials(renderer: THREE.WebGLRenderer): PhoenixMa
     beak.dispose();
     eyeSocket.dispose();
     eye.dispose();
-    flame.dispose();
+    haze.dispose();
     envMap.dispose();
   }
 
-  return { sculpture, feather, wingBone, head, beak, eyeSocket, eye, flame, motion, envMap, update, dispose };
+  return {
+    sculpture,
+    feather,
+    wingBone,
+    head,
+    beak,
+    eyeSocket,
+    eye,
+    haze,
+    motion,
+    envMap,
+    update,
+    dispose,
+  };
 }

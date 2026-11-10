@@ -12,8 +12,8 @@ export const BackgroundCanvas: React.FC = () => {
     let disposed = false;
     let controller: SceneController | null = null;
     let scrollFrame = 0;
-    let initialCleanup = () => {};
-    let activeCleanup = () => {};
+    let initialCleanup = () => { };
+    let activeCleanup = () => { };
 
     let observer: IntersectionObserver | null = null;
     if (typeof IntersectionObserver !== 'undefined' && container) {
@@ -38,6 +38,9 @@ export const BackgroundCanvas: React.FC = () => {
         }
         controller = sceneController;
         controllerRef.current = sceneController;
+        if (import.meta.env.DEV) {
+          (window as unknown as Record<string, unknown>).__scene = sceneController;
+        }
 
         let lastScrollY = window.scrollY;
         let lastScrollTime = performance.now();
@@ -79,8 +82,6 @@ export const BackgroundCanvas: React.FC = () => {
           sceneController.resize();
           syncScroll();
         };
-        const motionPreference = window.matchMedia('(prefers-reduced-motion: reduce)');
-        const handleMotionPreference = () => sceneController.setReducedMotion(motionPreference.matches);
         const handleScroll = () => {
           if (scrollFrame) return;
           scrollFrame = requestAnimationFrame(() => {
@@ -89,19 +90,16 @@ export const BackgroundCanvas: React.FC = () => {
           });
         };
 
-        sceneController.setReducedMotion(motionPreference.matches);
         syncScroll();
         window.addEventListener('mousemove', handleMouseMove, { passive: true });
         window.addEventListener('scroll', handleScroll, { passive: true });
         window.addEventListener('resize', handleResize, { passive: true });
-        motionPreference.addEventListener('change', handleMotionPreference);
         activeCleanup = () => {
           if (scrollFrame) cancelAnimationFrame(scrollFrame);
           observer?.disconnect();
           window.removeEventListener('mousemove', handleMouseMove);
           window.removeEventListener('scroll', handleScroll);
           window.removeEventListener('resize', handleResize);
-          motionPreference.removeEventListener('change', handleMotionPreference);
         };
       }).catch((error: unknown) => {
         console.warn('Phoenix experience could not be loaded.', error);
