@@ -105,6 +105,28 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
         item: route.canonicalUrl,
       }
     );
+  } else if (routeKey.startsWith('/blog/')) {
+    breadcrumbItems.push(
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: 'Blog',
+        item: `${SEO_CONFIG.siteUrl}/blog/`,
+      },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: route.title.split('|')[0].trim(),
+        item: route.canonicalUrl,
+      }
+    );
+  } else if (routeKey === '/blog') {
+    breadcrumbItems.push({
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Blog',
+      item: route.canonicalUrl,
+    });
   } else if (routeKey.startsWith('/tools/')) {
     breadcrumbItems.push({
       '@type': 'ListItem',
@@ -145,6 +167,28 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
       serviceType: 'AI Automation & Software Development',
       areaServed: ['United States', 'United Kingdom', 'Canada', 'Australia', 'India'],
       termsOfService: `${SEO_CONFIG.siteUrl}/pricing/`,
+    });
+  }
+
+  // If blog article, attach rich Article Schema
+  if (route.ogType === 'article') {
+    graphNodes.push({
+      '@type': 'TechArticle',
+      '@id': `${route.canonicalUrl}#article`,
+      headline: route.title.split('|')[0].trim(),
+      description: route.description,
+      author: {
+        '@type': 'Person',
+        name: 'Avi',
+        jobTitle: 'Founder & Systems Architect',
+        worksFor: { '@id': `${SEO_CONFIG.siteUrl}/#organization` },
+      },
+      publisher: { '@id': `${SEO_CONFIG.siteUrl}/#organization` },
+      datePublished: '2026-03-01T00:00:00+05:30',
+      dateModified: '2026-11-16T00:00:00+05:30',
+      mainEntityOfPage: route.canonicalUrl,
+      image: `${SEO_CONFIG.siteUrl}/metadata.png`,
+      inLanguage: 'en-US',
     });
   }
 

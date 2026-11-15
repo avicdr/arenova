@@ -16,7 +16,19 @@ import { CustomAiDevelopmentPage } from './pages/services/CustomAiDevelopmentPag
 import { RealEstatePage } from './pages/industries/RealEstatePage';
 import { B2bServicesPage } from './pages/industries/B2bServicesPage';
 import { HealthcarePage } from './pages/industries/HealthcarePage';
+import { RecruitmentPage } from './pages/industries/RecruitmentPage';
+import { MarketingAgenciesPage } from './pages/industries/MarketingAgenciesPage';
+import { SaasPage } from './pages/industries/SaasPage';
+import { AiChatbotPage } from './pages/services/AiChatbotPage';
+import { AiVoiceAgentsPage } from './pages/services/AiVoiceAgentsPage';
+import { WhatsappAutomationPage } from './pages/services/WhatsappAutomationPage';
+import { AiCustomerSupportPage } from './pages/services/AiCustomerSupportPage';
+import { AiSalesAutomationPage } from './pages/services/AiSalesAutomationPage';
 import { RoiCalculatorPage } from './pages/tools/RoiCalculatorPage';
+import { BlogHubPage } from './pages/blog/BlogHubPage';
+import { DeterministicAiPlaybookPage } from './pages/blog/DeterministicAiPlaybookPage';
+import { AiAgentsVsChatbotsPage } from './pages/blog/AiAgentsVsChatbotsPage';
+import { CalculatingAutomationRoiPage } from './pages/blog/CalculatingAutomationRoiPage';
 
 function AppContent() {
   const { pathname, navigate } = useRouter();
@@ -77,14 +89,38 @@ function AppContent() {
         <CrmAutomationPage onNavigate={handleNavigate} />
       ) : pathname === '/services/custom-ai-development' ? (
         <CustomAiDevelopmentPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/ai-chatbot-development' ? (
+        <AiChatbotPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/ai-voice-agents' ? (
+        <AiVoiceAgentsPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/whatsapp-automation' ? (
+        <WhatsappAutomationPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/ai-customer-support' ? (
+        <AiCustomerSupportPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/ai-sales-automation' ? (
+        <AiSalesAutomationPage onNavigate={handleNavigate} />
       ) : pathname === '/industries/real-estate' ? (
         <RealEstatePage onNavigate={handleNavigate} />
       ) : pathname === '/industries/b2b-services' ? (
         <B2bServicesPage onNavigate={handleNavigate} />
       ) : pathname === '/industries/healthcare' ? (
         <HealthcarePage onNavigate={handleNavigate} />
+      ) : pathname === '/industries/recruitment' ? (
+        <RecruitmentPage onNavigate={handleNavigate} />
+      ) : pathname === '/industries/marketing-agencies' ? (
+        <MarketingAgenciesPage onNavigate={handleNavigate} />
+      ) : pathname === '/industries/saas' ? (
+        <SaasPage onNavigate={handleNavigate} />
       ) : pathname === '/tools/automation-roi-calculator' ? (
         <RoiCalculatorPage onNavigate={handleNavigate} />
+      ) : pathname === '/blog' ? (
+        <BlogHubPage onNavigate={handleNavigate} />
+      ) : pathname === '/blog/deterministic-ai-playbook' ? (
+        <DeterministicAiPlaybookPage onNavigate={handleNavigate} />
+      ) : pathname === '/blog/ai-agents-vs-chatbots' ? (
+        <AiAgentsVsChatbotsPage onNavigate={handleNavigate} />
+      ) : pathname === '/blog/calculating-automation-roi' ? (
+        <CalculatingAutomationRoiPage onNavigate={handleNavigate} />
       ) : (
         <HomePage onNavigate={handleNavigate} />
       )}

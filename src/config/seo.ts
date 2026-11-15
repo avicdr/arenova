@@ -15,10 +15,22 @@ export type CanonicalRouteKey =
   | '/services/ai-workflow-automation'
   | '/services/crm-automation'
   | '/services/custom-ai-development'
+  | '/services/ai-chatbot-development'
+  | '/services/ai-voice-agents'
+  | '/services/whatsapp-automation'
+  | '/services/ai-customer-support'
+  | '/services/ai-sales-automation'
   | '/industries/real-estate'
   | '/industries/b2b-services'
   | '/industries/healthcare'
-  | '/tools/automation-roi-calculator';
+  | '/industries/recruitment'
+  | '/industries/marketing-agencies'
+  | '/industries/saas'
+  | '/tools/automation-roi-calculator'
+  | '/blog'
+  | '/blog/deterministic-ai-playbook'
+  | '/blog/ai-agents-vs-chatbots'
+  | '/blog/calculating-automation-roi';
 
 export interface RouteSeoMeta {
   routeKey: CanonicalRouteKey;
@@ -120,6 +132,56 @@ export const ROUTE_SEO: Record<CanonicalRouteKey, RouteSeoMeta> = {
       'custom AI development company, custom AI solutions company, LLM application development, AI software development company, custom AI engineering India',
     ogType: 'website',
   },
+  '/services/ai-chatbot-development': {
+    routeKey: '/services/ai-chatbot-development',
+    canonicalUrl: 'https://arenova.in/services/ai-chatbot-development/',
+    title: 'AI Chatbot Development Company | Enterprise Conversational AI | Arenova',
+    description:
+      'Custom AI chatbot development company. We build intelligent, knowledge-grounded chatbots for customer support deflection, lead capture, and internal knowledge search.',
+    keywords:
+      'AI chatbot development company, custom AI chatbot development, enterprise AI chatbots, conversational AI agency, customer support chatbot development, LLM chatbot agency',
+    ogType: 'website',
+  },
+  '/services/ai-voice-agents': {
+    routeKey: '/services/ai-voice-agents',
+    canonicalUrl: 'https://arenova.in/services/ai-voice-agents/',
+    title: 'AI Voice Agent Development Company | Telephony & Voice AI | Arenova',
+    description:
+      'Engineered AI voice agents for enterprise phone systems. Sub-600ms latency, natural conversation flow, automated appointment scheduling, and CRM voice logging.',
+    keywords:
+      'AI voice agent development, voice AI agents for business, conversational voice AI company, inbound call automation AI, outbound voice scheduling, Twilio voice AI',
+    ogType: 'website',
+  },
+  '/services/whatsapp-automation': {
+    routeKey: '/services/whatsapp-automation',
+    canonicalUrl: 'https://arenova.in/services/whatsapp-automation/',
+    title: 'WhatsApp AI Automation Services | Official Cloud API Systems | Arenova',
+    description:
+      'Enterprise WhatsApp AI automation services built on official Meta Cloud API. 24/7 automated inquiry triage, catalog browsing, appointment booking, and CRM sync.',
+    keywords:
+      'WhatsApp AI automation, WhatsApp automation services, WhatsApp business API automation, WhatsApp customer support bot, WhatsApp CRM automation, Meta cloud API agency',
+    ogType: 'website',
+  },
+  '/services/ai-customer-support': {
+    routeKey: '/services/ai-customer-support',
+    canonicalUrl: 'https://arenova.in/services/ai-customer-support/',
+    title: 'AI Customer Support Automation | Autonomous Helpdesk Triage | Arenova',
+    description:
+      'Deflect 60%+ of routine customer service tickets. Seamless integrations with Zendesk, Freshdesk, and Intercom with zero hallucinations and instant human escalation.',
+    keywords:
+      'AI customer support automation, customer service automation company, automated ticketing resolution, support ticket deflection AI, Zendesk AI automation, helpdesk AI',
+    ogType: 'website',
+  },
+  '/services/ai-sales-automation': {
+    routeKey: '/services/ai-sales-automation',
+    canonicalUrl: 'https://arenova.in/services/ai-sales-automation/',
+    title: 'AI Sales Automation Agency | Inbound Speed-to-Lead & Outreach | Arenova',
+    description:
+      'AI sales automation agency engineering sub-60-second inbound speed-to-lead, waterfall prospect enrichment, customized email sequences, and automated pipeline updates.',
+    keywords:
+      'AI sales automation agency, AI lead generation automation, automated sales pipeline, speed to lead automation, B2B sales automation company, inbound qualification AI',
+    ogType: 'website',
+  },
   '/industries/real-estate': {
     routeKey: '/industries/real-estate',
     canonicalUrl: 'https://arenova.in/industries/real-estate/',
@@ -150,6 +212,36 @@ export const ROUTE_SEO: Record<CanonicalRouteKey, RouteSeoMeta> = {
       'AI automation for healthcare, clinic front desk AI, patient appointment automation, medical practice workflow automation, healthcare appointment booking bot',
     ogType: 'website',
   },
+  '/industries/recruitment': {
+    routeKey: '/industries/recruitment',
+    canonicalUrl: 'https://arenova.in/industries/recruitment/',
+    title: 'AI Automation for Recruitment & Staffing Agencies | Arenova',
+    description:
+      'Automate recruitment workflows: resume parsing against role rubrics, WhatsApp candidate pre-screening, automated interview scheduling, and bidirectional ATS sync.',
+    keywords:
+      'AI automation for recruitment, staffing automation company, automated candidate screening, ATS automation, recruitment agency AI workflows, Greenhouse automation',
+    ogType: 'website',
+  },
+  '/industries/marketing-agencies': {
+    routeKey: '/industries/marketing-agencies',
+    canonicalUrl: 'https://arenova.in/industries/marketing-agencies/',
+    title: 'AI Automation for Marketing Agencies | Client Reporting & Ops | Arenova',
+    description:
+      'Automate marketing agency operations: multi-platform client reporting aggregation (GA4, Meta, Google Ads), intake-to-Slack onboarding, and content QA pipelines.',
+    keywords:
+      'AI automation for marketing agencies, agency operations automation, automated client reporting, marketing workflow automation, client onboarding automation agency',
+    ogType: 'website',
+  },
+  '/industries/saas': {
+    routeKey: '/industries/saas',
+    canonicalUrl: 'https://arenova.in/industries/saas/',
+    title: 'AI Automation for B2B SaaS Companies | Churn Alerts & Onboarding | Arenova',
+    description:
+      'Automate B2B SaaS operations: product telemetry churn warning triggers, automated guided onboarding, bug report reproduction extraction, and billing dispute triage.',
+    keywords:
+      'AI automation for SaaS, SaaS operations automation, product churn alert automation, SaaS user onboarding automation, SaaS customer support AI',
+    ogType: 'website',
+  },
   '/tools/automation-roi-calculator': {
     routeKey: '/tools/automation-roi-calculator',
     canonicalUrl: 'https://arenova.in/tools/automation-roi-calculator/',
@@ -159,6 +251,46 @@ export const ROUTE_SEO: Record<CanonicalRouteKey, RouteSeoMeta> = {
     keywords:
       'AI automation ROI calculator, business automation cost savings calculator, automation savings estimator, AI agent ROI, business workflow cost calculator',
     ogType: 'website',
+  },
+  '/blog': {
+    routeKey: '/blog',
+    canonicalUrl: 'https://arenova.in/blog/',
+    title: 'Engineering Blog & Technical Playbooks | Arenova',
+    description:
+      'In-depth technical guides, systems architecture playbooks, and business automation frameworks written by the engineers at Arenova.',
+    keywords:
+      'AI automation blog, systems architecture guides, enterprise AI playbooks, business process automation engineering, autonomous agent architecture',
+    ogType: 'website',
+  },
+  '/blog/deterministic-ai-playbook': {
+    routeKey: '/blog/deterministic-ai-playbook',
+    canonicalUrl: 'https://arenova.in/blog/deterministic-ai-playbook/',
+    title: 'The Deterministic AI Playbook: Why 70% of Make & Zapier Automations Break | Arenova',
+    description:
+      'Why prompt-only automations fail at scale and how to build dual-layer deterministic automation architectures with strict schemas and dead-letter queues.',
+    keywords:
+      'deterministic AI, why zapier breaks at scale, enterprise workflow automation architecture, LLM validation schemas, fault tolerant automation',
+    ogType: 'article',
+  },
+  '/blog/ai-agents-vs-chatbots': {
+    routeKey: '/blog/ai-agents-vs-chatbots',
+    canonicalUrl: 'https://arenova.in/blog/ai-agents-vs-chatbots/',
+    title: 'Autonomous AI Agents vs Traditional Chatbots: Production Architecture Guide | Arenova',
+    description:
+      'The definitive engineering comparison between rule-based chatbots and autonomous AI agents: memory management, tool execution schemas, and multi-step planning.',
+    keywords:
+      'AI agents vs chatbots, autonomous AI agent architecture, tool execution LLM, multi-agent orchestration, enterprise conversational AI',
+    ogType: 'article',
+  },
+  '/blog/calculating-automation-roi': {
+    routeKey: '/blog/calculating-automation-roi',
+    canonicalUrl: 'https://arenova.in/blog/calculating-automation-roi/',
+    title: 'How to Calculate Business Process Automation ROI (With Real Math) | Arenova',
+    description:
+      'A practical mathematical framework for calculating business automation ROI: labor cost reclamation, error reduction, maintenance budgets, and payback velocity.',
+    keywords:
+      'calculating automation ROI, business process automation return on investment, automation cost formula, operational efficiency metrics',
+    ogType: 'article',
   },
 };
 

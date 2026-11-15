@@ -43,7 +43,7 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
             </p>
           </div>
 
-          <div className="footer-links" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '32px' }}>
+          <div className="footer-links" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))', gap: '28px' }}>
             <nav aria-label="Services">
               <h2>Services</h2>
               <a href="/services/ai-automation/" onClick={(e) => { e.preventDefault(); go('/services/ai-automation/'); }}>AI Automation</a>
@@ -52,6 +52,11 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
               <a href="/services/ai-workflow-automation/" onClick={(e) => { e.preventDefault(); go('/services/ai-workflow-automation/'); }}>Workflow Pipelines</a>
               <a href="/services/crm-automation/" onClick={(e) => { e.preventDefault(); go('/services/crm-automation/'); }}>CRM & Outreach</a>
               <a href="/services/custom-ai-development/" onClick={(e) => { e.preventDefault(); go('/services/custom-ai-development/'); }}>Custom AI Engineering</a>
+              <a href="/services/ai-chatbot-development/" onClick={(e) => { e.preventDefault(); go('/services/ai-chatbot-development/'); }}>AI Chatbots</a>
+              <a href="/services/ai-voice-agents/" onClick={(e) => { e.preventDefault(); go('/services/ai-voice-agents/'); }}>AI Voice Agents</a>
+              <a href="/services/whatsapp-automation/" onClick={(e) => { e.preventDefault(); go('/services/whatsapp-automation/'); }}>WhatsApp Automation</a>
+              <a href="/services/ai-customer-support/" onClick={(e) => { e.preventDefault(); go('/services/ai-customer-support/'); }}>Customer Support AI</a>
+              <a href="/services/ai-sales-automation/" onClick={(e) => { e.preventDefault(); go('/services/ai-sales-automation/'); }}>Sales Automation</a>
             </nav>
 
             <nav aria-label="Industries">
@@ -59,18 +64,25 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
               <a href="/industries/real-estate/" onClick={(e) => { e.preventDefault(); go('/industries/real-estate/'); }}>Real Estate</a>
               <a href="/industries/b2b-services/" onClick={(e) => { e.preventDefault(); go('/industries/b2b-services/'); }}>B2B & Agencies</a>
               <a href="/industries/healthcare/" onClick={(e) => { e.preventDefault(); go('/industries/healthcare/'); }}>Healthcare Clinics</a>
+              <a href="/industries/recruitment/" onClick={(e) => { e.preventDefault(); go('/industries/recruitment/'); }}>Recruitment & Staffing</a>
+              <a href="/industries/marketing-agencies/" onClick={(e) => { e.preventDefault(); go('/industries/marketing-agencies/'); }}>Marketing Studios</a>
+              <a href="/industries/saas/" onClick={(e) => { e.preventDefault(); go('/industries/saas/'); }}>B2B SaaS</a>
             </nav>
 
-            <nav aria-label="Company & Tools">
-              <h2>Company & Tools</h2>
+            <nav aria-label="Engineering & Guides">
+              <h2>Playbooks</h2>
+              <a href="/blog/" onClick={(e) => { e.preventDefault(); go('/blog/'); }}>Engineering Blog</a>
+              <a href="/blog/deterministic-ai-playbook/" onClick={(e) => { e.preventDefault(); go('/blog/deterministic-ai-playbook/'); }}>Deterministic AI</a>
+              <a href="/blog/ai-agents-vs-chatbots/" onClick={(e) => { e.preventDefault(); go('/blog/ai-agents-vs-chatbots/'); }}>AI Agents vs Bots</a>
+              <a href="/blog/calculating-automation-roi/" onClick={(e) => { e.preventDefault(); go('/blog/calculating-automation-roi/'); }}>Calculating ROI</a>
+              <a href="/tools/automation-roi-calculator/" onClick={(e) => { e.preventDefault(); go('/tools/automation-roi-calculator/'); }}>ROI Calculator</a>
+            </nav>
+
+            <nav aria-label="Company">
+              <h2>Company</h2>
               <a href="/about/" onClick={(e) => { e.preventDefault(); go('/about/'); }}>About Arenova</a>
               <a href="/pricing/" onClick={(e) => { e.preventDefault(); go('/pricing/'); }}>Pricing & Scope</a>
-              <a href="/tools/automation-roi-calculator/" onClick={(e) => { e.preventDefault(); go('/tools/automation-roi-calculator/'); }}>ROI Calculator</a>
               <a href="mailto:avi@arenova.in">Email Avi</a>
-            </nav>
-
-            <nav aria-label="Products">
-              <h2>Products</h2>
               <a href="https://frontdesk.arenova.in" target="_blank" rel="noopener noreferrer">
                 Frontdesk <ArrowUpRight aria-hidden="true" />
               </a>

@@ -43,6 +43,26 @@
 - URL: https://arenova.in/services/custom-ai-development/
 - Capabilities: Private VPC model hosting, domain fine-tuning (Llama, Mistral), hybrid semantic/keyword RAG, zero-data-retention compliance, and complete client IP ownership.
 
+### 7. AI Chatbot Development Company (/services/ai-chatbot-development/)
+- URL: https://arenova.in/services/ai-chatbot-development/
+- Capabilities: Knowledge-grounded RAG, ticket deflection, order lookup, appointment booking, multi-channel deployment (Web, WhatsApp, Slack, Zendesk), strict prompt injection defense.
+
+### 8. AI Voice Agent Development (/services/ai-voice-agents/)
+- URL: https://arenova.in/services/ai-voice-agents/
+- Capabilities: Sub-600ms latency voice pipelines, SIP and Twilio telephony integration, natural interruption handling, automated appointment scheduling, and CRM voice logging.
+
+### 9. WhatsApp AI Automation Services (/services/whatsapp-automation/)
+- URL: https://arenova.in/services/whatsapp-automation/
+- Capabilities: Official Meta Cloud API integration, voice memo transcription via Whisper, catalog checkout links, automated reminders, and multi-agent shared inboxes.
+
+### 10. AI Customer Support Automation (/services/ai-customer-support/)
+- URL: https://arenova.in/services/ai-customer-support/
+- Capabilities: Autonomous tier-1 helpdesk resolution for Zendesk, Intercom, and Freshdesk, sentiment churn warning detection, multilingual support, and zero hallucinations.
+
+### 11. AI Sales Automation Agency (/services/ai-sales-automation/)
+- URL: https://arenova.in/services/ai-sales-automation/
+- Capabilities: Sub-60-second speed-to-lead, waterfall prospect enrichment, customized email sequences, automated pipeline updates, and executive meeting prep briefs.
+
 ## Industry Implementations
 
 ### Real Estate (/industries/real-estate/)
@@ -53,6 +73,26 @@
 
 ### Healthcare Administration (/industries/healthcare/)
 - Workflows: Non-clinical patient appointment scheduling, calendar reminders, administrative triage, medical intake form collection. All medical advice is strictly excluded and routed to clinical staff.
+
+### Recruitment & Staffing (/industries/recruitment/)
+- Workflows: Resume parsing against role rubrics, WhatsApp candidate pre-screening, bidirectional ATS sync (Greenhouse, Lever, Bullhorn), and automated calendar booking.
+
+### Marketing Agencies & Studios (/industries/marketing-agencies/)
+- Workflows: Multi-platform performance reporting aggregation (GA4, Meta, Google Ads), intake-to-Slack onboarding, and automated creative QA pipelines.
+
+### B2B SaaS & Platforms (/industries/saas/)
+- Workflows: Product telemetry churn alerts (Mixpanel, Segment, PostHog), guided trial onboarding sequences, and support-to-engineering bug reproduction triage.
+
+## Engineering Playbooks & Research Publications
+
+### The Deterministic AI Playbook (/blog/deterministic-ai-playbook/)
+- Deep engineering analysis on why 70% of Make & Zapier automations break at scale, and the dual-layer architecture (Perception vs. Execution) required for production.
+
+### Autonomous AI Agents vs Traditional Chatbots (/blog/ai-agents-vs-chatbots/)
+- Comprehensive systems comparison: Reactive RAG chatbots vs. goal-directed autonomous agents, four-subsystem agent architecture, and multi-agent coordination.
+
+### Calculating Business Process Automation ROI (/blog/calculating-automation-roi/)
+- Mathematical formulation of business automation return on investment: loaded labor equations, error rework multipliers, and payback velocity modeling.
 
 ## Interactive Tools
 - AI Automation ROI Calculator: https://arenova.in/tools/automation-roi-calculator/

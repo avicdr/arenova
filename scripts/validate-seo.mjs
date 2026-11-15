@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { createServer } from 'vite';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -25,100 +26,36 @@ function logWarn(msg) {
   warningsCount++;
 }
 
-console.log('\n======================================================');
-console.log('--- ARENOVA ECOSYSTEM SEO VALIDATOR & AUDIT ENGINE ---');
-console.log('Target Domain: ' + PRODUCTION_DOMAIN);
-console.log('======================================================\n');
+async function runAudit() {
+  console.log('\n======================================================');
+  console.log('--- ARENOVA ECOSYSTEM SEO VALIDATOR & AUDIT ENGINE ---');
+  console.log('Target Domain: ' + PRODUCTION_DOMAIN);
+  console.log('======================================================\n');
 
-const distExists = fs.existsSync(path.join(rootDir, 'dist', 'index.html'));
+  const distExists = fs.existsSync(path.join(rootDir, 'dist', 'index.html'));
 
-const pageSpecs = [
-  {
-    route: '/',
-    file: distExists ? path.join(rootDir, 'dist', 'index.html') : path.join(rootDir, 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/`,
-  },
-  {
-    route: '/pricing/',
-    file: distExists ? path.join(rootDir, 'dist', 'pricing', 'index.html') : path.join(rootDir, 'pricing', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/pricing/`,
-  },
-  {
-    route: '/about/',
-    file: distExists ? path.join(rootDir, 'dist', 'about', 'index.html') : path.join(rootDir, 'about', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/about/`,
-  },
-  {
-    route: '/services/ai-automation/',
-    file: distExists
-      ? path.join(rootDir, 'dist', 'services', 'ai-automation', 'index.html')
-      : path.join(rootDir, 'services', 'ai-automation', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/services/ai-automation/`,
-  },
-  {
-    route: '/services/ai-agents/',
-    file: distExists
-      ? path.join(rootDir, 'dist', 'services', 'ai-agents', 'index.html')
-      : path.join(rootDir, 'services', 'ai-agents', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/services/ai-agents/`,
-  },
-  {
-    route: '/services/business-process-automation/',
-    file: distExists
-      ? path.join(rootDir, 'dist', 'services', 'business-process-automation', 'index.html')
-      : path.join(rootDir, 'services', 'business-process-automation', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/services/business-process-automation/`,
-  },
-  {
-    route: '/services/ai-workflow-automation/',
-    file: distExists
-      ? path.join(rootDir, 'dist', 'services', 'ai-workflow-automation', 'index.html')
-      : path.join(rootDir, 'services', 'ai-workflow-automation', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/services/ai-workflow-automation/`,
-  },
-  {
-    route: '/services/crm-automation/',
-    file: distExists
-      ? path.join(rootDir, 'dist', 'services', 'crm-automation', 'index.html')
-      : path.join(rootDir, 'services', 'crm-automation', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/services/crm-automation/`,
-  },
-  {
-    route: '/services/custom-ai-development/',
-    file: distExists
-      ? path.join(rootDir, 'dist', 'services', 'custom-ai-development', 'index.html')
-      : path.join(rootDir, 'services', 'custom-ai-development', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/services/custom-ai-development/`,
-  },
-  {
-    route: '/industries/real-estate/',
-    file: distExists
-      ? path.join(rootDir, 'dist', 'industries', 'real-estate', 'index.html')
-      : path.join(rootDir, 'industries', 'real-estate', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/industries/real-estate/`,
-  },
-  {
-    route: '/industries/b2b-services/',
-    file: distExists
-      ? path.join(rootDir, 'dist', 'industries', 'b2b-services', 'index.html')
-      : path.join(rootDir, 'industries', 'b2b-services', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/industries/b2b-services/`,
-  },
-  {
-    route: '/industries/healthcare/',
-    file: distExists
-      ? path.join(rootDir, 'dist', 'industries', 'healthcare', 'index.html')
-      : path.join(rootDir, 'industries', 'healthcare', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/industries/healthcare/`,
-  },
-  {
-    route: '/tools/automation-roi-calculator/',
-    file: distExists
-      ? path.join(rootDir, 'dist', 'tools', 'automation-roi-calculator', 'index.html')
-      : path.join(rootDir, 'tools', 'automation-roi-calculator', 'index.html'),
-    expectedCanonical: `${PRODUCTION_DOMAIN}/tools/automation-roi-calculator/`,
-  },
-];
+  const vite = await createServer({
+    root: rootDir,
+    logLevel: 'error',
+    server: { middlewareMode: true, hmr: false },
+    appType: 'custom',
+  });
+
+  let pageSpecs = [];
+  try {
+    const { ROUTE_SEO } = await vite.ssrLoadModule('/src/config/seo.ts');
+    pageSpecs = Object.keys(ROUTE_SEO).map((routeKey) => {
+      const meta = ROUTE_SEO[routeKey];
+      const relPath = routeKey === '/' ? 'index.html' : path.join(routeKey.replace(/^\//, ''), 'index.html');
+      return {
+        route: routeKey === '/' ? '/' : `${routeKey}/`,
+        file: distExists ? path.join(rootDir, 'dist', relPath) : path.join(rootDir, relPath),
+        expectedCanonical: meta.canonicalUrl,
+      };
+    });
+  } finally {
+    await vite.close();
+  }
 
 const seenTitles = new Map();
 const seenDescriptions = new Map();
@@ -442,10 +379,16 @@ console.log('\n======================================================');
 console.log(`SEO AUDIT COMPLETE: ${errorsCount} Error(s), ${warningsCount} Warning(s)`);
 console.log('======================================================\n');
 
-if (errorsCount > 0) {
-  console.error('\x1b[31m[SEO VALIDATOR] Critical SEO failures detected! Please fix errors above.\x1b[0m');
-  process.exit(1);
-} else {
-  console.log('\x1b[32m[SEO VALIDATOR] All deterministic SEO checks passed successfully!\x1b[0m\n');
-  process.exit(0);
+  if (errorsCount > 0) {
+    console.error('\x1b[31m[SEO VALIDATOR] Critical SEO failures detected! Please fix errors above.\x1b[0m');
+    process.exit(1);
+  } else {
+    console.log('\x1b[32m[SEO VALIDATOR] All deterministic SEO checks passed successfully!\x1b[0m\n');
+    process.exit(0);
+  }
 }
+
+runAudit().catch((err) => {
+  console.error('[SEO VALIDATOR] Fatal execution error:', err);
+  process.exit(1);
+});

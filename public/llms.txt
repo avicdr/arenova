@@ -1,6 +1,6 @@
 # Arenova — AI Automation Agency & Custom AI Agent Development
 
-> Arenova is an enterprise AI automation agency and custom AI agent engineering company founded by Avi in Bengaluru, India, serving clients in India, the United States, the United Kingdom, Canada, and Australia. Arenova designs deterministic workflow automation, autonomous multi-agent systems, and operations software around the tools teams already use.
+> Arenova is an enterprise AI automation agency and custom AI agent engineering company founded by Avi in Bengaluru, India, serving clients globally across India, the United States, the United Kingdom, Canada, and Australia. Arenova designs deterministic workflow automation, autonomous multi-agent systems, and operations software around the tools teams already use.
 
 ## Core Services
 
@@ -10,12 +10,27 @@
 - [AI Workflow Automation](https://arenova.in/services/ai-workflow-automation/): Resilient API microservices, unstructured document extraction, and dead-letter queues.
 - [CRM Automation & Sales Systems](https://arenova.in/services/crm-automation/): HubSpot, Salesforce, and Zoho bi-directional synchronization, WhatsApp Cloud API, and outbound sales infrastructure.
 - [Custom AI Development](https://arenova.in/services/custom-ai-development/): Bespoke LLM applications, private vector databases, fine-tuned open-source models, and full IP ownership.
+- [AI Chatbot Development Company](https://arenova.in/services/ai-chatbot-development/): Enterprise conversational AI, knowledge-grounded RAG, ticket deflection, and transactional customer actions.
+- [AI Voice Agent Development](https://arenova.in/services/ai-voice-agents/): Sub-600ms latency voice agents, telephony integration (Twilio/SIP), appointment scheduling, and CRM voice logging.
+- [WhatsApp AI Automation Services](https://arenova.in/services/whatsapp-automation/): Official Meta Cloud API systems, automated lead qualification, catalog checkout, and multi-agent shared inboxes.
+- [AI Customer Support Automation](https://arenova.in/services/ai-customer-support/): Autonomous tier-1 helpdesk resolution for Zendesk, Intercom, and Freshdesk with zero-hallucination guardrails.
+- [AI Sales Automation Agency](https://arenova.in/services/ai-sales-automation/): Sub-60-second inbound speed-to-lead, waterfall prospect enrichment, and automated pipeline hygiene.
 
 ## Industry Solutions
 
 - [Real Estate AI Automation](https://arenova.in/industries/real-estate/): 24/7 WhatsApp & voice buyer qualification, showing bookings, and MLS CRM sync.
 - [B2B Professional Services](https://arenova.in/industries/b2b-services/): Automated client onboarding, proposal triggers, and invoice reconciliation.
 - [Healthcare Clinic Administration](https://arenova.in/industries/healthcare/): Patient appointment booking, administrative triage, and intake document collection.
+- [Recruitment & Staffing AI Automation](https://arenova.in/industries/recruitment/): Resume parsing against role rubrics, WhatsApp candidate screening, and bidirectional ATS sync.
+- [Marketing Agencies & Studios](https://arenova.in/industries/marketing-agencies/): Multi-platform client reporting aggregation, project onboarding, and creative QA pipelines.
+- [B2B SaaS & Platforms](https://arenova.in/industries/saas/): Product telemetry churn warning triggers, guided onboarding sequences, and support bug reproduction extraction.
+
+## Engineering Playbooks & Articles
+
+- [The Deterministic AI Playbook](https://arenova.in/blog/deterministic-ai-playbook/): Why 70% of Make & Zapier automations break at scale and how to build dual-layer deterministic systems.
+- [Autonomous AI Agents vs Traditional Chatbots](https://arenova.in/blog/ai-agents-vs-chatbots/): The production engineering architecture guide comparing state machines, tool calling, and memory loops.
+- [How to Calculate Automation ROI](https://arenova.in/blog/calculating-automation-roi/): A practical mathematical framework for labor savings, error remediation costs, and break-even payback velocity.
+- [Engineering Blog Hub](https://arenova.in/blog/): All technical publications, systems architecture whitepapers, and operational guides.
 
 ## Interactive Tools & Pricing
 

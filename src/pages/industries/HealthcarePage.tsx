@@ -153,3 +153,4 @@ export const HealthcarePage = ({ onNavigate }: IndustryPageProps) => {
 };
 
 HealthcarePage.displayName = 'HealthcarePage';
+

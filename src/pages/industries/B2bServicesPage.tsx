@@ -153,3 +153,4 @@ export const B2bServicesPage = ({ onNavigate }: IndustryPageProps) => {
 };
 
 B2bServicesPage.displayName = 'B2bServicesPage';
+

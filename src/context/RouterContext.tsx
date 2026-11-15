@@ -14,10 +14,22 @@ const VALID_ROUTES: CanonicalRouteKey[] = [
   '/services/ai-workflow-automation',
   '/services/crm-automation',
   '/services/custom-ai-development',
+  '/services/ai-chatbot-development',
+  '/services/ai-voice-agents',
+  '/services/whatsapp-automation',
+  '/services/ai-customer-support',
+  '/services/ai-sales-automation',
   '/industries/real-estate',
   '/industries/b2b-services',
   '/industries/healthcare',
+  '/industries/recruitment',
+  '/industries/marketing-agencies',
+  '/industries/saas',
   '/tools/automation-roi-calculator',
+  '/blog',
+  '/blog/deterministic-ai-playbook',
+  '/blog/ai-agents-vs-chatbots',
+  '/blog/calculating-automation-roi',
 ];
 
 export function normalizeRouteKey(rawPath: string): CanonicalRouteKey {

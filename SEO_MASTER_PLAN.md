@@ -77,3 +77,4 @@ https://arenova.in/
 - Every route is tested for 0 errors, canonical compliance, Open Graph metadata, and JSON-LD schema validity via `scripts/validate-seo.mjs`.
 - Clean code enforced via `oxlint` and TypeScript compiler (`tsc -b`).
 - Full sitemap re-generation via `scripts/generate-sitemap.mjs`.
+
