@@ -48,6 +48,76 @@ const pageSpecs = [
     file: distExists ? path.join(rootDir, 'dist', 'about', 'index.html') : path.join(rootDir, 'about', 'index.html'),
     expectedCanonical: `${PRODUCTION_DOMAIN}/about/`,
   },
+  {
+    route: '/services/ai-automation/',
+    file: distExists
+      ? path.join(rootDir, 'dist', 'services', 'ai-automation', 'index.html')
+      : path.join(rootDir, 'services', 'ai-automation', 'index.html'),
+    expectedCanonical: `${PRODUCTION_DOMAIN}/services/ai-automation/`,
+  },
+  {
+    route: '/services/ai-agents/',
+    file: distExists
+      ? path.join(rootDir, 'dist', 'services', 'ai-agents', 'index.html')
+      : path.join(rootDir, 'services', 'ai-agents', 'index.html'),
+    expectedCanonical: `${PRODUCTION_DOMAIN}/services/ai-agents/`,
+  },
+  {
+    route: '/services/business-process-automation/',
+    file: distExists
+      ? path.join(rootDir, 'dist', 'services', 'business-process-automation', 'index.html')
+      : path.join(rootDir, 'services', 'business-process-automation', 'index.html'),
+    expectedCanonical: `${PRODUCTION_DOMAIN}/services/business-process-automation/`,
+  },
+  {
+    route: '/services/ai-workflow-automation/',
+    file: distExists
+      ? path.join(rootDir, 'dist', 'services', 'ai-workflow-automation', 'index.html')
+      : path.join(rootDir, 'services', 'ai-workflow-automation', 'index.html'),
+    expectedCanonical: `${PRODUCTION_DOMAIN}/services/ai-workflow-automation/`,
+  },
+  {
+    route: '/services/crm-automation/',
+    file: distExists
+      ? path.join(rootDir, 'dist', 'services', 'crm-automation', 'index.html')
+      : path.join(rootDir, 'services', 'crm-automation', 'index.html'),
+    expectedCanonical: `${PRODUCTION_DOMAIN}/services/crm-automation/`,
+  },
+  {
+    route: '/services/custom-ai-development/',
+    file: distExists
+      ? path.join(rootDir, 'dist', 'services', 'custom-ai-development', 'index.html')
+      : path.join(rootDir, 'services', 'custom-ai-development', 'index.html'),
+    expectedCanonical: `${PRODUCTION_DOMAIN}/services/custom-ai-development/`,
+  },
+  {
+    route: '/industries/real-estate/',
+    file: distExists
+      ? path.join(rootDir, 'dist', 'industries', 'real-estate', 'index.html')
+      : path.join(rootDir, 'industries', 'real-estate', 'index.html'),
+    expectedCanonical: `${PRODUCTION_DOMAIN}/industries/real-estate/`,
+  },
+  {
+    route: '/industries/b2b-services/',
+    file: distExists
+      ? path.join(rootDir, 'dist', 'industries', 'b2b-services', 'index.html')
+      : path.join(rootDir, 'industries', 'b2b-services', 'index.html'),
+    expectedCanonical: `${PRODUCTION_DOMAIN}/industries/b2b-services/`,
+  },
+  {
+    route: '/industries/healthcare/',
+    file: distExists
+      ? path.join(rootDir, 'dist', 'industries', 'healthcare', 'index.html')
+      : path.join(rootDir, 'industries', 'healthcare', 'index.html'),
+    expectedCanonical: `${PRODUCTION_DOMAIN}/industries/healthcare/`,
+  },
+  {
+    route: '/tools/automation-roi-calculator/',
+    file: distExists
+      ? path.join(rootDir, 'dist', 'tools', 'automation-roi-calculator', 'index.html')
+      : path.join(rootDir, 'tools', 'automation-roi-calculator', 'index.html'),
+    expectedCanonical: `${PRODUCTION_DOMAIN}/tools/automation-roi-calculator/`,
+  },
 ];
 
 const seenTitles = new Map();
@@ -326,6 +396,44 @@ if (!fs.existsSync(notFoundPath)) {
     logFail('404.html uses relative ./ asset paths that break on nested missing routes.');
   } else {
     logPass('404.html uses root-relative asset paths.');
+  }
+}
+
+// 6. Validate Favicon & Brand Icons Infrastructure
+console.log('\n[FAVICON AUDIT] Checking Favicon & Brand Icons Infrastructure...');
+const publicOrDist = distExists ? path.join(rootDir, 'dist') : path.join(rootDir, 'public');
+
+const requiredIcons = [
+  { name: 'favicon.svg', test: (buf) => buf.toString('utf-8').includes('<svg') },
+  { name: 'favicon.ico', test: (buf) => buf.length > 2000 && buf.readUInt16LE(4) >= 2 },
+  { name: 'favicon-32x32.png', test: (buf) => buf.length > 500 },
+  { name: 'favicon-16x16.png', test: (buf) => buf.length > 200 },
+  { name: 'apple-touch-icon.png', test: (buf) => buf.length > 5000 },
+  { name: 'site.webmanifest', test: (buf) => buf.toString('utf-8').includes('icons') },
+];
+
+for (const icon of requiredIcons) {
+  const iconPath = path.join(publicOrDist, icon.name);
+  if (!fs.existsSync(iconPath)) {
+    logFail(`Missing critical favicon asset: ${icon.name} in ${path.relative(rootDir, publicOrDist)}`);
+  } else {
+    const buf = fs.readFileSync(iconPath);
+    if (icon.test(buf)) {
+      logPass(`Favicon asset verified: ${icon.name} (${buf.length} bytes)`);
+    } else {
+      logFail(`Favicon asset invalid or corrupt: ${icon.name}`);
+    }
+  }
+}
+
+for (const page of pageSpecs) {
+  if (fs.existsSync(page.file)) {
+    const html = fs.readFileSync(page.file, 'utf-8');
+    if (!html.includes('href="/favicon.svg"')) {
+      logFail(`Route ${page.route} is missing <link rel="icon" type="image/svg+xml" href="/favicon.svg" />`);
+    } else {
+      logPass(`Route ${page.route} has SVG favicon declared.`);
+    }
   }
 }
 

@@ -1,6 +1,5 @@
 import { resolve } from 'path';
 import react from '@vitejs/plugin-react';
-import tailwindcss from '@tailwindcss/vite';
 import { defineConfig, loadEnv } from 'vite';
 
 // https://vite.dev/config/
@@ -11,7 +10,6 @@ export default defineConfig(({ mode }) => {
     base: '/',
     plugins: [
       react(),
-      tailwindcss(),
       {
         name: 'arenova-seo-transform',
         transformIndexHtml(html) {
@@ -28,15 +26,22 @@ export default defineConfig(({ mode }) => {
     build: {
       rollupOptions: {
         input: {
-          main: resolve(__dirname, 'index.html'),
-          pricing: resolve(__dirname, 'pricing/index.html'),
-          about: resolve(__dirname, 'about/index.html'),
+          main: resolve(import.meta.dirname, 'index.html'),
+          pricing: resolve(import.meta.dirname, 'pricing/index.html'),
+          about: resolve(import.meta.dirname, 'about/index.html'),
+          aiAutomation: resolve(import.meta.dirname, 'services/ai-automation/index.html'),
+          aiAgents: resolve(import.meta.dirname, 'services/ai-agents/index.html'),
+          bpa: resolve(import.meta.dirname, 'services/business-process-automation/index.html'),
+          aiWorkflow: resolve(import.meta.dirname, 'services/ai-workflow-automation/index.html'),
+          crmAutomation: resolve(import.meta.dirname, 'services/crm-automation/index.html'),
+          customAi: resolve(import.meta.dirname, 'services/custom-ai-development/index.html'),
+          realEstate: resolve(import.meta.dirname, 'industries/real-estate/index.html'),
+          b2bServices: resolve(import.meta.dirname, 'industries/b2b-services/index.html'),
+          healthcare: resolve(import.meta.dirname, 'industries/healthcare/index.html'),
+          roiCalculator: resolve(import.meta.dirname, 'tools/automation-roi-calculator/index.html'),
         },
         output: {
           manualChunks(id: string) {
-            if (id.includes('node_modules/three/')) {
-              return 'vendor-three';
-            }
             if (id.includes('node_modules/react/') || id.includes('node_modules/react-dom/')) {
               return 'vendor-react';
             }

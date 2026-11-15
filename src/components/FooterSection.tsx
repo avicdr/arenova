@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowUpRight } from 'lucide-react';
 import { useRouter } from '../context/RouterContext';
 
@@ -6,204 +5,87 @@ interface FooterSectionProps {
   onNavigate: (sectionId: string) => void;
 }
 
-export const FooterSection: React.FC<FooterSectionProps> = React.memo(({ onNavigate }) => {
+export function FooterSection({ onNavigate }: FooterSectionProps) {
   const { pathname, navigate } = useRouter();
 
-  const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, target: string) => {
-    e.preventDefault();
+  const go = (target: string) => {
     if (target.startsWith('/')) {
       navigate(target);
+    } else if (pathname === '/') {
+      onNavigate(target);
     } else {
-      if (pathname === '/') {
-        onNavigate(target);
-      } else {
-        navigate(`/#${target}`);
-      }
+      navigate(`/#${target}`);
     }
   };
 
   return (
-    <footer className="cv-auto-footer relative w-full bg-[#0D0D0C] border-t border-[#F3F0E8]/08 pt-16 pb-12 px-6 sm:px-10 lg:px-16 z-10">
-      <div className="max-w-7xl mx-auto flex flex-col gap-12">
-        {/* TOP ROW: BRAND & COLUMNS */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          <div className="lg:col-span-5 flex flex-col gap-5">
+    <footer className="site-footer">
+      <div className="page-frame">
+        <div className="footer-primary" style={{ display: 'grid', gridTemplateColumns: '1.2fr 2fr', gap: '64px' }}>
+          <div className="footer-statement">
             <a
+              className="brand brand--footer"
               href="/"
-              onClick={(e) => handleLinkClick(e, '/')}
-              className="flex items-center gap-3 w-fit"
+              onClick={(event) => {
+                event.preventDefault();
+                go('/');
+              }}
             >
-              <picture>
-                <source type="image/webp" srcSet="/arenova-128.webp" />
-                <img
-                  src="/arenova-128.png"
-                  alt="ARENOVA Logo"
-                  width="36"
-                  height="36"
-                  className="h-9 w-auto object-contain drop-shadow-[0_0_15px_rgba(232,75,44,0.3)]"
-                />
-              </picture>
-              <span className="font-display tracking-[0.2em] text-xl font-bold text-[#F3F0E8]">
-                ARENOVA
-              </span>
+              <img src="/arenova-128.webp" width="40" height="40" alt="" />
+              <span>Arenova</span>
             </a>
-
-            <p className="text-sm text-[#A39E93] leading-relaxed max-w-sm">
-              We engineer enterprise AI automation: business workflow orchestration, autonomous cold outreach engines, and 24/7 front desk capture.
+            <p style={{ marginTop: '16px', lineHeight: 1.65, color: 'var(--inverse-muted)' }}>
+              Deterministic AI systems, custom autonomous agents, and enterprise workflow engineering for teams with complex
+              operational handoffs.
             </p>
-
-            {/* LIVE SYSTEM STATUS */}
-            <div className="inline-flex items-center gap-2.5 px-3 py-1 rounded-full bg-[#161514] border border-[#F3F0E8]/08 text-xs font-mono text-[#A39E93] w-fit">
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-              <span>All automation & outreach clusters operational — 99.98% SLA</span>
-            </div>
+            <p style={{ fontSize: '0.85rem', color: 'var(--inverse-muted)', marginTop: '12px' }}>
+              Bengaluru, India · Global Remote Delivery
+            </p>
           </div>
 
-          {/* COLUMNS */}
-          <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-3 gap-8 text-xs font-mono">
-            {/* SERVICES */}
-            <nav aria-label="Services" className="flex flex-col gap-2.5">
-              <span className="uppercase tracking-widest text-[#E84B2C] font-bold mb-1">
-                Services
-              </span>
-              <a
-                href="/#services"
-                onClick={(e) => handleLinkClick(e, 'services')}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                Business Automation
-              </a>
-              <a
-                href="/#services"
-                onClick={(e) => handleLinkClick(e, 'services')}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                Sales & Outreach
-              </a>
-              <a
-                href="/#services"
-                onClick={(e) => handleLinkClick(e, 'services')}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                AI Frontdesk Agent
-              </a>
-              <a
-                href="/pricing/"
-                onClick={(e) => handleLinkClick(e, '/pricing/')}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                Custom AI Agents
-              </a>
+          <div className="footer-links" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '32px' }}>
+            <nav aria-label="Services">
+              <h2>Services</h2>
+              <a href="/services/ai-automation/" onClick={(e) => { e.preventDefault(); go('/services/ai-automation/'); }}>AI Automation</a>
+              <a href="/services/ai-agents/" onClick={(e) => { e.preventDefault(); go('/services/ai-agents/'); }}>AI Agents</a>
+              <a href="/services/business-process-automation/" onClick={(e) => { e.preventDefault(); go('/services/business-process-automation/'); }}>Process Automation</a>
+              <a href="/services/ai-workflow-automation/" onClick={(e) => { e.preventDefault(); go('/services/ai-workflow-automation/'); }}>Workflow Pipelines</a>
+              <a href="/services/crm-automation/" onClick={(e) => { e.preventDefault(); go('/services/crm-automation/'); }}>CRM & Outreach</a>
+              <a href="/services/custom-ai-development/" onClick={(e) => { e.preventDefault(); go('/services/custom-ai-development/'); }}>Custom AI Engineering</a>
             </nav>
 
-            {/* ECOSYSTEM */}
-            <nav aria-label="Ecosystem" className="flex flex-col gap-2.5">
-              <span className="uppercase tracking-widest text-[#E84B2C] font-bold mb-1">
-                Ecosystem
-              </span>
-              <a
-                href="https://frontdesk.arenova.in"
-                target="_blank"
-                rel="noopener noreferrer"
-                title="Arenova Frontdesk — AI WhatsApp Receptionist"
-                className="group flex flex-col text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
-              >
-                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#E84B2C]">
-                  Frontdesk <ArrowUpRight className="w-3 h-3 opacity-70" />
-                </span>
-                <span className="text-[10px] text-[#A39E93]">AI Voice & WhatsApp</span>
-              </a>
-              <a
-                href="/#ascent"
-                onClick={(e) => handleLinkClick(e, 'contact')}
-                title="Arova — B2B Lead Intelligence"
-                className="group flex flex-col text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
-              >
-                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#FFAA3D]">
-                  Arova Intelligence <ArrowUpRight className="w-3 h-3 opacity-70" />
-                </span>
-                <span className="text-[10px] text-[#A39E93]">B2B Lead Intelligence</span>
-              </a>
-              <a
-                href="https://outreacher.arenova.in"
-                target="_blank"
-                rel="nofollow noopener noreferrer"
-                title="Outreacher — Email Outreach"
-                className="group flex flex-col text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors"
-              >
-                <span className="flex items-center gap-1 font-semibold text-[#F3F0E8] group-hover:text-[#D4AF37]">
-                  Outreacher <ArrowUpRight className="w-3 h-3 opacity-70" />
-                </span>
-                <span className="text-[10px] text-[#A39E93]">Sales Outreach Engine</span>
-              </a>
+            <nav aria-label="Industries">
+              <h2>Industries</h2>
+              <a href="/industries/real-estate/" onClick={(e) => { e.preventDefault(); go('/industries/real-estate/'); }}>Real Estate</a>
+              <a href="/industries/b2b-services/" onClick={(e) => { e.preventDefault(); go('/industries/b2b-services/'); }}>B2B & Agencies</a>
+              <a href="/industries/healthcare/" onClick={(e) => { e.preventDefault(); go('/industries/healthcare/'); }}>Healthcare Clinics</a>
             </nav>
 
-            {/* NAVIGATION & AUDIT */}
-            <nav aria-label="Navigation" className="flex flex-col gap-2.5">
-              <span className="uppercase tracking-widest text-[#E84B2C] font-bold mb-1">
-                Navigation
-              </span>
-              <a
-                href="/#problem"
-                onClick={(e) => handleLinkClick(e, 'problem')}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                Why Us
+            <nav aria-label="Company & Tools">
+              <h2>Company & Tools</h2>
+              <a href="/about/" onClick={(e) => { e.preventDefault(); go('/about/'); }}>About Arenova</a>
+              <a href="/pricing/" onClick={(e) => { e.preventDefault(); go('/pricing/'); }}>Pricing & Scope</a>
+              <a href="/tools/automation-roi-calculator/" onClick={(e) => { e.preventDefault(); go('/tools/automation-roi-calculator/'); }}>ROI Calculator</a>
+              <a href="mailto:avi@arenova.in">Email Avi</a>
+            </nav>
+
+            <nav aria-label="Products">
+              <h2>Products</h2>
+              <a href="https://frontdesk.arenova.in" target="_blank" rel="noopener noreferrer">
+                Frontdesk <ArrowUpRight aria-hidden="true" />
               </a>
-              <a
-                href="/#services"
-                onClick={(e) => handleLinkClick(e, 'services')}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                Services
+              <a href="https://outreacher.arenova.in" target="_blank" rel="noopener noreferrer">
+                Outreacher <ArrowUpRight aria-hidden="true" />
               </a>
-              <a
-                href="/pricing/"
-                onClick={(e) => handleLinkClick(e, '/pricing/')}
-                className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer font-semibold"
-              >
-                Pricing
-              </a>
-              <a
-                href="/about/"
-                onClick={(e) => handleLinkClick(e, '/about/')}
-                className="text-left text-[#FFAA3D] hover:text-[#F3F0E8] transition-colors cursor-pointer font-semibold"
-              >
-                About Us
-              </a>
-              <a
-                href="/#workflow-demo"
-                onClick={(e) => handleLinkClick(e, 'workflow-demo')}
-                className="text-left text-[#A39E93] hover:text-[#F3F0E8] transition-colors cursor-pointer"
-              >
-                System Demo
-              </a>
-              <div className="pt-2">
-                <a
-                  href="/#ascent"
-                  onClick={(e) => handleLinkClick(e, 'contact')}
-                  className="inline-flex items-center gap-1 text-[#E84B2C] hover:underline font-bold cursor-pointer"
-                >
-                  <span>Request Free Audit</span>
-                  <ArrowUpRight className="w-3.5 h-3.5" />
-                </a>
-              </div>
             </nav>
           </div>
         </div>
 
-        {/* BOTTOM METRICS & COPYRIGHT */}
-        <div className="pt-6 border-t border-[#F3F0E8]/08 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-[#A39E93]">
-          <p>© 2026 ARENOVA. All systems engineered with precision.</p>
-          <div className="flex items-center gap-4">
-            <a href="mailto:avi@arenova.in" className="hover:text-[#F3F0E8] transition-colors">
-              Direct: avi@arenova.in
-            </a>
-            <span>•</span>
-            <span>Security: Zero-Trust TLS 1.3</span>
-          </div>
+        <div className="footer-legal" style={{ marginTop: '48px', paddingTop: '24px', borderTop: '1px solid var(--line-inverse)', display: 'flex', justifyContent: 'space-between', color: 'var(--inverse-muted)', fontSize: '0.82rem' }}>
+          <span>© 2026 ARENOVA Systems Architecture. All rights reserved.</span>
+          <span>Bengaluru, India · Serving Clients in US, UK, Canada, Australia & India</span>
         </div>
       </div>
     </footer>
   );
-});
+}

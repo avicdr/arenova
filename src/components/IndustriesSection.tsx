@@ -1,118 +1,58 @@
-import React from 'react';
-import { Stethoscope, Wrench, Building, ArrowRight } from 'lucide-react';
+import { ArrowUpRight } from 'lucide-react';
+import { useRouter } from '../context/RouterContext';
 
-interface IndustriesSectionProps {
-  onNavigate: (sectionId: string) => void;
-}
+const useCases = [
+  {
+    title: 'Clinics and medical practices',
+    slug: '/industries/healthcare/',
+    body: 'Administrative enquiry handling, appointment booking, reminders, intake routing, and human escalation. Clinical decisions remain with qualified medical staff.',
+  },
+  {
+    title: 'B2B services, consultancies & agencies',
+    slug: '/industries/b2b-services/',
+    body: 'Research accounts, enrich decision-makers, trigger onboarding checklists, reconcile retainer hours, and eliminate manual spreadsheet glue.',
+  },
+  {
+    title: 'Real estate agencies & developers',
+    slug: '/industries/real-estate/',
+    body: '24/7 WhatsApp and phone lead qualification, property showing booking, MLS CRM synchronization, and post-viewing feedback capture.',
+  },
+];
 
-export const IndustriesSection: React.FC<IndustriesSectionProps> = React.memo(({ onNavigate }) => {
-  const industries = [
-    {
-      title: 'Clinics & Healthcare Practices',
-      subtitle: 'Dental, aesthetic clinics, physiotherapy & specialists',
-      icon: Stethoscope,
-      impact: 'Zero Missed Patient Bookings',
-      solution:
-        '24/7 AI front desk answering patient calls and WhatsApp inquiries, checking emergency triage, and booking appointment slots directly into your practice management software.',
-      deliverables: ['24/7 emergency dental & medical triage', 'Direct sync with Cliniko, Dentrix & Jane App', 'Automated pre-appointment medical intake via SMS'],
-    },
-    {
-      title: 'Home Services & Contractors',
-      subtitle: 'HVAC, plumbing, electrical, roofing & restoration',
-      icon: Wrench,
-      impact: '<15s Job Site Call Dispatch',
-      solution:
-        'Technicians working on job sites cannot safely answer calls. AI voice & SMS dispatchers qualify job requests, quote estimates, and schedule arrival windows directly.',
-      deliverables: ['Instant phone dispatch while techs are on ladders', 'Sync with ServiceTitan, Jobber & Housecall Pro', 'Automated quote follow-up sequences via SMS'],
-    },
-    {
-      title: 'High-Ticket B2B & Advisory',
-      subtitle: 'Consulting, commercial brokerage & professional services',
-      icon: Building,
-      impact: '3.4x Faster Deal Velocity',
-      solution:
-        'Filter out tire-kickers automatically. AI screens prospect budget, territory, and intent, booking meetings only with qualified decision-makers.',
-      deliverables: ['Automated budget & territory qualification', 'Instant CRM enrichment and lead scoring', 'Automated calendar booking holds for sales teams'],
-    },
-  ];
+export function IndustriesSection() {
+  const { navigate } = useRouter();
 
   return (
-    <section
-      id="industries"
-      className="relative min-h-screen w-full py-28 px-6 sm:px-10 lg:px-16 z-10 flex flex-col justify-center border-t border-[#F3F0E8]/08"
-    >
-      {/* SECTION HEADER */}
-      <div className="max-w-4xl mb-14">
-        <div className="flex items-center gap-3 text-xs tracking-[0.25em] text-[#E84B2C] uppercase font-mono mb-4">
-          <span className="w-2 h-2 rounded-full bg-[#E84B2C]" />
-          <span>PROVEN ACROSS INDUSTRIES</span>
+    <section id="use-cases" className="section use-cases" aria-labelledby="use-cases-title">
+      <div className="page-frame use-cases__grid">
+        <div className="section-heading">
+          <p className="section-index">Industry Solutions</p>
+          <h2 id="use-cases-title">Workflows with high volume, strict rules, and expensive delays.</h2>
+          <p>
+            Arenova is a practical fit when the same handoff happens dozens of times a week, touches several tools, and needs
+            an explicit human exception path.
+          </p>
         </div>
-
-        <h2 className="font-display font-bold text-4xl sm:text-6xl tracking-[-0.02em] text-[#F3F0E8] leading-[0.96] mb-6">
-          Engineered for <br />
-          <span className="text-[#A39E93]">high-volume businesses.</span>
-        </h2>
-
-        <p className="text-base sm:text-lg text-[#A39E93] max-w-2xl leading-relaxed">
-          Whether you run a private surgical clinic or a multi-van HVAC fleet, our systems adapt to your exact booking criteria and tools.
-        </p>
-      </div>
-
-      {/* 3-COLUMN INDUSTRY GRID */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 max-w-6xl">
-        {industries.map((ind, idx) => {
-          const Icon = ind.icon;
-          return (
-            <div
-              key={idx}
-              className="p-8 rounded-2xl bg-[#161514]/80 border border-[#F3F0E8]/08 hover:border-[#E84B2C]/40 transition-all duration-300 backdrop-blur-md flex flex-col justify-between group"
-            >
-              <div>
-                <div className="flex items-center justify-between mb-5">
-                  <div className="w-11 h-11 rounded-xl bg-[#E84B2C]/15 border border-[#E84B2C]/30 flex items-center justify-center text-[#E84B2C]">
-                    <Icon className="w-5 h-5" />
-                  </div>
-                  <span className="text-[11px] font-mono text-[#34D399] px-2.5 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                    {ind.impact}
-                  </span>
-                </div>
-
-                <h3 className="font-display font-bold text-xl text-[#F3F0E8] mb-1 group-hover:text-[#FFAA3D] transition-colors">
-                  {ind.title}
-                </h3>
-
-                <p className="text-xs font-mono text-[#A39E93] mb-4">
-                  {ind.subtitle}
-                </p>
-
-                <p className="text-sm text-[#D0CBC1] leading-relaxed mb-6">
-                  {ind.solution}
-                </p>
-
-                <div className="flex flex-col gap-2 pt-4 border-t border-[#F3F0E8]/08">
-                  {ind.deliverables.map((item, i) => (
-                    <div key={i} className="text-xs text-[#A39E93] flex items-center gap-2">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#E84B2C]" />
-                      <span>{item}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-
-      {/* BOTTOM CTA */}
-      <div className="flex items-center gap-4">
-        <button
-          onClick={() => onNavigate('contact')}
-          className="btn-cinematic px-6 py-3 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs tracking-wider uppercase transition-all shadow-md shadow-[#E84B2C]/20 flex items-center gap-2 cursor-pointer"
-        >
-          <span>Get Industry Blueprint</span>
-          <ArrowRight className="w-4 h-4" />
-        </button>
+        <div className="use-case-list">
+          {useCases.map((item) => (
+            <article key={item.title}>
+              <h3>{item.title}</h3>
+              <p>{item.body}</p>
+              <a
+                href={item.slug}
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate(item.slug);
+                }}
+                className="text-link"
+                style={{ marginTop: '12px', fontSize: '0.85rem' }}
+              >
+                View industry workflows <ArrowUpRight aria-hidden="true" />
+              </a>
+            </article>
+          ))}
+        </div>
       </div>
     </section>
   );
-});
+}

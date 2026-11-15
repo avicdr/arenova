@@ -1,47 +1,69 @@
-# ARENOVA — Comprehensive Technical & Architectural Documentation
+# ARENOVA — FULL TECHNICAL AND ARCHITECTURAL MANIFEST
 
-## Organization Identity
-- Brand Name: ARENOVA
-- Full Legal / Operating Name: ARENOVA Systems Architecture & AI Automation
-- Website: https://arenova.in/
-- Pricing: https://arenova.in/pricing/
-- About: https://arenova.in/about/
-- Primary Contact: avi@arenova.in
-- Headquarters Domain: arenova.in
+## Organization
+- Entity: ARENOVA Systems Architecture & AI Automation
+- Website: https://arenova.in
+- Founder: Avi
+- Location: Bengaluru, Karnataka, India
+- Delivery: Global (United States, United Kingdom, Canada, Australia, India)
+- Primary Positioning: AI Automation Agency, Custom AI Agent Development Company, Business Process Automation Agency
 
-## Core Mission & Architecture
-Arenova designs and deploys resilient, deterministic AI automation systems for modern enterprises. We automate internal operations, outbound sales acquisition, and 24/7 customer triage so organizations eliminate manual clerical friction and scale revenue predictably.
+## Core Philosophy: Deterministic AI Systems
+- Fundamental Axiom: "Language models interpret. Explicit rules, validation schemas, and APIs execute."
+- Zero Hallucination Standard: Probabilistic LLMs are never granted direct, unvalidated write access to production databases or financial APIs. All model outputs must conform to typed Pydantic/Zod schemas before triggering downstream transactions.
+- Exception Handling: Every automated workflow incorporates human-in-the-loop fallback gates for ambiguous inputs, edge cases, or low-confidence model predictions.
 
-## Primary Service Tiers & Pricing
+## Service Offerings & Specifications
 
-### 1. Sales & Outreach Engine ($999/month; 15% discount quarterly)
-- Dedicated cold email infrastructure (15+ warmed secondary domains, SPF/DKIM/DMARC, custom tracking domain).
-- Multi-channel sequences across Cold Email, LinkedIn, and WhatsApp.
-- AI hyper-personalization & B2B lead enrichment (Clay, Apollo).
-- Direct calendar booking & CRM deal pipeline synchronization (target 20–40+ qualified calls/month).
+### 1. AI Automation Agency (/services/ai-automation/)
+- URL: https://arenova.in/services/ai-automation/
+- Capabilities: End-to-end operational handoff engineering, multi-platform integrations, customer intake routing, cross-tool synchronization.
+- Typical Outcomes: 75% reduction in manual data entry hours, sub-minute lead response times, zero dropped customer handoffs.
 
-### 2. Business & Operations Automation ($1,999/month; 15% discount quarterly)
-- End-to-end workflow orchestration (Make.com, n8n, Zapier Enterprise, custom webhooks).
-- Bi-directional synchronization across CRM, ERP, Slack, Microsoft Teams, and Google Workspace.
-- Document & invoice extraction AI to accounting (QuickBooks, Xero, Stripe).
-- Internal company knowledge assistant and automated client onboarding / contract generation.
+### 2. Custom AI Agent Development (/services/ai-agents/)
+- URL: https://arenova.in/services/ai-agents/
+- Frameworks: Python, LangGraph, Pydantic AI, LlamaIndex, pgvector, Meta WhatsApp Cloud API, Twilio.
+- Architecture: 4-layer design comprising Perception/Intent Extraction, Multi-Step Planning Loop, Scoped Tool Execution, and Human Fallback Handover.
 
-### 3. Autonomous Enterprise ($3,499/month; 15% discount quarterly)
-- Full Sales & Outreach + Business & Operations suite plus 24/7 Autonomous AI Frontdesk.
-- Performance marketing conversion funnels (Meta & Google Ads routing & attribution).
-- Custom AI agent development for proprietary SOPs and multi-department orchestration.
-- Dedicated Fractional Systems Architect, priority 2-hour SLA, HIPAA/GDPR alignment.
+### 3. Business Process Automation (/services/business-process-automation/)
+- URL: https://arenova.in/services/business-process-automation/
+- Capabilities: Client & vendor onboarding, invoice & contract reconciliation, cross-departmental approval chains in Slack/Teams, ERP & billing synchronization.
+- Tech Stack: REST/GraphQL APIs, Webhooks, PostgreSQL, Stripe, QuickBooks, Xero, Google Workspace.
 
-### 4. Standalone / Add-on: 24/7 Autonomous AI Frontdesk ($490/month)
-- Inbound voice telephony, WhatsApp Business API, SMS, and web chat triage under 15 seconds.
-- Zero-hallucination guardrails anchored in deterministic schemas.
-- Direct booking into Calendly, Acuity, Cliniko, Dentrix, ServiceTitan, and CRMs.
+### 4. AI Workflow Automation (/services/ai-workflow-automation/)
+- URL: https://arenova.in/services/ai-workflow-automation/
+- Capabilities: Intelligent document processing (IDP) from unstructured PDFs, dead-letter queues, automated retries with exponential backoff, and full operational telemetry.
 
-## Canonical Technical Specifications
-- Canonical Protocol: HTTPS
-- Canonical URLs:
-  - https://arenova.in/
-  - https://arenova.in/pricing/
-  - https://arenova.in/about/
-- Robots Policy: Open indexing across all canonical pages (`Allow: /`).
-- Sitemap: https://arenova.in/sitemap.xml
+### 5. CRM Automation & Sales Outreach (/services/crm-automation/)
+- URL: https://arenova.in/services/crm-automation/
+- Supported CRMs: HubSpot, Salesforce, Zoho CRM, Pipedrive, Close.
+- Capabilities: Bi-directional state synchronization, waterfall data enrichment, secondary domain cold outreach infrastructure, and WhatsApp Business integration.
+
+### 6. Custom AI Development & LLMs (/services/custom-ai-development/)
+- URL: https://arenova.in/services/custom-ai-development/
+- Capabilities: Private VPC model hosting, domain fine-tuning (Llama, Mistral), hybrid semantic/keyword RAG, zero-data-retention compliance, and complete client IP ownership.
+
+## Industry Implementations
+
+### Real Estate (/industries/real-estate/)
+- Workflows: 24/7 WhatsApp & voice buyer qualification, automated showing scheduling, MLS/CRM synchronization, post-inspection follow-up surveys.
+
+### B2B Professional Services (/industries/b2b-services/)
+- Workflows: Client intake routing, automated proposal generation, DocuSign contract triggers, retainer overage monitoring, automated invoice reconciliation.
+
+### Healthcare Administration (/industries/healthcare/)
+- Workflows: Non-clinical patient appointment scheduling, calendar reminders, administrative triage, medical intake form collection. All medical advice is strictly excluded and routed to clinical staff.
+
+## Interactive Tools
+- AI Automation ROI Calculator: https://arenova.in/tools/automation-roi-calculator/
+  Computes annual labor waste, hours recovered, dollar savings, and payback period.
+
+## Pricing Plans (/pricing/)
+- Sales & Outreach: $999/month
+- Business Automation: $1,999/month (Most requested)
+- Connected Automation: $3,499/month
+- AI Frontdesk Add-on: $490/month
+
+## Contact Information
+- Inquiries: avi@arenova.in
+- Audit Request: https://arenova.in/#contact

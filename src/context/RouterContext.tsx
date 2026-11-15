@@ -1,25 +1,39 @@
+/* oxlint-disable react/only-export-components -- Provider and its hook intentionally share this module. */
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import type { CanonicalRouteKey } from '../config/seo';
 import { ROUTE_SEO } from '../config/seo';
 import { generateSchemaGraph } from '../seo/schema';
 
-type CanonicalRouteKey = '/' | '/pricing' | '/about';
+const VALID_ROUTES: CanonicalRouteKey[] = [
+  '/',
+  '/pricing',
+  '/about',
+  '/services/ai-automation',
+  '/services/ai-agents',
+  '/services/business-process-automation',
+  '/services/ai-workflow-automation',
+  '/services/crm-automation',
+  '/services/custom-ai-development',
+  '/industries/real-estate',
+  '/industries/b2b-services',
+  '/industries/healthcare',
+  '/tools/automation-roi-calculator',
+];
 
-function normalizeRouteKey(rawPath: string): CanonicalRouteKey {
+export function normalizeRouteKey(rawPath: string): CanonicalRouteKey {
   const cleaned = rawPath
     .split('#')[0]
     .split('?')[0]
     .replace(/\/index\.html$/, '')
     .replace(/\/+$/, '');
 
-  if (cleaned === '/pricing') return '/pricing';
-  if (cleaned === '/about') return '/about';
-  return '/';
+  const matched = VALID_ROUTES.find((r) => r === cleaned || (r === '/' && cleaned === ''));
+  return matched || '/';
 }
 
-function getCanonicalHrefPath(routeKey: CanonicalRouteKey): string {
-  if (routeKey === '/pricing') return '/pricing/';
-  if (routeKey === '/about') return '/about/';
-  return '/';
+export function getCanonicalHrefPath(routeKey: CanonicalRouteKey): string {
+  if (routeKey === '/') return '/';
+  return `${routeKey}/`;
 }
 
 interface RouterContextType {
@@ -34,7 +48,7 @@ const RouterContext = createContext<RouterContextType>({
 
 function syncHeadForRoute(routeKey: CanonicalRouteKey) {
   if (typeof document === 'undefined') return;
-  const meta = ROUTE_SEO[routeKey];
+  const meta = ROUTE_SEO[routeKey] || ROUTE_SEO['/'];
 
   document.title = meta.title;
 
@@ -58,81 +72,84 @@ function syncHeadForRoute(routeKey: CanonicalRouteKey) {
 
   const jsonLdScript = document.querySelector('script[type="application/ld+json"]');
   if (jsonLdScript) {
-    jsonLdScript.textContent = JSON.stringify(generateSchemaGraph(routeKey));
+    jsonLdScript.textContent = JSON.stringify(generateSchemaGraph(routeKey), null, 2);
   }
 }
 
-export const RouterProvider: React.FC<{
-  children: React.ReactNode;
-  initialPathname?: string;
-}> = ({ children, initialPathname }) => {
+export const RouterProvider: React.FC<{ children: React.ReactNode; initialPathname?: CanonicalRouteKey }> = ({
+  children,
+  initialPathname,
+}) => {
   const [pathname, setPathname] = useState<CanonicalRouteKey>(() => {
-    if (typeof window === 'undefined') {
-      return normalizeRouteKey(initialPathname || '/');
+    if (initialPathname) return initialPathname;
+    if (typeof window !== 'undefined') {
+      return normalizeRouteKey(window.location.pathname);
     }
-    return normalizeRouteKey(window.location.pathname);
+    return '/';
   });
 
-  // Synchronize <head> canonical, title, description, OG & JSON-LD with active route
-  useEffect(() => {
-    syncHeadForRoute(pathname);
-  }, [pathname]);
-
-  useEffect(() => {
-    const handlePopState = () => {
-      setPathname(normalizeRouteKey(window.location.pathname));
-    };
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
-  }, []);
-
   const navigate = useCallback((to: string) => {
-    if (to.startsWith('http://') || to.startsWith('https://') || to.startsWith('//')) {
-      window.location.href = to;
+    if (typeof window === 'undefined') return;
+
+    if (to.includes('#') && !to.startsWith('/#')) {
+      const parts = to.split('#');
+      const routePart = parts[0];
+      const hashPart = parts[1];
+      const targetRoute = normalizeRouteKey(routePart);
+
+      if (window.location.pathname !== getCanonicalHrefPath(targetRoute)) {
+        window.history.pushState(null, '', `${getCanonicalHrefPath(targetRoute)}#${hashPart}`);
+        setPathname(targetRoute);
+        syncHeadForRoute(targetRoute);
+      }
+      setTimeout(() => {
+        const el = document.getElementById(hashPart);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
       return;
     }
 
-    const [pathPart, hashPart] = to.split('#');
-    const targetRoute = normalizeRouteKey(pathPart || '/');
-    const canonicalPath = getCanonicalHrefPath(targetRoute);
-    const currentRoute = normalizeRouteKey(window.location.pathname);
-    const browserTarget = hashPart ? `${canonicalPath}#${hashPart}` : canonicalPath;
+    if (to.startsWith('/#')) {
+      const hash = to.replace('/#', '');
+      if (window.location.pathname !== '/') {
+        window.history.pushState(null, '', `/#${hash}`);
+        setPathname('/');
+        syncHeadForRoute('/');
+      } else {
+        window.history.pushState(null, '', `/#${hash}`);
+      }
+      setTimeout(() => {
+        const el = document.getElementById(hash);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 50);
+      return;
+    }
 
-    if (targetRoute === currentRoute) {
-      if (hashPart) {
-        const el = document.getElementById(hashPart);
-        if (el) {
-          el.scrollIntoView({ behavior: 'smooth' });
-          window.history.pushState(null, '', `#${hashPart}`);
-          return;
-        }
-      } else {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        window.history.pushState(null, '', canonicalPath);
-      }
-    } else {
-      window.history.pushState(null, '', browserTarget);
-      setPathname(targetRoute);
-      if (hashPart) {
-        setTimeout(() => {
-          const el = document.getElementById(hashPart);
-          if (el) {
-            el.scrollIntoView({ behavior: 'smooth' });
-          } else {
-            window.scrollTo({ top: 0 });
-          }
-        }, 150);
-      } else {
-        window.scrollTo({ top: 0 });
-      }
+    const nextRoute = normalizeRouteKey(to);
+    const targetHref = getCanonicalHrefPath(nextRoute);
+
+    if (window.location.pathname !== targetHref) {
+      window.history.pushState(null, '', targetHref);
+      setPathname(nextRoute);
+      syncHeadForRoute(nextRoute);
+      window.scrollTo({ top: 0, behavior: 'instant' });
     }
   }, []);
 
-  return (
-    <RouterContext.Provider value={{ pathname, navigate }}>
-      {children}
-    </RouterContext.Provider>
-  );
+  useEffect(() => {
+    const handlePopState = () => {
+      const currentRoute = normalizeRouteKey(window.location.pathname);
+      setPathname(currentRoute);
+      syncHeadForRoute(currentRoute);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    syncHeadForRoute(pathname);
+
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, [pathname]);
+
+  return <RouterContext.Provider value={{ pathname, navigate }}>{children}</RouterContext.Provider>;
 };
 
 export const useRouter = () => useContext(RouterContext);

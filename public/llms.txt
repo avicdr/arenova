@@ -1,31 +1,36 @@
-# ARENOVA
+# Arenova — AI Automation Agency & Custom AI Agent Development
 
-> Enterprise AI Automation Agency — Business Workflow Automation, Sales & Outreach Pipelines, 24/7 AI Frontdesk, and Autonomous Systems Architecture.
-
-ARENOVA designs, builds, and deploys custom AI automation systems for modern enterprises. We automate sales pipelines, multi-channel cold outreach, internal business operations, and 24/7 customer triage — eliminating manual bottlenecks so companies scale on autopilot.
-
-## Core Pages & Systems
-
-- [Home & Capabilities](https://arenova.in/): Overview of Business & Workflow Automation, Sales & Outreach Automation, 24/7 AI Frontdesk Agents, interactive system demo, and free architecture audit request.
-- [Pricing & Tiers](https://arenova.in/pricing/): Transparent monthly and quarterly investment packages: Sales & Outreach Engine ($999/mo), Business & Operations Automation ($1,999/mo), Autonomous Enterprise ($3,499/mo), and 24/7 AI Frontdesk add-on ($490/mo).
-- [About Arenova](https://arenova.in/about/): Engineering philosophy, four architectural pillars (deterministic logic, deep integration, speed, security), technology stack, and founder background.
+> Arenova is an enterprise AI automation agency and custom AI agent engineering company founded by Avi in Bengaluru, India, serving clients in India, the United States, the United Kingdom, Canada, and Australia. Arenova designs deterministic workflow automation, autonomous multi-agent systems, and operations software around the tools teams already use.
 
 ## Core Services
 
-- [Business & Operations Automation](https://arenova.in/#services): End-to-end operational pipelines connecting CRMs, ERPs, Slack, Google Workspace/Microsoft 365, and billing gateways without human data entry. Document extraction AI, invoice reconciliation, and approval hierarchies.
-- [Sales & Multichannel Outreach Automation](https://arenova.in/#services): Dedicated cold outreach infrastructure (15+ warmed secondary domains, SPF/DKIM/DMARC) paired with AI hyper-personalization, lead enrichment (Clay, Apollo), and automated follow-ups booking 20–40+ sales calls/month.
-- [24/7 AI Front Desk & Receptionist](https://arenova.in/#services): Telephony voice and WhatsApp receptionists that answer inquiries in <15s, qualify leads, answer FAQs with zero hallucination, and book appointments directly into calendars.
+- [AI Automation Agency & Services](https://arenova.in/services/ai-automation/): Production-grade workflow automation for inbound lead qualification, operational handoffs, and back-office pipelines.
+- [Custom AI Agent Development](https://arenova.in/services/ai-agents/): Autonomous goal-directed agents with multi-step reasoning, scoped API tools, and zero-hallucination validation.
+- [Business Process Automation](https://arenova.in/services/business-process-automation/): Connect ERP, CRM, billing, and databases into fault-tolerant automated processes.
+- [AI Workflow Automation](https://arenova.in/services/ai-workflow-automation/): Resilient API microservices, unstructured document extraction, and dead-letter queues.
+- [CRM Automation & Sales Systems](https://arenova.in/services/crm-automation/): HubSpot, Salesforce, and Zoho bi-directional synchronization, WhatsApp Cloud API, and outbound sales infrastructure.
+- [Custom AI Development](https://arenova.in/services/custom-ai-development/): Bespoke LLM applications, private vector databases, fine-tuned open-source models, and full IP ownership.
 
-## Arenova Product Ecosystem
+## Industry Solutions
 
-- [Arenova Frontdesk](https://frontdesk.arenova.in): AI-powered voice & WhatsApp receptionist and calendar booking for clinics and service businesses.
-- [Arova Intelligence](https://arenova.in/#ascent): B2B lead intelligence and intent detection engine (early access via architecture audit).
-- [Outreacher](https://outreacher.arenova.in): Multi-channel cold sales outreach and email deliverability engine.
+- [Real Estate AI Automation](https://arenova.in/industries/real-estate/): 24/7 WhatsApp & voice buyer qualification, showing bookings, and MLS CRM sync.
+- [B2B Professional Services](https://arenova.in/industries/b2b-services/): Automated client onboarding, proposal triggers, and invoice reconciliation.
+- [Healthcare Clinic Administration](https://arenova.in/industries/healthcare/): Patient appointment booking, administrative triage, and intake document collection.
 
-## Contact & Architecture Briefs
+## Interactive Tools & Pricing
 
-- Website: https://arenova.in/
-- Pricing: https://arenova.in/pricing/
-- About: https://arenova.in/about/
-- Consultation: https://arenova.in/#ascent
-- Contact Email: avi@arenova.in
+- [AI Automation ROI & Cost Calculator](https://arenova.in/tools/automation-roi-calculator/): Calculate annual labor hours saved, dollar waste eliminated, and break-even payback period.
+- [Pricing & Scope](https://arenova.in/pricing/): Transparent monthly retainers ($999/mo, $1,999/mo, $3,499/mo, and $490/mo front desk).
+- [About Arenova](https://arenova.in/about/): Engineering principles, founder story (Avi in Bengaluru), and product ecosystem.
+
+## Products
+
+- [Arenova Frontdesk](https://frontdesk.arenova.in): Autonomous voice and WhatsApp inquiry triage and appointment booking.
+- [Outreacher](https://outreacher.arenova.in): B2B outbound email and sales infrastructure.
+- Arova Intelligence: Lead research, waterfall enrichment, and buyer prospecting software.
+
+## Contact & Audits
+
+- Website: https://arenova.in
+- Request an Automation Audit: https://arenova.in/#contact
+- Founder Email: avi@arenova.in

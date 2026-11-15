@@ -1,331 +1,122 @@
-import React, { useState } from 'react';
-import {
-  Send,
-  CheckCircle2,
-  AlertCircle,
-  ShieldCheck,
-  Mail,
-  User,
-  Building,
-  Layers,
-  MessageSquare,
-} from 'lucide-react';
+import { useState } from 'react';
+import { ArrowUpRight, Check, LoaderCircle } from 'lucide-react';
 
-interface AscentSectionProps {
-  onNavigate: (sectionId: string) => void;
-}
+type FormState = 'idle' | 'sending' | 'sent' | 'error';
 
-export const AscentSection: React.FC<AscentSectionProps> = React.memo(() => {
-  const [formData, setFormData] = useState({
-    fullName: '',
-    workEmail: '',
-    companyName: '',
-    serviceInterest: 'Meta & Google Ads + AI Front Desk',
-    monthlyVolume: '50 - 250 enquiries / mo',
-    message: '',
-  });
+const initialData = { fullName: '', workEmail: '', companyName: '', serviceInterest: 'Workflow automation', message: '' };
 
+export function AscentSection() {
+  const [formData, setFormData] = useState(initialData);
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
+  const [formState, setFormState] = useState<FormState>('idle');
 
   const validate = () => {
-    const errs: Record<string, string> = {};
-    if (!formData.fullName.trim()) errs.fullName = 'Please provide your full name.';
-    if (!formData.workEmail.trim() || !/^\S+@\S+\.\S+$/.test(formData.workEmail)) {
-      errs.workEmail = 'Please provide a valid work email address.';
-    }
-    if (!formData.companyName.trim()) errs.companyName = 'Please enter your company or practice name.';
-    if (!formData.message.trim() || formData.message.length < 10) {
-      errs.message = 'Please briefly describe your current bottleneck (at least 10 characters).';
-    }
-    setErrors(errs);
-    return Object.keys(errs).length === 0;
+    const nextErrors: Record<string, string> = {};
+    if (!formData.fullName.trim()) nextErrors.fullName = 'Enter your name.';
+    if (!/^\S+@\S+\.\S+$/.test(formData.workEmail)) nextErrors.workEmail = 'Enter a valid work email address.';
+    if (!formData.companyName.trim()) nextErrors.companyName = 'Enter your company or practice name.';
+    if (formData.message.trim().length < 10) nextErrors.message = 'Describe the workflow in at least 10 characters.';
+    setErrors(nextErrors);
+    const firstInvalid = Object.keys(nextErrors)[0];
+    if (firstInvalid) document.getElementById(firstInvalid)?.focus();
+    return Object.keys(nextErrors).length === 0;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
     if (!validate()) return;
-
-    setIsSubmitting(true);
-
+    setFormState('sending');
     try {
-      await fetch('https://formsubmit.co/ajax/avi@arenova.in', {
+      const response = await fetch('https://formsubmit.co/ajax/avi@arenova.in', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          _subject: `New ARENOVA Architecture Brief: ${formData.fullName} (${formData.companyName})`,
-          _template: 'table',
-          _captcha: 'false',
-          name: formData.fullName,
-          email: formData.workEmail,
-          'Full Name': formData.fullName,
-          'Work Email': formData.workEmail,
-          'Company or Practice': formData.companyName,
-          'Service Needed': formData.serviceInterest,
-          'Monthly Inbound Volume': formData.monthlyVolume,
-          'Operational Challenge': formData.message,
-          'Submission Timestamp': new Date().toLocaleString(),
+          _subject: `New Arenova automation audit: ${formData.companyName}`,
+          _template: 'table', _captcha: 'false',
+          name: formData.fullName, email: formData.workEmail,
+          company: formData.companyName, service: formData.serviceInterest,
+          workflow: formData.message,
         }),
       });
-
-      setSubmitted(true);
-    } catch (err) {
-      console.warn('Form submission dispatch note:', err);
-      setSubmitted(true);
-    } finally {
-      setIsSubmitting(false);
+      if (!response.ok) throw new Error(`Form service returned ${response.status}`);
+      setFormState('sent');
+    } catch {
+      setFormState('error');
     }
+  };
+
+  const update = (field: keyof typeof formData, value: string) => {
+    setFormData((current) => ({ ...current, [field]: value }));
+    if (errors[field]) setErrors((current) => ({ ...current, [field]: '' }));
   };
 
   return (
-    <section
-      id="ascent"
-      className="relative min-h-screen w-full py-28 px-6 sm:px-10 lg:px-16 z-10 flex flex-col justify-center border-t border-[#F3F0E8]/08"
-    >
-      <div id="contact-form" className="max-w-4xl mx-auto w-full">
-        {/* HEADER */}
-        <div className="mb-10 text-center sm:text-left">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1A1918]/80 border border-[#E84B2C]/30 text-xs text-[#E84B2C] font-mono uppercase tracking-wider mb-4">
-            <span className="w-2 h-2 rounded-full bg-[#E84B2C] animate-pulse" />
-            <span>GET AN AUDIT</span>
-          </div>
-
-          <h2 className="font-display font-bold text-4xl sm:text-5xl tracking-[-0.02em] text-[#F3F0E8] leading-tight mb-4">
-            Ready to stop losing <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#F3F0E8] via-[#FFAA3D] to-[#E84B2C]">
-              inbound leads?
-            </span>
-          </h2>
-
-          <p className="text-base text-[#A39E93] max-w-xl">
-            Tell us about your business. We’ll analyze your lead flow and map out a custom customer acquisition and automation architecture.
-          </p>
+    <section id="contact" className="section contact-section" aria-labelledby="contact-title">
+      <div className="page-frame contact-grid">
+        <div className="contact-copy">
+          <p className="section-index">Automation audit</p>
+          <h2 id="contact-title">Bring us one workflow that should run better.</h2>
+          <p>Tell us where work slows down, which tools are involved, and what a good handoff looks like. We’ll use that context to assess the fit.</p>
+          <dl className="contact-notes">
+            <div><dt>Useful context</dt><dd>Current tools, monthly volume, failure points, and required human checks.</dd></div>
+            <div><dt>Good starting scope</dt><dd>One repeated process with a clear trigger, owner, and outcome.</dd></div>
+          </dl>
         </div>
 
-        <div className="p-8 sm:p-12 rounded-3xl glass-panel-glow border border-[#E84B2C]/30 relative overflow-hidden">
-          {/* Luminous Glow Aura */}
-          <div className="absolute top-0 right-0 w-80 h-80 rounded-full bg-[#E84B2C]/10 blur-[100px] pointer-events-none" />
-
-          {submitted ? (
-            <div className="flex flex-col items-center text-center py-12">
-              <div className="w-16 h-16 rounded-full bg-[#E84B2C]/20 border border-[#E84B2C] flex items-center justify-center text-[#E84B2C] mb-6">
-                <CheckCircle2 className="w-8 h-8" />
-              </div>
-
-              <h3 className="font-display font-bold text-3xl text-[#F3F0E8] mb-3">
-                Audit Request Received
-              </h3>
-
-              <p className="text-sm text-[#A39E93] max-w-md mb-6 leading-relaxed">
-                Thank you, <span className="text-[#F3F0E8] font-semibold">{formData.fullName}</span>.
-                Your brief for <span className="text-[#E84B2C] font-mono">{formData.companyName}</span> has
-                been dispatched directly to our systems team.
-              </p>
-
-              <div className="p-4 rounded-2xl bg-[#141312] border border-[#F3F0E8]/10 text-xs font-mono text-left max-w-md w-full mb-8">
-                <div className="flex items-center justify-between pb-2 border-b border-[#F3F0E8]/08 mb-2">
-                  <span className="text-[#A39E93]">DISPATCH STATUS</span>
-                  <span className="text-emerald-400">ROUTED TO AVI@ARENOVA.IN</span>
-                </div>
-                <p className="text-[#A39E93]">Direct Delivery: <span className="text-[#F3F0E8]">avi@arenova.in</span></p>
-                <p className="text-[#A39E93]">Primary Service: <span className="text-[#F3F0E8]">{formData.serviceInterest}</span></p>
-                <p className="text-[#A39E93]">Volume Tier: <span className="text-[#F3F0E8]">{formData.monthlyVolume}</span></p>
-                <p className="text-[#A39E93]">Response Window: <span className="text-[#E84B2C]">&lt; 2 Business Hours</span></p>
-              </div>
-
-              <button
-                onClick={() => {
-                  setSubmitted(false);
-                  setFormData({
-                    fullName: '',
-                    workEmail: '',
-                    companyName: '',
-                    serviceInterest: 'Meta & Google Ads + AI Front Desk',
-                    monthlyVolume: '50 - 250 enquiries / mo',
-                    message: '',
-                  });
-                }}
-                className="px-6 py-2.5 rounded-full bg-[#1F1E1C] hover:bg-[#282725] border border-[#F3F0E8]/15 text-xs font-mono uppercase tracking-wider text-[#F3F0E8] cursor-pointer"
-              >
-                Submit another request
+        <div className="contact-form-wrap">
+          {formState === 'sent' ? (
+            <div className="form-result" role="status">
+              <Check aria-hidden="true" />
+              <h3>Audit request sent</h3>
+              <p>We received the workflow details for {formData.companyName}.</p>
+              <button className="text-link" onClick={() => { setFormData(initialData); setFormState('idle'); }}>
+                Send another request
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col gap-6 relative z-10">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                {/* FULL NAME */}
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="fullName" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
-                    <User className="w-3.5 h-3.5 text-[#E84B2C]" />
-                    <span>Your Full Name *</span>
-                  </label>
-                  <input
-                    id="fullName"
-                    type="text"
-                    name="fullName"
-                    autoComplete="name"
-                    value={formData.fullName}
-                    onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
-                    placeholder="Alexander Wright"
-                    className="w-full px-4 py-3.5 rounded-xl bg-[#111110] border border-[#F3F0E8]/10 text-sm text-[#F3F0E8] placeholder-[#A39E93]/40 focus:outline-none focus:border-[#E84B2C] transition-colors"
-                  />
-                  {errors.fullName && (
-                    <span className="text-xs text-rose-400 flex items-center gap-1 mt-1">
-                      <AlertCircle className="w-3 h-3" />
-                      {errors.fullName}
-                    </span>
-                  )}
-                </div>
-
-                {/* WORK EMAIL */}
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="workEmail" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
-                    <Mail className="w-3.5 h-3.5 text-[#E84B2C]" />
-                    <span>Work Email *</span>
-                  </label>
-                  <input
-                    id="workEmail"
-                    type="email"
-                    name="workEmail"
-                    autoComplete="email"
-                    value={formData.workEmail}
-                    onChange={(e) => setFormData({ ...formData, workEmail: e.target.value })}
-                    placeholder="alexander@company.com"
-                    className="w-full px-4 py-3.5 rounded-xl bg-[#111110] border border-[#F3F0E8]/10 text-sm text-[#F3F0E8] placeholder-[#A39E93]/40 focus:outline-none focus:border-[#E84B2C] transition-colors"
-                  />
-                  {errors.workEmail && (
-                    <span className="text-xs text-rose-400 flex items-center gap-1 mt-1">
-                      <AlertCircle className="w-3 h-3" />
-                      {errors.workEmail}
-                    </span>
-                  )}
-                </div>
+            <form onSubmit={handleSubmit} noValidate>
+              <div className="form-row">
+                <Field label="Name" id="fullName" error={errors.fullName}>
+                  <input id="fullName" name="fullName" autoComplete="name" value={formData.fullName}
+                    aria-invalid={Boolean(errors.fullName)} aria-describedby={errors.fullName ? 'fullName-error' : undefined}
+                    onChange={(event) => update('fullName', event.target.value)} />
+                </Field>
+                <Field label="Work email" id="workEmail" error={errors.workEmail}>
+                  <input id="workEmail" name="workEmail" type="email" autoComplete="email" value={formData.workEmail}
+                    aria-invalid={Boolean(errors.workEmail)} aria-describedby={errors.workEmail ? 'workEmail-error' : undefined}
+                    onChange={(event) => update('workEmail', event.target.value)} />
+                </Field>
               </div>
-
-              {/* COMPANY NAME */}
-              <div className="flex flex-col gap-2">
-                <label htmlFor="companyName" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
-                  <Building className="w-3.5 h-3.5 text-[#E84B2C]" />
-                  <span>Company or Practice Name *</span>
-                </label>
-                <input
-                  id="companyName"
-                  type="text"
-                  name="companyName"
-                  autoComplete="organization"
-                  value={formData.companyName}
-                  onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
-                  placeholder="Acme Clinic / Vance Logistics"
-                  className="w-full px-4 py-3.5 rounded-xl bg-[#111110] border border-[#F3F0E8]/10 text-sm text-[#F3F0E8] placeholder-[#A39E93]/40 focus:outline-none focus:border-[#E84B2C] transition-colors"
-                />
-                {errors.companyName && (
-                  <span className="text-xs text-rose-400 flex items-center gap-1 mt-1">
-                    <AlertCircle className="w-3 h-3" />
-                    {errors.companyName}
-                  </span>
-                )}
-              </div>
-
-              {/* SERVICE OF INTEREST */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="serviceInterest" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
-                    <Layers className="w-3.5 h-3.5 text-[#E84B2C]" />
-                    <span>Primary Service Needed</span>
-                  </label>
-                  <select
-                    id="serviceInterest"
-                    name="serviceInterest"
-                    aria-label="Primary Service Needed"
-                    value={formData.serviceInterest}
-                    onChange={(e) => setFormData({ ...formData, serviceInterest: e.target.value })}
-                    className="w-full px-4 py-3.5 rounded-xl bg-[#111110] border border-[#F3F0E8]/10 text-sm text-[#F3F0E8] focus:outline-none focus:border-[#E84B2C] transition-colors"
-                  >
-                    <option value="Meta & Google Ads + AI Front Desk">Meta & Google Ads + AI Front Desk (Full Engine)</option>
-                    <option value="AI Front Desk Agents">AI Front Desk (Voice & WhatsApp)</option>
-                    <option value="Meta & Google Ads (Performance Marketing)">Meta & Google Ads Management</option>
-                    <option value="Workflow Automation">Workflow & System Automation</option>
-                    <option value="Conversion-Engineered Website">Conversion-Engineered Website</option>
-                  </select>
-                </div>
-
-                {/* MONTHLY ENQUIRY VOLUME */}
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="monthlyVolume" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8]">
-                    Monthly Inbound Enquiries
-                  </label>
-                  <select
-                    id="monthlyVolume"
-                    name="monthlyVolume"
-                    aria-label="Monthly Inbound Enquiries"
-                    value={formData.monthlyVolume}
-                    onChange={(e) => setFormData({ ...formData, monthlyVolume: e.target.value })}
-                    className="w-full px-4 py-3.5 rounded-xl bg-[#111110] border border-[#F3F0E8]/10 text-sm text-[#F3F0E8] focus:outline-none focus:border-[#E84B2C] transition-colors"
-                  >
-                    <option value="< 50 / mo">&lt; 50 enquiries / month</option>
-                    <option value="50 - 250 / mo">50 – 250 enquiries / month</option>
-                    <option value="250 - 1,000 / mo">250 – 1,000 enquiries / month</option>
-                    <option value="1,000+ / mo">1,000+ enquiries / month</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* MESSAGE / BOTTLENECK DESCRIPTION */}
-              <div className="flex flex-col gap-2">
-                <label htmlFor="message" className="text-xs font-mono uppercase tracking-wider text-[#F3F0E8] flex items-center gap-2">
-                  <MessageSquare className="w-3.5 h-3.5 text-[#E84B2C]" />
-                  <span>Current Bottleneck or Target *</span>
-                </label>
-                <textarea
-                  id="message"
-                  rows={4}
-                  name="message"
-                  value={formData.message}
-                  onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  placeholder="e.g. We are spending $5k/mo on Google Ads but losing leads after 5 PM because staff can't answer calls. We need an automated receptionist and CRM sync."
-                  className="w-full px-4 py-3.5 rounded-xl bg-[#111110] border border-[#F3F0E8]/10 text-sm text-[#F3F0E8] placeholder-[#A39E93]/40 focus:outline-none focus:border-[#E84B2C] transition-colors resize-none"
-                />
-                {errors.message && (
-                  <span className="text-xs text-rose-400 flex items-center gap-1 mt-1">
-                    <AlertCircle className="w-3 h-3" />
-                    {errors.message}
-                  </span>
-                )}
-              </div>
-
-              {/* SUBMIT BUTTON */}
-              <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-                <div className="flex items-center gap-2 text-xs text-[#A39E93]">
-                  <ShieldCheck className="w-4 h-4 text-emerald-400" />
-                  <span>Dispatched directly to avi@arenova.in. Zero spam.</span>
-                </div>
-
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="w-full sm:w-auto btn-cinematic px-8 py-4 rounded-full bg-[#E84B2C] hover:bg-[#D94022] text-[#111110] font-bold text-xs uppercase tracking-wider shadow-lg shadow-[#E84B2C]/25 transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
-                >
-                  {isSubmitting ? (
-                    <>
-                      <div className="w-4 h-4 rounded-full border-2 border-white border-t-transparent animate-spin" />
-                      <span>Dispatching Brief...</span>
-                    </>
-                  ) : (
-                    <>
-                      <span>Submit Architecture Brief</span>
-                      <Send className="w-4 h-4" />
-                    </>
-                  )}
-                </button>
-              </div>
+              <Field label="Company or practice" id="companyName" error={errors.companyName}>
+                <input id="companyName" name="companyName" autoComplete="organization" value={formData.companyName}
+                  aria-invalid={Boolean(errors.companyName)} aria-describedby={errors.companyName ? 'companyName-error' : undefined}
+                  onChange={(event) => update('companyName', event.target.value)} />
+              </Field>
+              <Field label="System to discuss" id="serviceInterest">
+                <select id="serviceInterest" name="serviceInterest" value={formData.serviceInterest}
+                  onChange={(event) => update('serviceInterest', event.target.value)}>
+                  <option>Workflow automation</option><option>Sales outreach system</option><option>AI front desk</option><option>Custom AI agent</option>
+                </select>
+              </Field>
+              <Field label="Current workflow and bottleneck" id="message" error={errors.message}>
+                <textarea id="message" name="message" rows={5} value={formData.message}
+                  aria-invalid={Boolean(errors.message)} aria-describedby={errors.message ? 'message-error' : undefined}
+                  onChange={(event) => update('message', event.target.value)} />
+              </Field>
+              {formState === 'error' && (
+                <p className="form-error" role="alert">The form could not be sent. Email <a href="mailto:avi@arenova.in">avi@arenova.in</a> instead.</p>
+              )}
+              <button className="button button--primary form-submit" type="submit" disabled={formState === 'sending'}>
+                {formState === 'sending' ? <><LoaderCircle className="spinner" aria-hidden="true" /> Sending request</> : <>Request an automation audit <ArrowUpRight aria-hidden="true" /></>}
+              </button>
             </form>
           )}
         </div>
       </div>
     </section>
   );
-});
+}
+
+function Field({ label, id, error, children }: { label: string; id: string; error?: string; children: React.ReactNode }) {
+  return <div className="field"><label htmlFor={id}>{label}</label>{children}{error && <p id={`${id}-error`} className="field-error">{error}</p>}</div>;
+}

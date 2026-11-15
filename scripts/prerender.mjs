@@ -12,6 +12,28 @@ const routesToPrerender = [
   { route: '/', distHtml: path.join(distDir, 'index.html') },
   { route: '/pricing', distHtml: path.join(distDir, 'pricing', 'index.html') },
   { route: '/about', distHtml: path.join(distDir, 'about', 'index.html') },
+  { route: '/services/ai-automation', distHtml: path.join(distDir, 'services', 'ai-automation', 'index.html') },
+  { route: '/services/ai-agents', distHtml: path.join(distDir, 'services', 'ai-agents', 'index.html') },
+  {
+    route: '/services/business-process-automation',
+    distHtml: path.join(distDir, 'services', 'business-process-automation', 'index.html'),
+  },
+  {
+    route: '/services/ai-workflow-automation',
+    distHtml: path.join(distDir, 'services', 'ai-workflow-automation', 'index.html'),
+  },
+  { route: '/services/crm-automation', distHtml: path.join(distDir, 'services', 'crm-automation', 'index.html') },
+  {
+    route: '/services/custom-ai-development',
+    distHtml: path.join(distDir, 'services', 'custom-ai-development', 'index.html'),
+  },
+  { route: '/industries/real-estate', distHtml: path.join(distDir, 'industries', 'real-estate', 'index.html') },
+  { route: '/industries/b2b-services', distHtml: path.join(distDir, 'industries', 'b2b-services', 'index.html') },
+  { route: '/industries/healthcare', distHtml: path.join(distDir, 'industries', 'healthcare', 'index.html') },
+  {
+    route: '/tools/automation-roi-calculator',
+    distHtml: path.join(distDir, 'tools', 'automation-roi-calculator', 'index.html'),
+  },
 ];
 
 async function prerender() {
@@ -54,4 +76,3 @@ prerender().catch((err) => {
   console.error('[SSR PRERENDER] Failed:', err);
   process.exit(1);
 });
-

@@ -1,172 +1,102 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
-import type Lenis from 'lenis';
+import { useCallback, useEffect, useState } from 'react';
+import type { CanonicalRouteKey } from './config/seo';
 import { RouterProvider, useRouter } from './context/RouterContext';
-import { Navigation } from './components/Navigation';
-import { BackgroundCanvas } from './components/BackgroundCanvas';
 import { Analytics } from './components/Analytics';
 import { FooterSection } from './components/FooterSection';
+import { Navigation } from './components/Navigation';
+import { AboutPage } from './pages/AboutPage';
 import { HomePage } from './pages/HomePage';
 import { PricingPage } from './pages/PricingPage';
-import { AboutPage } from './pages/AboutPage';
+import { AiAutomationPage } from './pages/services/AiAutomationPage';
+import { AiAgentsPage } from './pages/services/AiAgentsPage';
+import { BusinessProcessAutomationPage } from './pages/services/BusinessProcessAutomationPage';
+import { AiWorkflowAutomationPage } from './pages/services/AiWorkflowAutomationPage';
+import { CrmAutomationPage } from './pages/services/CrmAutomationPage';
+import { CustomAiDevelopmentPage } from './pages/services/CustomAiDevelopmentPage';
+import { RealEstatePage } from './pages/industries/RealEstatePage';
+import { B2bServicesPage } from './pages/industries/B2bServicesPage';
+import { HealthcarePage } from './pages/industries/HealthcarePage';
+import { RoiCalculatorPage } from './pages/tools/RoiCalculatorPage';
 
 function AppContent() {
   const { pathname, navigate } = useRouter();
-  const [activeSection, setActiveSection] = useState('awakening');
-  const lenisRef = useRef<Lenis | null>(null);
+  const [activeSection, setActiveSection] = useState('top');
 
-  // Initialize Lenis Smooth Scroll on desktop upon user interaction
-  useEffect(() => {
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const isTouchOrMobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
-    if (prefersReducedMotion || isTouchOrMobile) {
-      return;
-    }
-
-    let disposed = false;
-    let rafId = 0;
-
-    const startLenis = () => {
-      if (disposed || lenisRef.current) return;
-      cleanupTriggers();
-
-      import('lenis').then(({ default: LenisClass }) => {
-        if (disposed || lenisRef.current) return;
-        const lenis = new LenisClass({
-          duration: 1.0,
-          easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-          orientation: 'vertical',
-          gestureOrientation: 'vertical',
-          smoothWheel: true,
-          wheelMultiplier: 1.15,
-        });
-
-        lenisRef.current = lenis;
-
-        function raf(time: number) {
-          lenis.raf(time);
-          rafId = requestAnimationFrame(raf);
-        }
-        rafId = requestAnimationFrame(raf);
-      });
-    };
-
-    const cleanupTriggers = () => {
-      window.removeEventListener('wheel', startLenis);
-      window.removeEventListener('scroll', startLenis);
-    };
-
-    window.addEventListener('wheel', startLenis, { passive: true, once: true });
-    window.addEventListener('scroll', startLenis, { passive: true, once: true });
-
-    return () => {
-      disposed = true;
-      cleanupTriggers();
-      if (rafId) cancelAnimationFrame(rafId);
-      lenisRef.current?.destroy();
-      lenisRef.current = null;
-    };
-  }, []);
-
-  // Update active section based on scroll position (when on homepage)
   useEffect(() => {
     if (pathname !== '/') return;
-
-    const sectionIds = [
-      'awakening',
-      'problem',
-      'services',
-      'workflow-demo',
-      'industries',
-      'ascent',
-    ];
-
+    const sectionIds = ['top', 'services', 'system', 'use-cases', 'contact'];
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActiveSection(visible.target.id);
       },
-      {
-        rootMargin: '-30% 0px -30% 0px',
-        threshold: 0.1,
-      }
+      { rootMargin: '-32% 0px -52%', threshold: [0.05, 0.35] }
     );
-
     sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (el) observer.observe(el);
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
     });
-
     return () => observer.disconnect();
   }, [pathname]);
 
   const handleNavigate = useCallback(
     (sectionId: string) => {
+      const target = sectionId === 'contact' ? 'contact' : sectionId;
       if (pathname !== '/') {
-        navigate(`/#${sectionId === 'contact' ? 'ascent' : sectionId}`);
+        navigate(`/#${target}`);
         return;
       }
-
-      requestAnimationFrame(() => {
-        if (sectionId === 'contact') {
-          const contactEl = document.getElementById('contact-form') || document.getElementById('ascent');
-          if (contactEl) {
-            if (lenisRef.current) {
-              lenisRef.current.scrollTo(contactEl, { offset: -80 });
-            } else {
-              contactEl.scrollIntoView({ behavior: 'smooth' });
-            }
-          }
-          return;
-        }
-
-        const targetEl = document.getElementById(sectionId);
-        if (targetEl) {
-          if (lenisRef.current) {
-            lenisRef.current.scrollTo(targetEl, { offset: -60 });
-          } else {
-            targetEl.scrollIntoView({ behavior: 'smooth' });
-          }
-        }
-      });
+      const element = document.getElementById(target);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        window.history.pushState(null, '', target === 'top' ? '/' : `/#${target}`);
+      }
     },
-    [pathname, navigate]
+    [navigate, pathname]
   );
 
   return (
-    <div className="relative min-h-screen bg-[#111110] text-[#F3F0E8] overflow-x-hidden selection:bg-[#E84B2C] selection:text-white">
-      {/* ANALYTICS INJECTION (CONFIG-AWARE) */}
+    <div className="site-shell">
       <Analytics />
-
-      {/* PERSISTENT 3D PHOENIX & ENVIRONMENTAL CANVAS */}
-      <BackgroundCanvas />
-
-      {/* TOP FLOATING NAVIGATION */}
       <Navigation activeSection={activeSection} onNavigate={handleNavigate} />
-
-      {/* ROUTE-BASED CONTENT */}
       {pathname === '/pricing' ? (
         <PricingPage onNavigate={handleNavigate} />
       ) : pathname === '/about' ? (
         <AboutPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/ai-automation' ? (
+        <AiAutomationPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/ai-agents' ? (
+        <AiAgentsPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/business-process-automation' ? (
+        <BusinessProcessAutomationPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/ai-workflow-automation' ? (
+        <AiWorkflowAutomationPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/crm-automation' ? (
+        <CrmAutomationPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/custom-ai-development' ? (
+        <CustomAiDevelopmentPage onNavigate={handleNavigate} />
+      ) : pathname === '/industries/real-estate' ? (
+        <RealEstatePage onNavigate={handleNavigate} />
+      ) : pathname === '/industries/b2b-services' ? (
+        <B2bServicesPage onNavigate={handleNavigate} />
+      ) : pathname === '/industries/healthcare' ? (
+        <HealthcarePage onNavigate={handleNavigate} />
+      ) : pathname === '/tools/automation-roi-calculator' ? (
+        <RoiCalculatorPage onNavigate={handleNavigate} />
       ) : (
         <HomePage onNavigate={handleNavigate} />
       )}
-
-      {/* FOOTER */}
       <FooterSection onNavigate={handleNavigate} />
     </div>
   );
 }
 
-export function App({ initialPathname }: { initialPathname?: string }) {
+export default function App({ initialPathname }: { initialPathname?: CanonicalRouteKey }) {
   return (
     <RouterProvider initialPathname={initialPathname}>
       <AppContent />
     </RouterProvider>
   );
 }
-
-export default App;
