@@ -40,6 +40,7 @@
 
 ## Products
 
+- [Menzy](https://menzy.arenova.in): Interactive 3D digital menus, contactless QR table ordering, and live kitchen display systems for restaurants.
 - [Arenova Frontdesk](https://frontdesk.arenova.in): Autonomous voice and WhatsApp inquiry triage and appointment booking.
 - [Outreacher](https://outreacher.arenova.in): B2B outbound email and sales infrastructure.
 - Arova Intelligence: Lead research, waterfall enrichment, and buyer prospecting software.

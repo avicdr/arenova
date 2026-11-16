@@ -11,6 +11,7 @@ const principles = [
 ];
 
 const products = [
+  { name: 'Menzy', type: 'Restaurant AI & QR Menus', description: 'Interactive 3D digital menus, contactless QR ordering, and live kitchen display for modern dining venues.', href: 'https://menzy.arenova.in' },
   { name: 'Arenova Frontdesk', type: 'Voice and WhatsApp', description: 'Handles routine enquiries, booking, approved answers, and staff escalation.', href: 'https://frontdesk.arenova.in' },
   { name: 'Outreacher', type: 'Outbound infrastructure', description: 'Supports managed email outreach and multi-stage sales workflows.', href: 'https://outreacher.arenova.in' },
   { name: 'Arova Intelligence', type: 'Lead intelligence', description: 'Research and enrichment workflows for evidence-backed B2B prospecting.', href: '/#contact' },

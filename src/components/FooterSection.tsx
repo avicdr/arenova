@@ -88,13 +88,16 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
               <h2>Company</h2>
               <a href="/about/" onClick={(e) => { e.preventDefault(); go('/about/'); }}>About Arenova</a>
               <a href="/pricing/" onClick={(e) => { e.preventDefault(); go('/pricing/'); }}>Pricing & Scope</a>
-              <a href="mailto:avi@arenova.in">Email Avi</a>
+              <a href="https://menzy.arenova.in" target="_blank" rel="noopener noreferrer">
+                Menzy (Restaurant AI) <ArrowUpRight aria-hidden="true" />
+              </a>
               <a href="https://frontdesk.arenova.in" target="_blank" rel="noopener noreferrer">
                 Frontdesk <ArrowUpRight aria-hidden="true" />
               </a>
               <a href="https://outreacher.arenova.in" target="_blank" rel="noopener noreferrer">
                 Outreacher <ArrowUpRight aria-hidden="true" />
               </a>
+              <a href="mailto:avi@arenova.in">Email Avi</a>
             </nav>
           </div>
         </div>

@@ -28,6 +28,7 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
     description: SEO_CONFIG.description,
     knowsAbout: SEO_CONFIG.keywords,
     sameAs: [
+      'https://menzy.arenova.in',
       'https://frontdesk.arenova.in',
       'https://aiagencysearch.com/agency/arenova-ai',
     ],
