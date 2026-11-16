@@ -1,0 +1,17 @@
+domain,opportunity_url,category,us_relevance,topical_relevance,requirements,estimated_effort,status,live_backlink_url,last_verified,notes
+clutch.co,https://clutch.co/get-listed,Agency directory,High,High,Company profile and verifiable service details,Medium,IDENTIFIED,,2026-11-16,Account submission requires authorization; do not claim reviews
+goodfirms.co,https://www.goodfirms.co/get-listed,Agency directory,High,High,Company profile and portfolio evidence,Medium,IDENTIFIED,,2026-11-16,Use only verified projects
+designrush.com,https://www.designrush.com/agency-signup,Agency directory,High,High,Company profile and service categories,Medium,IDENTIFIED,,2026-11-16,Review terms before submission
+techbehemoths.com,https://techbehemoths.com/join,Agency directory,High,High,Company profile and service focus,Low,IDENTIFIED,,2026-11-16,Global directory with US buyer reach
+crunchbase.com,https://www.crunchbase.com/add-new/organization,Company database,High,Medium,Authenticated organization record,Medium,IDENTIFIED,,2026-11-16,Entity citation; link may be nofollow
+producthunt.com,https://www.producthunt.com/posts/new,Product launch,High,Medium,Launchable product with screenshots and maker profile,High,IDENTIFIED,,2026-11-16,Use Menzy Frontdesk or ROI tool only when launch-ready
+dev.to,https://dev.to/new,Technical publication,High,High,Original technical article and disclosure,Medium,IDENTIFIED,,2026-11-16,Canonical back to Arenova where platform permits
+hackernoon.com,https://hackernoon.com/writers,Technical publication,High,High,Original editorial pitch and author profile,High,IDENTIFIED,,2026-11-16,Pitch only evidence-backed engineering content
+dzone.com,https://dzone.com/pages/contribute,Technical publication,High,High,Contributor application and technical article,High,IDENTIFIED,,2026-11-16,No promotional rewrite
+github.com,https://github.com/topics/ai-agents,Open-source community,High,High,Useful maintained repository with documentation,High,IDENTIFIED,,2026-11-16,Build a real validator or workflow-testing utility first
+indiehackers.com,https://www.indiehackers.com/,Founder community,High,Medium,Useful participation and transparent founder story,Medium,IDENTIFIED,,2026-11-16,No link-drop posts
+betalist.com,https://betalist.com/submit,Startup directory,High,Medium,Early-stage product submission,Medium,IDENTIFIED,,2026-11-16,Product-specific rather than agency listing
+saashub.com,https://www.saashub.com/submit,Software directory,High,Medium,Software product page,Low,IDENTIFIED,,2026-11-16,Applicable to products not agency services
+alternativeto.net,https://alternativeto.net/manage-items/,Software directory,High,Medium,Approved product listing and accurate category,Medium,IDENTIFIED,,2026-11-16,Applicable only when a product has clear alternatives
+sourceforge.net,https://sourceforge.net/software/vendors/new,Software directory,High,Medium,Vendor account and product information,Medium,IDENTIFIED,,2026-11-16,Applicable to public software products
+

@@ -35,8 +35,8 @@ const capabilities = [
   },
   {
     icon: ShieldCheck,
-    title: 'Zero Hallucinations Guarantee',
-    body: 'Financial figures, CRM stages, and calendar availability are never guessed. Operations fail safely to human operators when confidence drops below agreed thresholds.',
+    title: 'Guarded model output',
+    body: 'Financial figures, CRM stages, and calendar availability are validated against source systems. Low-confidence or invalid output is routed to a person instead of being executed.',
   },
   {
     icon: Zap,
@@ -85,8 +85,8 @@ export const AiAutomationPage = ({ onNavigate }: ServicePageProps) => {
       <section className="subpage-hero">
         <div className="page-frame subpage-hero__grid">
           <div>
-            <p className="section-index">AI Automation Agency · Bengaluru · Global Delivery</p>
-            <h1>AI automation agency for high-volume enterprise workflows.</h1>
+            <p className="section-index">AI automation agency · Remote delivery</p>
+            <h1>AI automation for business workflows.</h1>
           </div>
           <div>
             <p>
@@ -167,20 +167,20 @@ export const AiAutomationPage = ({ onNavigate }: ServicePageProps) => {
         <div className="page-frame">
           <div className="section-heading">
             <p className="section-index">Delivery Process</p>
-            <h2 id="roadmap-title">From workflow audit to production deployment in 3 weeks.</h2>
+            <h2 id="roadmap-title">From workflow audit to a controlled release.</h2>
           </div>
 
           <div className="friction-list">
             <article>
-              <h3>Week 1 · System Audit</h3>
+              <h3>1 · System audit</h3>
               <p>We trace your exact manual handoff, audit API capabilities, define error thresholds, and agree on success metrics.</p>
             </article>
             <article>
-              <h3>Week 2 · Engineering & Staging</h3>
+              <h3>2 · Engineering and staging</h3>
               <p>We build the orchestration microservices, validate schema boundaries, and test edge cases with synthetic traffic.</p>
             </article>
             <article>
-              <h3>Week 3 · Live Deployment</h3>
+              <h3>3 · Phased deployment</h3>
               <p>Phased rollout with real data, team exception training, automated observability telemetry, and full documentation handover.</p>
             </article>
           </div>
@@ -243,7 +243,7 @@ export const AiAutomationPage = ({ onNavigate }: ServicePageProps) => {
       <section className="page-close">
         <div className="page-frame">
           <h2>Ready to automate your most expensive manual workflow?</h2>
-          <p>Request a confidential automation audit. We’ll analyze your process and outline the exact architecture.</p>
+          <p>Request a workflow review. We’ll identify the system boundary, failure modes, and a practical first release.</p>
           <button className="button button--primary" onClick={contact}>
             Request an automation audit <ArrowUpRight aria-hidden="true" />
           </button>

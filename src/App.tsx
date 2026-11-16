@@ -7,7 +7,10 @@ import { Navigation } from './components/Navigation';
 import { AboutPage } from './pages/AboutPage';
 import { HomePage } from './pages/HomePage';
 import { PricingPage } from './pages/PricingPage';
+import { UsPage } from './pages/UsPage';
+import { LegalPage } from './pages/LegalPage';
 import { AiAutomationPage } from './pages/services/AiAutomationPage';
+import { AiIntegrationPage } from './pages/services/AiIntegrationPage';
 import { AiAgentsPage } from './pages/services/AiAgentsPage';
 import { BusinessProcessAutomationPage } from './pages/services/BusinessProcessAutomationPage';
 import { AiWorkflowAutomationPage } from './pages/services/AiWorkflowAutomationPage';
@@ -29,6 +32,7 @@ import { BlogHubPage } from './pages/blog/BlogHubPage';
 import { DeterministicAiPlaybookPage } from './pages/blog/DeterministicAiPlaybookPage';
 import { AiAgentsVsChatbotsPage } from './pages/blog/AiAgentsVsChatbotsPage';
 import { CalculatingAutomationRoiPage } from './pages/blog/CalculatingAutomationRoiPage';
+import { UsSeoGuidePage } from './pages/blog/UsSeoGuidePage';
 
 function AppContent() {
   const { pathname, navigate } = useRouter();
@@ -77,8 +81,16 @@ function AppContent() {
         <PricingPage onNavigate={handleNavigate} />
       ) : pathname === '/about' ? (
         <AboutPage onNavigate={handleNavigate} />
+      ) : pathname === '/us' ? (
+        <UsPage onNavigate={handleNavigate} />
+      ) : pathname === '/privacy' ? (
+        <LegalPage kind="privacy" />
+      ) : pathname === '/terms' ? (
+        <LegalPage kind="terms" />
       ) : pathname === '/services/ai-automation' ? (
         <AiAutomationPage onNavigate={handleNavigate} />
+      ) : pathname === '/services/ai-integration' ? (
+        <AiIntegrationPage onNavigate={handleNavigate} />
       ) : pathname === '/services/ai-agents' ? (
         <AiAgentsPage onNavigate={handleNavigate} />
       ) : pathname === '/services/business-process-automation' ? (
@@ -121,6 +133,8 @@ function AppContent() {
         <AiAgentsVsChatbotsPage onNavigate={handleNavigate} />
       ) : pathname === '/blog/calculating-automation-roi' ? (
         <CalculatingAutomationRoiPage onNavigate={handleNavigate} />
+      ) : pathname === '/blog/ai-automation-cost' || pathname === '/blog/ai-agent-evaluation-checklist' || pathname === '/blog/n8n-vs-custom-code' || pathname === '/blog/ai-crm-integration-guide' || pathname === '/blog/how-to-choose-ai-automation-agency' ? (
+        <UsSeoGuidePage routeKey={pathname} onNavigate={handleNavigate} />
       ) : (
         <HomePage onNavigate={handleNavigate} />
       )}

@@ -9,7 +9,11 @@ export type CanonicalRouteKey =
   | '/'
   | '/pricing'
   | '/about'
+  | '/us'
+  | '/privacy'
+  | '/terms'
   | '/services/ai-automation'
+  | '/services/ai-integration'
   | '/services/ai-agents'
   | '/services/business-process-automation'
   | '/services/ai-workflow-automation'
@@ -30,7 +34,12 @@ export type CanonicalRouteKey =
   | '/blog'
   | '/blog/deterministic-ai-playbook'
   | '/blog/ai-agents-vs-chatbots'
-  | '/blog/calculating-automation-roi';
+  | '/blog/calculating-automation-roi'
+  | '/blog/ai-automation-cost'
+  | '/blog/ai-agent-evaluation-checklist'
+  | '/blog/n8n-vs-custom-code'
+  | '/blog/ai-crm-integration-guide'
+  | '/blog/how-to-choose-ai-automation-agency';
 
 export interface RouteSeoMeta {
   routeKey: CanonicalRouteKey;
@@ -72,14 +81,50 @@ export const ROUTE_SEO: Record<CanonicalRouteKey, RouteSeoMeta> = {
       'About Arenova, AI automation agency Bengaluru, deterministic AI systems, workflow automation engineering, Avi Arenova, custom AI development India',
     ogType: 'website',
   },
+  '/us': {
+    routeKey: '/us',
+    canonicalUrl: 'https://arenova.in/us/',
+    title: 'AI Automation Agency for US Businesses | Arenova',
+    description:
+      'Arenova designs AI agents, workflow automation, and system integrations for US businesses, with remote delivery, documented controls, and human approval gates.',
+    keywords:
+      'AI automation agency USA, AI automation services US, AI workflow automation company, custom AI agents for US businesses, remote AI development agency',
+    ogType: 'website',
+  },
+  '/privacy': {
+    routeKey: '/privacy',
+    canonicalUrl: 'https://arenova.in/privacy/',
+    title: 'Privacy Policy | Arenova',
+    description: 'How Arenova handles website inquiries, project information, analytics data, and data-subject requests.',
+    keywords: 'Arenova privacy policy, website privacy, project data handling',
+    ogType: 'website',
+  },
+  '/terms': {
+    routeKey: '/terms',
+    canonicalUrl: 'https://arenova.in/terms/',
+    title: 'Website Terms | Arenova',
+    description: 'Terms governing use of the Arenova website, published resources, estimates, and project inquiries.',
+    keywords: 'Arenova website terms, service information terms',
+    ogType: 'website',
+  },
   '/services/ai-automation': {
     routeKey: '/services/ai-automation',
     canonicalUrl: 'https://arenova.in/services/ai-automation/',
-    title: 'AI Automation Agency & Services | Enterprise Systems | Arenova',
+    title: 'AI Automation Agency for Business Workflows | Arenova',
     description:
-      'Arenova is an enterprise AI automation agency. We engineer end-to-end operational workflows, CRM pipelines, and autonomous triage systems with zero hallucinations.',
+      'Arenova builds controlled AI automation for lead handling, customer operations, documents, and internal workflows, with validation and human approval gates.',
     keywords:
       'AI automation agency, AI automation company, AI automation services, AI automation agency India, enterprise AI automation, business automation agency, intelligent workflow automation',
+    ogType: 'website',
+  },
+  '/services/ai-integration': {
+    routeKey: '/services/ai-integration',
+    canonicalUrl: 'https://arenova.in/services/ai-integration/',
+    title: 'AI Integration Services for CRM, Support & Operations | Arenova',
+    description:
+      'Connect AI models to your CRM, help desk, documents, databases, and internal tools through secure APIs, validation rules, logs, and human review.',
+    keywords:
+      'AI integration services, AI systems integration company, CRM AI integration, generative AI integration services, LLM integration consulting',
     ogType: 'website',
   },
   '/services/ai-agents': {
@@ -167,7 +212,7 @@ export const ROUTE_SEO: Record<CanonicalRouteKey, RouteSeoMeta> = {
     canonicalUrl: 'https://arenova.in/services/ai-customer-support/',
     title: 'AI Customer Support Automation | Autonomous Helpdesk Triage | Arenova',
     description:
-      'Deflect 60%+ of routine customer service tickets. Seamless integrations with Zendesk, Freshdesk, and Intercom with zero hallucinations and instant human escalation.',
+      'Automate customer support triage and draft responses with grounded knowledge, help-desk integrations, policy checks, and human escalation for sensitive cases.',
     keywords:
       'AI customer support automation, customer service automation company, automated ticketing resolution, support ticket deflection AI, Zendesk AI automation, helpdesk AI',
     ogType: 'website',
@@ -265,7 +310,7 @@ export const ROUTE_SEO: Record<CanonicalRouteKey, RouteSeoMeta> = {
   '/blog/deterministic-ai-playbook': {
     routeKey: '/blog/deterministic-ai-playbook',
     canonicalUrl: 'https://arenova.in/blog/deterministic-ai-playbook/',
-    title: 'The Deterministic AI Playbook: Why 70% of Make & Zapier Automations Break | Arenova',
+    title: 'The Deterministic AI Playbook for Reliable Workflows | Arenova',
     description:
       'Why prompt-only automations fail at scale and how to build dual-layer deterministic automation architectures with strict schemas and dead-letter queues.',
     keywords:
@@ -290,6 +335,46 @@ export const ROUTE_SEO: Record<CanonicalRouteKey, RouteSeoMeta> = {
       'A practical mathematical framework for calculating business automation ROI: labor cost reclamation, error reduction, maintenance budgets, and payback velocity.',
     keywords:
       'calculating automation ROI, business process automation return on investment, automation cost formula, operational efficiency metrics',
+    ogType: 'article',
+  },
+  '/blog/ai-automation-cost': {
+    routeKey: '/blog/ai-automation-cost',
+    canonicalUrl: 'https://arenova.in/blog/ai-automation-cost/',
+    title: 'AI Automation Cost: Scope, Pricing Drivers & Budget | Arenova',
+    description: 'A practical guide to AI automation cost, including workflow scope, integrations, testing, model usage, maintenance, and the questions to price first.',
+    keywords: 'AI automation cost, AI automation pricing, cost to automate a business process, AI workflow budget',
+    ogType: 'article',
+  },
+  '/blog/ai-agent-evaluation-checklist': {
+    routeKey: '/blog/ai-agent-evaluation-checklist',
+    canonicalUrl: 'https://arenova.in/blog/ai-agent-evaluation-checklist/',
+    title: 'AI Agent Evaluation Checklist for Business Workflows | Arenova',
+    description: 'Evaluate an AI agent before production with test cases for permissions, source grounding, tool failures, escalation, logging, and rollback.',
+    keywords: 'AI agent evaluation checklist, AI agent testing, AI agent production readiness, agentic AI evaluation',
+    ogType: 'article',
+  },
+  '/blog/n8n-vs-custom-code': {
+    routeKey: '/blog/n8n-vs-custom-code',
+    canonicalUrl: 'https://arenova.in/blog/n8n-vs-custom-code/',
+    title: 'n8n vs Custom Code for Production Automation | Arenova',
+    description: 'Choose between n8n and custom code by comparing workflow complexity, failure handling, security, maintainability, volume, and ownership.',
+    keywords: 'n8n vs custom code, n8n for production, workflow automation platform vs custom software',
+    ogType: 'article',
+  },
+  '/blog/ai-crm-integration-guide': {
+    routeKey: '/blog/ai-crm-integration-guide',
+    canonicalUrl: 'https://arenova.in/blog/ai-crm-integration-guide/',
+    title: 'How to Integrate AI With a CRM Safely | Arenova',
+    description: 'A technical guide to CRM AI integration covering identity, permissions, duplicate handling, validation, approval gates, and audit logs.',
+    keywords: 'CRM AI integration, integrate AI with CRM, HubSpot AI integration, Salesforce AI workflow',
+    ogType: 'article',
+  },
+  '/blog/how-to-choose-ai-automation-agency': {
+    routeKey: '/blog/how-to-choose-ai-automation-agency',
+    canonicalUrl: 'https://arenova.in/blog/how-to-choose-ai-automation-agency/',
+    title: 'How to Choose an AI Automation Agency | Buyer Checklist | Arenova',
+    description: 'A buyer checklist for evaluating an AI automation agency: workflow fit, proof, security, testing, ownership, support, pricing, and exit terms.',
+    keywords: 'how to choose an AI automation agency, AI automation agency checklist, hire AI automation company',
     ogType: 'article',
   },
 };

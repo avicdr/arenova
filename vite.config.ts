@@ -29,7 +29,11 @@ export default defineConfig(({ mode }) => {
           main: resolve(import.meta.dirname, 'index.html'),
           pricing: resolve(import.meta.dirname, 'pricing/index.html'),
           about: resolve(import.meta.dirname, 'about/index.html'),
+          us: resolve(import.meta.dirname, 'us/index.html'),
+          privacy: resolve(import.meta.dirname, 'privacy/index.html'),
+          terms: resolve(import.meta.dirname, 'terms/index.html'),
           aiAutomation: resolve(import.meta.dirname, 'services/ai-automation/index.html'),
+          aiIntegration: resolve(import.meta.dirname, 'services/ai-integration/index.html'),
           aiAgents: resolve(import.meta.dirname, 'services/ai-agents/index.html'),
           bpa: resolve(import.meta.dirname, 'services/business-process-automation/index.html'),
           aiWorkflow: resolve(import.meta.dirname, 'services/ai-workflow-automation/index.html'),
@@ -51,6 +55,11 @@ export default defineConfig(({ mode }) => {
           blogPlaybook: resolve(import.meta.dirname, 'blog/deterministic-ai-playbook/index.html'),
           blogAgentsVsBots: resolve(import.meta.dirname, 'blog/ai-agents-vs-chatbots/index.html'),
           blogRoi: resolve(import.meta.dirname, 'blog/calculating-automation-roi/index.html'),
+          blogAutomationCost: resolve(import.meta.dirname, 'blog/ai-automation-cost/index.html'),
+          blogAgentEvaluation: resolve(import.meta.dirname, 'blog/ai-agent-evaluation-checklist/index.html'),
+          blogN8nCustom: resolve(import.meta.dirname, 'blog/n8n-vs-custom-code/index.html'),
+          blogCrmIntegration: resolve(import.meta.dirname, 'blog/ai-crm-integration-guide/index.html'),
+          blogAgencyChecklist: resolve(import.meta.dirname, 'blog/how-to-choose-ai-automation-agency/index.html'),
         },
         output: {
           manualChunks(id: string) {

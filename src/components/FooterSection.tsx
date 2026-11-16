@@ -39,7 +39,7 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
               operational handoffs.
             </p>
             <p className="footer-location">
-              Bengaluru, India · Global Remote Delivery
+              Bengaluru, India · Remote delivery for US and global teams
             </p>
           </div>
 
@@ -49,6 +49,7 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
               <div className="footer-services-grid">
                 <div className="footer-subcol">
                   <a href="/services/ai-automation/" onClick={(e) => { e.preventDefault(); go('/services/ai-automation/'); }}>AI Automation</a>
+                  <a href="/services/ai-integration/" onClick={(e) => { e.preventDefault(); go('/services/ai-integration/'); }}>AI Integration</a>
                   <a href="/services/ai-agents/" onClick={(e) => { e.preventDefault(); go('/services/ai-agents/'); }}>AI Agents</a>
                   <a href="/services/business-process-automation/" onClick={(e) => { e.preventDefault(); go('/services/business-process-automation/'); }}>Process Automation</a>
                   <a href="/services/ai-workflow-automation/" onClick={(e) => { e.preventDefault(); go('/services/ai-workflow-automation/'); }}>Workflow Pipelines</a>
@@ -87,6 +88,7 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
             <nav aria-label="Company" className="footer-nav">
               <h2>Company</h2>
               <a href="/about/" onClick={(e) => { e.preventDefault(); go('/about/'); }}>About Arenova</a>
+              <a href="/us/" onClick={(e) => { e.preventDefault(); go('/us/'); }}>United States</a>
               <a href="/pricing/" onClick={(e) => { e.preventDefault(); go('/pricing/'); }}>Pricing & Scope</a>
               <a href="https://menzy.arenova.in" target="_blank" rel="noopener noreferrer">
                 Menzy (Restaurant AI) <ArrowUpRight aria-hidden="true" />
@@ -104,7 +106,7 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
 
         <div className="footer-legal">
           <span>© 2026 ARENOVA Systems Architecture. All rights reserved.</span>
-          <span>Bengaluru, India · Serving Clients in US, UK, Canada, Australia & India</span>
+          <span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · Bengaluru, India</span>
         </div>
       </div>
     </footer>

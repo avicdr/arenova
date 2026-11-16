@@ -1,4 +1,4 @@
-import { ArrowLeft, ArrowUpRight, Calendar, Clock, User, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Calendar, Clock, User } from 'lucide-react';
 import { useRouter } from '../../context/RouterContext';
 
 interface GuideProps {
@@ -46,7 +46,7 @@ export const DeterministicAiPlaybookPage = ({ onNavigate }: GuideProps) => {
               Systems Architecture
             </span>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
-              <Calendar style={{ width: '14px', height: '14px' }} /> Published March 2026
+              <Calendar style={{ width: '14px', height: '14px' }} /> Published November 2026
             </span>
             <span style={{ display: 'inline-flex', alignItems: 'center', gap: '6px' }}>
               <Clock style={{ width: '14px', height: '14px' }} /> 9 min read
@@ -56,12 +56,12 @@ export const DeterministicAiPlaybookPage = ({ onNavigate }: GuideProps) => {
             </span>
           </div>
           <h1 style={{ fontSize: 'clamp(2rem, 4vw, 3rem)', lineHeight: 1.15, marginBottom: '24px' }}>
-            The Deterministic AI Playbook: Why 70% of Make &amp; Zapier Automations Break at Scale
+            The Deterministic AI Playbook for Reliable Business Workflows
           </h1>
           <p style={{ fontSize: '1.25rem', color: 'var(--muted)', lineHeight: 1.6 }}>
             Most corporate AI automation initiatives fail not because modern language models are incapable, but because teams
             mistakenly trust probabilistic models to perform deterministic execution. Here is how to architect dual-layer systems
-            that never fail silently.
+            that expose failures instead of losing them silently.
           </p>
         </div>
       </section>
@@ -76,8 +76,8 @@ export const DeterministicAiPlaybookPage = ({ onNavigate }: GuideProps) => {
             posting a celebratory Slack message when a sale closes—these modules work acceptably.
           </p>
           <p>
-            However, when enterprise operations teams attempt to scale these linear no-code chains across hundreds of daily
-            customer interactions, invoice processing, or CRM deal mutations, failure rates spike above 70%.
+            Problems appear when operations teams scale linear no-code chains across customer interactions, invoice processing,
+            or CRM mutations without validation, retries, and an owner for exceptions.
           </p>
           <p>
             The root cause is fundamental computer science: <strong>Large Language Models are probabilistic token predictors, while business databases require strict deterministic integrity.</strong>
@@ -117,8 +117,8 @@ export const DeterministicAiPlaybookPage = ({ onNavigate }: GuideProps) => {
             <strong>Language models interpret. Explicit rules and APIs execute.</strong>
           </p>
           <p>
-            To achieve zero hallucinations in critical business pipelines, every production automation must be decoupled into two
-            independent, isolated architectural layers:
+            To prevent unverified model output from reaching critical business systems, separate the workflow into two
+            independent architectural layers:
           </p>
 
           <div
@@ -176,26 +176,19 @@ export const DeterministicAiPlaybookPage = ({ onNavigate }: GuideProps) => {
             </li>
           </ul>
 
-          <h2>6. Production Results: 5,000 Inbound Inquiries/Day</h2>
+          <h2>6. A production-readiness review</h2>
           <p>
-            When a high-growth B2B technology client migrated from an unmonitored Zapier setup to Arenova&apos;s deterministic
-            architecture, their results were immediate:
+            Before release, review the workflow as an operating system rather than a successful demo. The team should be able to
+            answer each of these questions with a test, an owner, and a recovery path:
           </p>
           <div style={{ background: 'var(--surface)', padding: '28px', borderRadius: '8px', margin: '24px 0' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <CheckCircle2 style={{ color: 'var(--accent)', width: '20px', height: '20px', flexShrink: 0 }} />
-                <span><strong>0% Lost Leads:</strong> Unhandled exceptions dropped from 4.2% to absolute zero via automated DLQ replays.</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <CheckCircle2 style={{ color: 'var(--accent)', width: '20px', height: '20px', flexShrink: 0 }} />
-                <span><strong>45-Second Speed-to-Lead:</strong> Inbound qualification time dropped from 3.5 hours to under 45 seconds.</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-                <CheckCircle2 style={{ color: 'var(--accent)', width: '20px', height: '20px', flexShrink: 0 }} />
-                <span><strong>$140,000+ Reclaimed Labor:</strong> Sales reps completely stopped manual data entry across Salesforce and Apollo.</span>
-              </div>
-            </div>
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', margin: 0 }}>
+              <li>What happens when the model output is incomplete, invalid, or low confidence?</li>
+              <li>Can a duplicate event repeat a customer-facing or financial action?</li>
+              <li>Where can an operator see failed work and replay it safely?</li>
+              <li>Which actions require a person, and how is that approval recorded?</li>
+              <li>How is the release stopped or rolled back when a rule changes?</li>
+            </ul>
           </div>
 
           <div
@@ -237,4 +230,3 @@ export const DeterministicAiPlaybookPage = ({ onNavigate }: GuideProps) => {
 };
 
 DeterministicAiPlaybookPage.displayName = 'DeterministicAiPlaybookPage';
-

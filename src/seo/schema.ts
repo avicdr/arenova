@@ -27,10 +27,9 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
     slogan: SEO_CONFIG.slogan,
     description: SEO_CONFIG.description,
     knowsAbout: SEO_CONFIG.keywords,
-    sameAs: [
-      'https://menzy.arenova.in',
-      'https://frontdesk.arenova.in',
-      'https://aiagencysearch.com/agency/arenova-ai',
+    hasPart: [
+      { '@type': 'SoftwareApplication', name: 'Menzy', url: 'https://menzy.arenova.in/' },
+      { '@type': 'SoftwareApplication', name: 'Arenova Frontdesk', url: 'https://frontdesk.arenova.in/' },
     ],
     address: {
       '@type': 'PostalAddress',
@@ -161,7 +160,7 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
   ];
 
   // If service route, attach rich Service Schema
-  if (routeKey.startsWith('/services/')) {
+  if (routeKey.startsWith('/services/') || routeKey === '/us') {
     graphNodes.push({
       '@type': 'Service',
       '@id': `${route.canonicalUrl}#service`,
@@ -169,7 +168,7 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
       description: route.description,
       provider: { '@id': `${SEO_CONFIG.siteUrl}/#organization` },
       serviceType: 'AI Automation & Software Development',
-      areaServed: ['United States', 'United Kingdom', 'Canada', 'Australia', 'India'],
+      areaServed: routeKey === '/us' ? ['United States'] : ['United States', 'United Kingdom', 'Canada', 'Australia', 'India'],
       termsOfService: `${SEO_CONFIG.siteUrl}/pricing/`,
     });
   }

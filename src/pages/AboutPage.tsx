@@ -46,7 +46,7 @@ export const AboutPage = ({ onNavigate }: AboutPageProps) => {
 
       <section className="section products-section" aria-labelledby="products-title">
         <div className="page-frame products-layout">
-          <div className="section-heading"><p className="section-index">Products</p><h2 id="products-title">Software that supports the service.</h2><p>Arenova also develops focused products for recurring parts of the systems it implements.</p></div>
+          <div className="section-heading"><p className="section-index">Product demonstrations</p><h2 id="products-title">Software Arenova has built.</h2><p>These are Arenova products and engineering demonstrations, not client case studies or customer results.</p></div>
           <div className="product-list">{products.map((product) => <a key={product.name} href={product.href} target={product.href.startsWith('http') ? '_blank' : undefined} rel={product.href.startsWith('http') ? 'noopener noreferrer' : undefined} onClick={product.href.startsWith('/') ? (e) => { e.preventDefault(); navigate(product.href); } : undefined}><span>{product.type}</span><h3>{product.name}</h3><p>{product.description}</p><ArrowUpRight aria-hidden="true" /></a>)}</div>
         </div>
       </section>

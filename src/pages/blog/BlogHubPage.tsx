@@ -8,11 +8,11 @@ interface BlogHubPageProps {
 const articles = [
   {
     slug: '/blog/deterministic-ai-playbook/',
-    title: 'The Deterministic AI Playbook: Why 70% of Make & Zapier Automations Break at Scale',
+    title: 'The Deterministic AI Playbook for Reliable Business Workflows',
     excerpt:
       'Why prompt-only automations fail under load and how to engineer resilient dual-layer systems with schema boundaries, dead-letter queues, and deterministic execution.',
     readTime: '9 min read',
-    date: 'March 2026',
+    date: 'November 2026',
     category: 'Systems Architecture',
   },
   {
@@ -21,7 +21,7 @@ const articles = [
     excerpt:
       'A deep engineering breakdown comparing rule-based decision trees with goal-directed autonomous agents: memory loops, tool sandboxes, and multi-agent coordination.',
     readTime: '11 min read',
-    date: 'February 2026',
+    date: 'November 2026',
     category: 'Agent Engineering',
   },
   {
@@ -30,8 +30,38 @@ const articles = [
     excerpt:
       'Move beyond vague productivity promises. Learn the exact mathematical formula for quantifying labor hours reclaimed, error remediation costs, and break-even payback velocity.',
     readTime: '7 min read',
-    date: 'January 2026',
+    date: 'November 2026',
     category: 'Operations & Strategy',
+  },
+  {
+    slug: '/blog/ai-automation-cost/',
+    title: 'AI Automation Cost: Scope, Pricing Drivers, and Operating Budget',
+    excerpt: 'Price the workflow boundary, failure handling, usage, maintenance, and ownership before comparing vendor quotes.',
+    readTime: '6 min read', date: 'November 2026', category: 'Buyer Guide',
+  },
+  {
+    slug: '/blog/ai-agent-evaluation-checklist/',
+    title: 'AI Agent Evaluation Checklist for Business Workflows',
+    excerpt: 'Test permissions, source grounding, dependency failures, escalation, logging, and rollback before production.',
+    readTime: '6 min read', date: 'November 2026', category: 'Agent Engineering',
+  },
+  {
+    slug: '/blog/n8n-vs-custom-code/',
+    title: 'n8n vs Custom Code for Production Automation',
+    excerpt: 'A decision framework for choosing visual orchestration, custom services, or a hybrid boundary.',
+    readTime: '6 min read', date: 'November 2026', category: 'Architecture',
+  },
+  {
+    slug: '/blog/ai-crm-integration-guide/',
+    title: 'How to Integrate AI With a CRM Safely',
+    excerpt: 'Identity resolution, draft-versus-write permissions, validation, audit logs, and duplicate protection.',
+    readTime: '6 min read', date: 'November 2026', category: 'Integration',
+  },
+  {
+    slug: '/blog/how-to-choose-ai-automation-agency/',
+    title: 'How to Choose an AI Automation Agency',
+    excerpt: 'A buyer checklist covering proof, scope, security, testing, ownership, support, pricing, and exit terms.',
+    readTime: '6 min read', date: 'November 2026', category: 'Buyer Guide',
   },
 ];
 
@@ -53,7 +83,7 @@ export const BlogHubPage = ({ onNavigate }: BlogHubPageProps) => {
             <div className="subpage-hero__card">
               <div className="subpage-hero__card-head">
                 <span className="card-kicker">Editorial Dispatch · 2026</span>
-                <span className="card-meta">3 Engineering Playbooks</span>
+                <span className="card-meta">8 Engineering Playbooks</span>
               </div>
               <p>
                 In-depth systems architecture, deterministic workflow design, and operational mathematical frameworks written
@@ -176,4 +206,3 @@ export const BlogHubPage = ({ onNavigate }: BlogHubPageProps) => {
 };
 
 BlogHubPage.displayName = 'BlogHubPage';
-
