@@ -7,7 +7,6 @@ const initialData = {
   fullName: '',
   workEmail: '',
   companyName: '',
-  region: 'United States & Canada (EST / CST / MST / PST)',
   serviceInterest: 'Workflow automation',
   message: '',
 };
@@ -38,13 +37,12 @@ export function AscentSection() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          _subject: `New Arenova automation audit: ${formData.companyName} (${formData.region})`,
+          _subject: `New Arenova automation audit: ${formData.companyName}`,
           _template: 'table',
           _captcha: 'false',
           name: formData.fullName,
           email: formData.workEmail,
           company: formData.companyName,
-          region: formData.region,
           service: formData.serviceInterest,
           workflow: formData.message,
         }),
@@ -72,7 +70,7 @@ export function AscentSection() {
             <div>
               <dt>Global delivery & invoicing</dt>
               <dd>
-                Bengaluru engineering hub with dedicated US (EST/PST) and India (IST) overlap. Invoiced in USD (Stripe/ACH with Form W-8BEN-E) & INR (GST 18% Input Tax Credit).
+                Active US (EST/PST) and IST timezone overlap. Multi-currency invoicing in USD ($) and INR (₹) with full W-8BEN-E and GST compliance.
               </dd>
             </div>
             <div>
@@ -80,8 +78,8 @@ export function AscentSection() {
               <dd>Current tools, monthly volume, failure points, and required human checks.</dd>
             </div>
             <div>
-              <dt>Good starting scope</dt>
-              <dd>One repeated process with a clear trigger, owner, and outcome.</dd>
+              <dt>Direct technical review</dt>
+              <dd>Workflows are evaluated within 24 business hours directly by systems architects.</dd>
             </div>
           </dl>
         </div>
@@ -110,23 +108,11 @@ export function AscentSection() {
                     onChange={(event) => update('workEmail', event.target.value)} />
                 </Field>
               </div>
-              <div className="form-row">
-                <Field label="Company or practice" id="companyName" error={errors.companyName}>
-                  <input id="companyName" name="companyName" autoComplete="organization" value={formData.companyName}
-                    aria-invalid={Boolean(errors.companyName)} aria-describedby={errors.companyName ? 'companyName-error' : undefined}
-                    onChange={(event) => update('companyName', event.target.value)} />
-                </Field>
-                <Field label="Region & Timezone" id="region">
-                  <select id="region" name="region" value={formData.region}
-                    onChange={(event) => update('region', event.target.value)}>
-                    <option>United States & Canada (EST / CST / MST / PST)</option>
-                    <option>India & South Asia (IST)</option>
-                    <option>United Kingdom & Europe (GMT / CET)</option>
-                    <option>Australia & Asia-Pacific (AEST / SGT)</option>
-                    <option>Other / Global</option>
-                  </select>
-                </Field>
-              </div>
+              <Field label="Company or practice" id="companyName" error={errors.companyName}>
+                <input id="companyName" name="companyName" autoComplete="organization" value={formData.companyName}
+                  aria-invalid={Boolean(errors.companyName)} aria-describedby={errors.companyName ? 'companyName-error' : undefined}
+                  onChange={(event) => update('companyName', event.target.value)} />
+              </Field>
               <Field label="System to discuss" id="serviceInterest">
                 <select id="serviceInterest" name="serviceInterest" value={formData.serviceInterest}
                   onChange={(event) => update('serviceInterest', event.target.value)}>

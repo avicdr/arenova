@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ArrowUpRight, Check, ChevronDown, Globe, Landmark, ShieldCheck, FileCheck, Clock, CreditCard } from 'lucide-react';
+import { ArrowUpRight, Check, ChevronDown, Clock, CreditCard, FileCheck, ShieldCheck } from 'lucide-react';
 import { useRouter } from '../context/RouterContext';
 
 interface PricingPageProps {
@@ -57,6 +57,29 @@ const plans: Plan[] = [
   },
 ];
 
+const commercialStandards = [
+  {
+    icon: CreditCard,
+    title: 'Multi-Currency Invoicing (USD & INR)',
+    body: 'Invoiced cleanly in USD ($) or INR (₹) via Stripe, ACH wire, or domestic bank transfer. Complete tax documentation provided: IRS Form W-8BEN-E for international accounting and official GST invoices (SAC 998314) with 18% Input Tax Credit.',
+  },
+  {
+    icon: Clock,
+    title: 'Synchronous Timezone Overlap',
+    body: 'Sprint syncs, discovery workshops, and launch reviews are scheduled with active working overlap across US Eastern/Pacific (EST/PST) and Indian Standard Time (IST). Clear Loom walkthroughs and direct Slack channels ensure rapid async turnaround.',
+  },
+  {
+    icon: ShieldCheck,
+    title: 'Mutual NDA & 100% IP Transfer',
+    body: 'Enterprise bilateral non-disclosure agreements protect your proprietary workflows before any architecture begins. Full intellectual property assignment for all workflows, prompts, and connectors transfers to your company.',
+  },
+  {
+    icon: FileCheck,
+    title: 'Deterministic Security & Controls',
+    body: 'Language models interpret unstructured inputs while deterministic rules, schema validation, scoped API credentials, and human escalation gates govern business-critical writes, bookings, and financial handoffs.',
+  },
+];
+
 const faqs = [
   [
     'What happens before implementation?',
@@ -71,16 +94,12 @@ const faqs = [
     'AI models are used where language interpretation, unstructured extraction, or semantic routing is needed. All business-critical operations—database writes, payments, bookings, and external API calls—execute through deterministic business rules and schema validation.',
   ],
   [
-    'How does contracting and billing work for US and global clients?',
-    'US and international clients are invoiced in USD via Stripe or direct US ACH / international wire transfer. We provide a signed IRS Form W-8BEN-E, execute a mutual NDA under standard commercial terms, and assign 100% intellectual property upon payment.',
+    'How does invoicing and multi-currency support work?',
+    'We support clean billing in both USD ($) and INR (₹). For US and international organizations, we furnish IRS Form W-8BEN-E and accept Stripe or bank wire/ACH. For domestic Indian organizations, we provide official GST-compliant tax invoices (SAC 998314 with full 18% Input Tax Credit) and support NEFT, RTGS, IMPS, and UPI.',
   ],
   [
-    'Can Indian companies claim GST Input Tax Credit (ITC)?',
-    'Yes. Domestic Indian clients receive official GST-compliant tax invoices with our GSTIN and SAC code 998314. You can claim the full 18% GST as Input Tax Credit (ITC). We accept NEFT, RTGS, IMPS, UPI, and domestic corporate cards.',
-  ],
-  [
-    'How do you manage time zone overlap between the US and India?',
-    'Our engineering delivery hub is based in Bengaluru (IST) with dedicated synchronous overlap scheduled during US Eastern (EST) and Pacific (PST) business hours. Discovery, weekly sprint demos, and urgent syncs happen during mutual working windows.',
+    'How do you manage collaboration across different time zones?',
+    'Our engineering hub in Bengaluru maintains scheduled synchronous overlap during US Eastern (EST) and Pacific (PST) business hours as well as Indian Standard Time (IST). Discovery, milestone demonstrations, and handoffs occur during shared working windows, supported by daily async updates.',
   ],
   [
     'Can the AI front desk be purchased separately?',
@@ -119,13 +138,13 @@ export const PricingPage = ({ onNavigate }: PricingPageProps) => {
       <section className="subpage-hero">
         <div className="page-frame subpage-hero__grid">
           <div>
-            <p className="section-index">Predictable Investment · Dual Currency</p>
+            <p className="section-index">Predictable Retainers</p>
             <h1>Choose the system, then define the scope.</h1>
           </div>
           <div>
             <p>
-              Monthly starting points for Arenova’s core systems. Invoicing available in USD ($) for US and international
-              clients, and INR (₹) with full GST Input Tax Credit for Indian enterprises.
+              Monthly starting points for Arenova’s core systems. Invoicing available in USD ($) or INR (₹) with full
+              tax compliance (W-8BEN-E & GST invoices).
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: '24px' }}>
               <div className="billing-toggle" aria-label="Currency selection">
@@ -134,14 +153,14 @@ export const PricingPage = ({ onNavigate }: PricingPageProps) => {
                   aria-pressed={currency === 'USD'}
                   onClick={() => setCurrency('USD')}
                 >
-                  USD ($) · US & Global
+                  USD ($)
                 </button>
                 <button
                   type="button"
                   aria-pressed={currency === 'INR'}
                   onClick={() => setCurrency('INR')}
                 >
-                  INR (₹) · India / GST
+                  INR (₹)
                 </button>
               </div>
 
@@ -180,7 +199,7 @@ export const PricingPage = ({ onNavigate }: PricingPageProps) => {
                 <div className="price">
                   <span>{formattedPrice}</span> / month
                   <div style={{ fontSize: '0.74rem', opacity: 0.8, marginTop: '6px', fontWeight: 500 }}>
-                    {currency === 'INR' ? '+ 18% GST · 100% ITC Eligible' : 'Zero US sales tax · Form W-8BEN-E'}
+                    {currency === 'INR' ? 'Tax compliant · 18% GST invoices with ITC' : 'Tax compliant · Form W-8BEN-E furnished'}
                   </div>
                 </div>
                 <ul>
@@ -232,117 +251,28 @@ export const PricingPage = ({ onNavigate }: PricingPageProps) => {
         </div>
       </section>
 
-      {/* Dual Market Reassurance & Commercial Terms */}
-      <section className="section section--ink" aria-labelledby="terms-heading">
+      {/* Unified Enterprise Commercial Standards */}
+      <section className="section section--ink" aria-labelledby="standards-heading">
         <div className="page-frame">
           <div className="section-heading">
-            <p className="section-index">Dual-Region Commercial Terms</p>
-            <h2 id="terms-heading" style={{ color: 'white' }}>
-              Engineered for US and Indian enterprise compliance.
+            <p className="section-index">Commercial & Delivery Standards</p>
+            <h2 id="standards-heading" style={{ color: 'white' }}>
+              Enterprise compliance, flexible invoicing, and timezone overlap.
             </h2>
             <p style={{ color: 'var(--inverse-muted)' }}>
-              Clear billing, strict intellectual property protections, and predictable timezone communication for teams
-              operating across North America and India.
+              Predictable retainers, complete intellectual property ownership, and direct systems architect collaboration
+              for modern operations teams.
             </p>
           </div>
 
-          <div
-            style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-              gap: '24px',
-              marginTop: '40px',
-            }}
-          >
-            {/* US Card */}
-            <div
-              style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid var(--line-inverse)',
-                borderRadius: '8px',
-                padding: '36px',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-                <Globe style={{ color: 'var(--accent)', width: '24px', height: '24px' }} />
-                <h3 style={{ color: 'white', fontSize: '1.4rem', margin: 0 }}>United States & Global</h3>
-              </div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <li style={{ display: 'flex', gap: '12px', color: 'var(--inverse-muted)', fontSize: '0.92rem' }}>
-                  <CreditCard style={{ width: '18px', height: '18px', color: 'var(--accent)', flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <strong style={{ color: 'white', display: 'block' }}>USD Invoicing & ACH / Stripe</strong>
-                    Pay cleanly in USD via credit card, Stripe, or direct US ACH / bank wire with zero international foreign transaction fees.
-                  </div>
-                </li>
-                <li style={{ display: 'flex', gap: '12px', color: 'var(--inverse-muted)', fontSize: '0.92rem' }}>
-                  <FileCheck style={{ width: '18px', height: '18px', color: 'var(--accent)', flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <strong style={{ color: 'white', display: 'block' }}>IRS Form W-8BEN-E Provided</strong>
-                    Compliant foreign vendor certification for US accounting departments. No US tax withholding hassles.
-                  </div>
-                </li>
-                <li style={{ display: 'flex', gap: '12px', color: 'var(--inverse-muted)', fontSize: '0.92rem' }}>
-                  <Clock style={{ width: '18px', height: '18px', color: 'var(--accent)', flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <strong style={{ color: 'white', display: 'block' }}>US Timezone Overlap (EST / PST)</strong>
-                    Live video reviews, sprint syncs, and emergency support during US Eastern and Pacific working hours.
-                  </div>
-                </li>
-                <li style={{ display: 'flex', gap: '12px', color: 'var(--inverse-muted)', fontSize: '0.92rem' }}>
-                  <ShieldCheck style={{ width: '18px', height: '18px', color: 'var(--accent)', flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <strong style={{ color: 'white', display: 'block' }}>Mutual NDA & 100% IP Assignment</strong>
-                    Enterprise-standard non-disclosure agreements with complete ownership of custom workflows, agent prompts, and connectors.
-                  </div>
-                </li>
-              </ul>
-            </div>
-
-            {/* India Card */}
-            <div
-              style={{
-                background: 'rgba(255, 255, 255, 0.04)',
-                border: '1px solid var(--line-inverse)',
-                borderRadius: '8px',
-                padding: '36px',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '20px' }}>
-                <Landmark style={{ color: '#ff8064', width: '24px', height: '24px' }} />
-                <h3 style={{ color: 'white', fontSize: '1.4rem', margin: 0 }}>India (Domestic Enterprise)</h3>
-              </div>
-              <ul style={{ listStyle: 'none', padding: 0, margin: 0, display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                <li style={{ display: 'flex', gap: '12px', color: 'var(--inverse-muted)', fontSize: '0.92rem' }}>
-                  <FileCheck style={{ width: '18px', height: '18px', color: '#ff8064', flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <strong style={{ color: 'white', display: 'block' }}>18% GST Invoices with Full ITC</strong>
-                    Official tax invoices under SAC 998314 with GSTIN. Your business claims 100% Input Tax Credit on all services.
-                  </div>
-                </li>
-                <li style={{ display: 'flex', gap: '12px', color: 'var(--inverse-muted)', fontSize: '0.92rem' }}>
-                  <CreditCard style={{ width: '18px', height: '18px', color: '#ff8064', flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <strong style={{ color: 'white', display: 'block' }}>Domestic Banking & UPI / NEFT</strong>
-                    Pay via corporate net banking, NEFT / RTGS / IMPS, UPI, or domestic corporate credit card.
-                  </div>
-                </li>
-                <li style={{ display: 'flex', gap: '12px', color: 'var(--inverse-muted)', fontSize: '0.92rem' }}>
-                  <ShieldCheck style={{ width: '18px', height: '18px', color: '#ff8064', flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <strong style={{ color: 'white', display: 'block' }}>TDS Compliance (Section 194J)</strong>
-                    Standard TDS deduction supported with automated Form 16A reconciliation and formal vendor paperwork.
-                  </div>
-                </li>
-                <li style={{ display: 'flex', gap: '12px', color: 'var(--inverse-muted)', fontSize: '0.92rem' }}>
-                  <Clock style={{ width: '18px', height: '18px', color: '#ff8064', flexShrink: 0, marginTop: '2px' }} />
-                  <div>
-                    <strong style={{ color: 'white', display: 'block' }}>Bengaluru Engineering Hub (IST)</strong>
-                    Direct communication with the engineering team in Bengaluru. Live Slack/WhatsApp support and on-site architecture sessions.
-                  </div>
-                </li>
-              </ul>
-            </div>
+          <div className="principle-grid" style={{ marginTop: '40px' }}>
+            {commercialStandards.map(({ icon: Icon, title, body }) => (
+              <article key={title} style={{ background: 'rgba(255,255,255,0.04)', padding: '32px', borderRadius: '8px' }}>
+                <Icon aria-hidden="true" style={{ color: 'var(--accent)', width: 28, height: 28, marginBottom: 16 }} />
+                <h3 style={{ color: 'white', marginBottom: 12, fontSize: '1.25rem' }}>{title}</h3>
+                <p style={{ color: 'var(--inverse-muted)', margin: 0 }}>{body}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>

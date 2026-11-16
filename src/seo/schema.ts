@@ -169,7 +169,7 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
   ];
 
   // If service route, attach rich Service Schema
-  if (routeKey.startsWith('/services/') || routeKey === '/us' || routeKey === '/india') {
+  if (routeKey.startsWith('/services/')) {
     graphNodes.push({
       '@type': 'Service',
       '@id': `${route.canonicalUrl}#service`,
@@ -177,12 +177,7 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
       description: route.description,
       provider: { '@id': `${SEO_CONFIG.siteUrl}/#organization` },
       serviceType: 'AI Automation & Software Development',
-      areaServed:
-        routeKey === '/us'
-          ? ['United States']
-          : routeKey === '/india'
-          ? ['India']
-          : ['United States', 'India', 'United Kingdom', 'Canada', 'Australia'],
+      areaServed: ['United States', 'India', 'United Kingdom', 'Canada', 'Australia'],
       currenciesAccepted: 'USD, INR',
       termsOfService: `${SEO_CONFIG.siteUrl}/pricing/`,
     });

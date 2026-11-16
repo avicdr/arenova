@@ -7,8 +7,6 @@ import { Navigation } from './components/Navigation';
 import { AboutPage } from './pages/AboutPage';
 import { HomePage } from './pages/HomePage';
 import { PricingPage } from './pages/PricingPage';
-import { UsPage } from './pages/UsPage';
-import { IndiaPage } from './pages/IndiaPage';
 import { LegalPage } from './pages/LegalPage';
 import { AiAutomationPage } from './pages/services/AiAutomationPage';
 import { AiIntegrationPage } from './pages/services/AiIntegrationPage';
@@ -82,10 +80,6 @@ function AppContent() {
         <PricingPage onNavigate={handleNavigate} />
       ) : pathname === '/about' ? (
         <AboutPage onNavigate={handleNavigate} />
-      ) : pathname === '/us' ? (
-        <UsPage onNavigate={handleNavigate} />
-      ) : pathname === '/india' ? (
-        <IndiaPage onNavigate={handleNavigate} />
       ) : pathname === '/privacy' ? (
         <LegalPage kind="privacy" />
       ) : pathname === '/terms' ? (

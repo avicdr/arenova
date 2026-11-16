@@ -12,8 +12,7 @@ const links = [
   { label: 'AI Agents', href: '/services/ai-agents/', route: '/services/ai-agents' },
   { label: 'Pricing', href: '/pricing/', route: '/pricing' },
   { label: 'Calculator', href: '/tools/automation-roi-calculator/', route: '/tools/automation-roi-calculator' },
-  { label: 'US', href: '/us/', route: '/us' },
-  { label: 'India', href: '/india/', route: '/india' },
+  { label: 'Blog', href: '/blog/', route: '/blog' },
   { label: 'About', href: '/about/', route: '/about' },
 ];
 

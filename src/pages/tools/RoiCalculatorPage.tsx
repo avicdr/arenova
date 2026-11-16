@@ -81,7 +81,7 @@ export const RoiCalculatorPage = ({ onNavigate }: ToolPageProps) => {
   }, [teamSize, hoursPerWeek, hourlyRate, softwareSpend, currency]);
 
   const copySummary = () => {
-    const text = `Arenova AI Automation ROI Estimate (${currency}):
+    const text = `Arenova AI Automation ROI Estimate:
 - Currency: ${currency === 'INR' ? 'INR (₹)' : 'USD ($)'}
 - Team Members Handling Repetitive Work: ${teamSize}
 - Hours Spent/Week/Person: ${hoursPerWeek} hrs
@@ -104,13 +104,13 @@ Generated at: https://arenova.in/tools/automation-roi-calculator/`;
       <section className="subpage-hero">
         <div className="page-frame subpage-hero__grid">
           <div>
-            <p className="section-index">Interactive Decision Tool · US ($) & India (₹) Benchmarks</p>
+            <p className="section-index">Interactive Decision Tool · Enterprise Savings Model</p>
             <h1>AI automation ROI & cost savings calculator.</h1>
           </div>
           <div>
             <p>
-              Quantify the real cost of repetitive manual handoffs across your team. Switch between USD ($) and INR (₹)
-              to calibrate regional salary benchmarks and calculate projected payback periods.
+              Quantify the real cost of repetitive manual handoffs across your team. Adjust inputs in USD ($) or INR (₹)
+              to calculate your annual labor waste, hours returned to revenue tasks, and projected break-even period.
             </p>
             <div style={{ marginTop: '24px' }}>
               <div className="billing-toggle" aria-label="Currency selection">
@@ -119,14 +119,14 @@ Generated at: https://arenova.in/tools/automation-roi-calculator/`;
                   aria-pressed={currency === 'USD'}
                   onClick={() => handleCurrencyChange('USD')}
                 >
-                  USD ($) · US / Global
+                  USD ($)
                 </button>
                 <button
                   type="button"
                   aria-pressed={currency === 'INR'}
                   onClick={() => handleCurrencyChange('INR')}
                 >
-                  INR (₹) · India / GST
+                  INR (₹)
                 </button>
               </div>
             </div>
@@ -153,23 +153,9 @@ Generated at: https://arenova.in/tools/automation-roi-calculator/`;
               border: '1px solid var(--line)',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
-              <h2 style={{ fontSize: '1.45rem', margin: 0, letterSpacing: '-0.02em' }}>
-                1. Operational Inputs ({currency})
-              </h2>
-              <span
-                style={{
-                  fontSize: '0.75rem',
-                  fontWeight: 700,
-                  padding: '4px 8px',
-                  borderRadius: '4px',
-                  background: 'var(--line)',
-                  color: 'var(--ink)',
-                }}
-              >
-                {currency === 'INR' ? 'Indian Benchmarks' : 'US / Global'}
-              </span>
-            </div>
+            <h2 style={{ fontSize: '1.45rem', marginBottom: '28px', letterSpacing: '-0.02em' }}>
+              1. Your Operational Inputs
+            </h2>
 
             {/* Slider 1 */}
             <div style={{ marginBottom: '28px' }}>
@@ -214,9 +200,7 @@ Generated at: https://arenova.in/tools/automation-roi-calculator/`;
             {/* Slider 3 */}
             <div style={{ marginBottom: '28px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontWeight: 600 }}>
-                <label htmlFor="hourly-rate">
-                  {currency === 'INR' ? 'Loaded employee hourly cost (₹/hr)' : 'Loaded employee hourly cost ($/hr)'}
-                </label>
+                <label htmlFor="hourly-rate">Average loaded employee hourly cost</label>
                 <span style={{ color: 'var(--accent-dark)', fontWeight: 700 }}>
                   {formatCurrency(hourlyRate)}/hr
                 </span>
@@ -232,20 +216,14 @@ Generated at: https://arenova.in/tools/automation-roi-calculator/`;
                 style={{ width: '100%', accentColor: 'var(--accent)' }}
               />
               <span style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>
-                {currency === 'INR'
-                  ? 'Salary + PF + benefits (Standard Indian enterprise range: ₹500–₹1,800/hr)'
-                  : 'Salary + payroll taxes + benefits (Standard US range: $25–$85/hr)'}
+                Salary + benefits + operational overhead
               </span>
             </div>
 
             {/* Slider 4 */}
             <div style={{ marginBottom: '16px' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px', fontWeight: 600 }}>
-                <label htmlFor="software-spend">
-                  {currency === 'INR'
-                    ? 'Monthly spend on fragmented tools & duct-tape (₹/mo)'
-                    : 'Monthly spend on disconnected tools & duct-tape ($/mo)'}
-                </label>
+                <label htmlFor="software-spend">Monthly spend on disconnected tools & duct-tape</label>
                 <span style={{ color: 'var(--accent-dark)', fontWeight: 700 }}>
                   {formatCurrency(softwareSpend)}/mo
                 </span>
@@ -261,9 +239,7 @@ Generated at: https://arenova.in/tools/automation-roi-calculator/`;
                 style={{ width: '100%', accentColor: 'var(--accent)' }}
               />
               <span style={{ fontSize: '0.78rem', color: 'var(--muted)' }}>
-                {currency === 'INR'
-                  ? 'Manual Zapier subscriptions, form builders, unintegrated CRM addons'
-                  : 'Miscellaneous Zapier tiers, form tools, scrapers, and manual software add-ons'}
+                Miscellaneous automation tiers, form builders, scrapers, and software add-ons
               </span>
             </div>
           </div>
@@ -279,14 +255,9 @@ Generated at: https://arenova.in/tools/automation-roi-calculator/`;
               boxShadow: '0 24px 60px rgba(19, 36, 32, 0.16)',
             }}
           >
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '12px' }}>
-              <p className="section-index" style={{ color: '#ff8064', margin: 0 }}>
-                Projected Business Impact
-              </p>
-              <span style={{ fontSize: '0.75rem', color: 'var(--inverse-muted)' }}>
-                {currency === 'INR' ? 'INR (₹) Model' : 'USD ($) Model'}
-              </span>
-            </div>
+            <p className="section-index" style={{ color: '#ff8064', marginBottom: '12px' }}>
+              Projected Business Impact
+            </p>
             <h2 style={{ color: 'white', fontSize: '1.85rem', marginBottom: '28px', letterSpacing: '-0.03em' }}>
               Automation Return on Investment
             </h2>
@@ -333,7 +304,7 @@ Generated at: https://arenova.in/tools/automation-roi-calculator/`;
                 <strong style={{ color: '#ff8064' }}>{formatCurrency(metrics.totalCurrentWaste)}</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '0.9rem' }}>
-                <span style={{ color: 'var(--inverse-muted)' }}>Baseline Engineering Tier:</span>
+                <span style={{ color: 'var(--inverse-muted)' }}>Baseline Engineering Retainer:</span>
                 <strong style={{ color: 'white' }}>{formatCurrency(metrics.monthlyInvestment)} / mo</strong>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px', fontSize: '0.9rem' }}>
@@ -368,12 +339,11 @@ Generated at: https://arenova.in/tools/automation-roi-calculator/`;
         <div className="page-frame">
           <div className="section-heading">
             <p className="section-index">Calculation Methodology</p>
-            <h2 style={{ color: 'white' }}>How this dual-market ROI model is constructed.</h2>
+            <h2 style={{ color: 'white' }}>How this ROI model is constructed.</h2>
             <p style={{ color: 'var(--inverse-muted)' }}>
-              Projections are calibrated against real-world enterprise workflow deployments across North America and India.
-              When repetitive manual data movement is replaced with deterministic API integrations, teams routinely recover
-              70–80% of manual coordination overhead. The remaining 20–30% represents necessary human exception handling and
-              strategic customer interaction.
+              We base our projections on real-world workflow automation benchmarks. When repetitive manual handoffs are
+              replaced with deterministic API integrations, teams recover an average of 70–80% of manual coordination time.
+              The remaining 20–30% represents necessary human exception handling and complex customer consultations.
             </p>
           </div>
         </div>
