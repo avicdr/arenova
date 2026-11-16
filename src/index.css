@@ -32,7 +32,7 @@ img, svg { display: block; }
 h1, h2, h3, p { margin-top: 0; }
 h1, h2, h3 { text-wrap: balance; }
 h1, h2 { font-family: 'Arenova Display', sans-serif; letter-spacing: -0.045em; font-weight: 600; }
-h1 { font-size: clamp(3.25rem, 6.2vw, 6.3rem); line-height: 0.94; }
+h1 { font-size: clamp(2.65rem, 4.4vw, 4.5rem); line-height: 1.02; }
 h2 { font-size: clamp(2.25rem, 4vw, 4.5rem); line-height: 0.98; }
 h3 { font-size: 1.25rem; line-height: 1.25; }
 p { line-height: 1.7; }
@@ -67,7 +67,7 @@ p { line-height: 1.7; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(520px, 6fr); gap: clamp(64px, 8vw, 128px); align-items: center; }
 .hero-copy { max-width: 660px; }
 .hero-kicker, .section-index { margin-bottom: 24px; color: var(--accent-dark); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.04em; }
-.hero-copy h1 { margin-bottom: 32px; }
+.hero-copy h1 { margin-bottom: 28px; }
 .hero-lead { max-width: 620px; margin-bottom: 36px; color: var(--ink-2); font-size: clamp(1.05rem, 1.4vw, 1.25rem); }
 .hero-actions { display: flex; align-items: center; gap: 24px; }
 [data-enter] .hero-copy > * { animation: hero-enter 600ms var(--ease-out) both; }
@@ -166,7 +166,7 @@ p { line-height: 1.7; }
 .subpage { padding-top: 72px; }
 .subpage-hero { min-height: 64svh; padding: 110px 0 84px; display: flex; align-items: center; border-bottom: 1px solid var(--line); }
 .subpage-hero__grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(380px, 0.85fr); gap: clamp(40px, 5vw, 72px); align-items: center; }
-.subpage-hero h1 { max-width: 820px; margin-bottom: 0; font-size: clamp(3.2rem, 5.5vw, 5.5rem); }
+.subpage-hero h1 { max-width: 820px; margin-bottom: 0; font-size: clamp(2.65rem, 4.4vw, 4.5rem); line-height: 1.02; }
 .subpage-hero__grid > div:last-child { display: flex; flex-direction: column; justify-content: center; max-width: 540px; }
 .subpage-hero__grid > div:last-child > p { color: var(--ink-2); font-size: clamp(1.05rem, 1.25vw, 1.18rem); line-height: 1.65; margin: 0; }
 .subpage-hero .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 28px; }
