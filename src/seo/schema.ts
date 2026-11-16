@@ -27,7 +27,10 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
     slogan: SEO_CONFIG.slogan,
     description: SEO_CONFIG.description,
     knowsAbout: SEO_CONFIG.keywords,
-    sameAs: ['https://frontdesk.arenova.in'],
+    sameAs: [
+      'https://frontdesk.arenova.in',
+      'https://aiagencysearch.com/agency/arenova-ai',
+    ],
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Bengaluru',
