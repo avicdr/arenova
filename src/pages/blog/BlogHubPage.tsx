@@ -50,17 +50,34 @@ export const BlogHubPage = ({ onNavigate }: BlogHubPageProps) => {
             <h1>Engineering blog and enterprise automation playbooks.</h1>
           </div>
           <div>
-            <p>
-              In-depth technical guides, systems architecture breakdowns, and operational playbooks written by the systems
-              engineers at Arenova.
-            </p>
-            <div className="hero-actions" style={{ marginTop: '28px' }}>
-              <button className="button button--primary" onClick={() => navigate('/tools/automation-roi-calculator/')}>
-                Try our ROI Calculator <ArrowUpRight aria-hidden="true" />
-              </button>
-              <button className="button button--secondary" onClick={() => navigate('/services/ai-automation/')}>
-                Explore our services
-              </button>
+            <div className="subpage-hero__card">
+              <div className="subpage-hero__card-head">
+                <span className="card-kicker">Editorial Dispatch · 2026</span>
+                <span className="card-meta">3 Engineering Playbooks</span>
+              </div>
+              <p>
+                In-depth systems architecture, deterministic workflow design, and operational mathematical frameworks written
+                by the systems engineers at Arenova.
+              </p>
+              <div className="subpage-hero__card-tags">
+                <span>Deterministic Systems</span>
+                <span>Agent Sandboxes</span>
+                <span>ROI Formulations</span>
+              </div>
+              <div className="hero-actions">
+                <button
+                  className="button button--primary"
+                  onClick={() => navigate('/tools/automation-roi-calculator/')}
+                >
+                  Try ROI Calculator <ArrowUpRight aria-hidden="true" />
+                </button>
+                <button
+                  className="button button--secondary"
+                  onClick={() => navigate('/services/ai-automation/')}
+                >
+                  Explore services
+                </button>
+              </div>
             </div>
           </div>
         </div>
