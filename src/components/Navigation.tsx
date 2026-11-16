@@ -10,10 +10,10 @@ interface NavigationProps {
 const links = [
   { label: 'Services', href: '/services/ai-automation/', route: '/services/ai-automation' },
   { label: 'AI Agents', href: '/services/ai-agents/', route: '/services/ai-agents' },
-  { label: 'US', href: '/us/', route: '/us' },
-  { label: 'Calculator', href: '/tools/automation-roi-calculator/', route: '/tools/automation-roi-calculator' },
   { label: 'Pricing', href: '/pricing/', route: '/pricing' },
-  { label: 'Blog', href: '/blog/', route: '/blog' },
+  { label: 'Calculator', href: '/tools/automation-roi-calculator/', route: '/tools/automation-roi-calculator' },
+  { label: 'US', href: '/us/', route: '/us' },
+  { label: 'India', href: '/india/', route: '/india' },
   { label: 'About', href: '/about/', route: '/about' },
 ];
 

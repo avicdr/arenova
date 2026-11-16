@@ -3,7 +3,14 @@ import { ArrowUpRight, Check, LoaderCircle } from 'lucide-react';
 
 type FormState = 'idle' | 'sending' | 'sent' | 'error';
 
-const initialData = { fullName: '', workEmail: '', companyName: '', serviceInterest: 'Workflow automation', message: '' };
+const initialData = {
+  fullName: '',
+  workEmail: '',
+  companyName: '',
+  region: 'United States & Canada (EST / CST / MST / PST)',
+  serviceInterest: 'Workflow automation',
+  message: '',
+};
 
 export function AscentSection() {
   const [formData, setFormData] = useState(initialData);
@@ -31,10 +38,14 @@ export function AscentSection() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
         body: JSON.stringify({
-          _subject: `New Arenova automation audit: ${formData.companyName}`,
-          _template: 'table', _captcha: 'false',
-          name: formData.fullName, email: formData.workEmail,
-          company: formData.companyName, service: formData.serviceInterest,
+          _subject: `New Arenova automation audit: ${formData.companyName} (${formData.region})`,
+          _template: 'table',
+          _captcha: 'false',
+          name: formData.fullName,
+          email: formData.workEmail,
+          company: formData.companyName,
+          region: formData.region,
+          service: formData.serviceInterest,
           workflow: formData.message,
         }),
       });
@@ -58,8 +69,20 @@ export function AscentSection() {
           <h2 id="contact-title">Bring us one workflow that should run better.</h2>
           <p>Tell us where work slows down, which tools are involved, and what a good handoff looks like. We’ll use that context to assess the fit.</p>
           <dl className="contact-notes">
-            <div><dt>Useful context</dt><dd>Current tools, monthly volume, failure points, and required human checks.</dd></div>
-            <div><dt>Good starting scope</dt><dd>One repeated process with a clear trigger, owner, and outcome.</dd></div>
+            <div>
+              <dt>Global delivery & invoicing</dt>
+              <dd>
+                Bengaluru engineering hub with dedicated US (EST/PST) and India (IST) overlap. Invoiced in USD (Stripe/ACH with Form W-8BEN-E) & INR (GST 18% Input Tax Credit).
+              </dd>
+            </div>
+            <div>
+              <dt>Useful context</dt>
+              <dd>Current tools, monthly volume, failure points, and required human checks.</dd>
+            </div>
+            <div>
+              <dt>Good starting scope</dt>
+              <dd>One repeated process with a clear trigger, owner, and outcome.</dd>
+            </div>
           </dl>
         </div>
 
@@ -87,11 +110,23 @@ export function AscentSection() {
                     onChange={(event) => update('workEmail', event.target.value)} />
                 </Field>
               </div>
-              <Field label="Company or practice" id="companyName" error={errors.companyName}>
-                <input id="companyName" name="companyName" autoComplete="organization" value={formData.companyName}
-                  aria-invalid={Boolean(errors.companyName)} aria-describedby={errors.companyName ? 'companyName-error' : undefined}
-                  onChange={(event) => update('companyName', event.target.value)} />
-              </Field>
+              <div className="form-row">
+                <Field label="Company or practice" id="companyName" error={errors.companyName}>
+                  <input id="companyName" name="companyName" autoComplete="organization" value={formData.companyName}
+                    aria-invalid={Boolean(errors.companyName)} aria-describedby={errors.companyName ? 'companyName-error' : undefined}
+                    onChange={(event) => update('companyName', event.target.value)} />
+                </Field>
+                <Field label="Region & Timezone" id="region">
+                  <select id="region" name="region" value={formData.region}
+                    onChange={(event) => update('region', event.target.value)}>
+                    <option>United States & Canada (EST / CST / MST / PST)</option>
+                    <option>India & South Asia (IST)</option>
+                    <option>United Kingdom & Europe (GMT / CET)</option>
+                    <option>Australia & Asia-Pacific (AEST / SGT)</option>
+                    <option>Other / Global</option>
+                  </select>
+                </Field>
+              </div>
               <Field label="System to discuss" id="serviceInterest">
                 <select id="serviceInterest" name="serviceInterest" value={formData.serviceInterest}
                   onChange={(event) => update('serviceInterest', event.target.value)}>

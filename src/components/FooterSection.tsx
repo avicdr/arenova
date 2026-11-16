@@ -39,7 +39,7 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
               operational handoffs.
             </p>
             <p className="footer-location">
-              Bengaluru, India · Remote delivery for US and global teams
+              Bengaluru, India · Global delivery for US, India & international enterprises
             </p>
           </div>
 
@@ -89,6 +89,7 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
               <h2>Company</h2>
               <a href="/about/" onClick={(e) => { e.preventDefault(); go('/about/'); }}>About Arenova</a>
               <a href="/us/" onClick={(e) => { e.preventDefault(); go('/us/'); }}>United States</a>
+              <a href="/india/" onClick={(e) => { e.preventDefault(); go('/india/'); }}>India (Domestic)</a>
               <a href="/pricing/" onClick={(e) => { e.preventDefault(); go('/pricing/'); }}>Pricing & Scope</a>
               <a href="https://menzy.arenova.in" target="_blank" rel="noopener noreferrer">
                 Menzy (Restaurant AI) <ArrowUpRight aria-hidden="true" />

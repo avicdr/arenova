@@ -12,7 +12,7 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
     <section id="top" className="hero-section" data-enter>
       <div className="page-frame hero-grid">
         <div className="hero-copy">
-          <p className="hero-kicker">AI Automation Agency · Custom AI Agents · Global Delivery</p>
+          <p className="hero-kicker">AI Automation Agency · Custom AI Agents · US & India Delivery</p>
           <h1>AI automation agency and custom agent engineering.</h1>
           <p className="hero-lead">
             Arenova designs deterministic workflow automation, autonomous AI agents, and systems integrations around the tools
@@ -26,9 +26,9 @@ export function HeroSection({ onNavigate }: HeroSectionProps) {
               Explore our services
             </button>
           </div>
-          <div style={{ marginTop: '24px', display: 'flex', gap: '20px', fontSize: '0.82rem', color: 'var(--muted)' }}>
+          <div style={{ marginTop: '24px', display: 'flex', gap: '20px', fontSize: '0.82rem', color: 'var(--muted)', flexWrap: 'wrap' }}>
             <span>✓ Deterministic API execution</span>
-            <span>✓ Zero hallucinations</span>
+            <span>✓ US (EST/PST) & India (IST) overlap</span>
             <span>✓ 2–4 week deployment</span>
           </div>
         </div>

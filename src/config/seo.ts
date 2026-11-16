@@ -10,6 +10,7 @@ export type CanonicalRouteKey =
   | '/pricing'
   | '/about'
   | '/us'
+  | '/india'
   | '/privacy'
   | '/terms'
   | '/services/ai-automation'
@@ -64,11 +65,11 @@ export const ROUTE_SEO: Record<CanonicalRouteKey, RouteSeoMeta> = {
   '/pricing': {
     routeKey: '/pricing',
     canonicalUrl: 'https://arenova.in/pricing/',
-    title: 'Arenova Pricing | Transparent AI Automation & Agent Engineering',
+    title: 'Arenova Pricing | Transparent AI Automation & Agent Engineering (USD & INR)',
     description:
-      'Transparent pricing for enterprise AI automation systems: Sales & Outreach ($999/mo), Business Automation ($1,999/mo), Connected Automation ($3,499/mo), and AI Frontdesk ($490/mo).',
+      'Transparent pricing for enterprise AI automation systems in USD ($) and INR (₹): Sales & Outreach ($999 or ₹79,000/mo), Business Automation ($1,999 or ₹1,59,000/mo), Connected Automation ($3,499 or ₹2,79,000/mo), and AI Frontdesk ($490 or ₹39,000/mo). Full US W-8BEN-E and Indian GST compliance.',
     keywords:
-      'AI automation pricing, AI agent development cost, workflow automation pricing, AI agency retainers, enterprise AI ROI, Arenova pricing',
+      'AI automation pricing, AI agent development cost, workflow automation pricing, AI agency retainers, enterprise AI ROI, Arenova pricing, AI automation cost India, AI agency pricing USD INR',
     ogType: 'website',
   },
   '/about': {
@@ -89,6 +90,16 @@ export const ROUTE_SEO: Record<CanonicalRouteKey, RouteSeoMeta> = {
       'Arenova designs AI agents, workflow automation, and system integrations for US businesses, with remote delivery, documented controls, and human approval gates.',
     keywords:
       'AI automation agency USA, AI automation services US, AI workflow automation company, custom AI agents for US businesses, remote AI development agency',
+    ogType: 'website',
+  },
+  '/india': {
+    routeKey: '/india',
+    canonicalUrl: 'https://arenova.in/india/',
+    title: 'AI Automation Agency India | Enterprise AI Agents & Workflows | Arenova',
+    description:
+      'Arenova engineers deterministic AI automation, custom agents, and ERP/CRM integrations for Indian enterprises and high-growth companies. Based in Bengaluru with 18% GST ITC compliance.',
+    keywords:
+      'AI automation agency India, AI agent development company India, AI workflow automation Bengaluru, custom AI agents India, enterprise AI automation Bangalore, WhatsApp automation agency India',
     ogType: 'website',
   },
   '/privacy': {
@@ -290,11 +301,11 @@ export const ROUTE_SEO: Record<CanonicalRouteKey, RouteSeoMeta> = {
   '/tools/automation-roi-calculator': {
     routeKey: '/tools/automation-roi-calculator',
     canonicalUrl: 'https://arenova.in/tools/automation-roi-calculator/',
-    title: 'AI Automation ROI & Cost Calculator | Calculate Annual Savings | Arenova',
+    title: 'AI Automation ROI & Cost Calculator (USD & INR) | Arenova',
     description:
-      'Free interactive AI automation ROI calculator. Calculate your exact annual labor savings, hours returned to high-value tasks, and projected break-even payback period.',
+      'Free interactive AI automation ROI calculator with USD ($) and INR (₹) salary benchmarks. Calculate your exact annual labor savings, hours returned to high-value tasks, and projected break-even payback period.',
     keywords:
-      'AI automation ROI calculator, business automation cost savings calculator, automation savings estimator, AI agent ROI, business workflow cost calculator',
+      'AI automation ROI calculator, business automation cost savings calculator, automation savings estimator, AI agent ROI, business workflow cost calculator, AI ROI calculator India, AI ROI calculator USD',
     ogType: 'website',
   },
   '/blog': {

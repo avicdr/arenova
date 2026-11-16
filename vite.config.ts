@@ -30,6 +30,7 @@ export default defineConfig(({ mode }) => {
           pricing: resolve(import.meta.dirname, 'pricing/index.html'),
           about: resolve(import.meta.dirname, 'about/index.html'),
           us: resolve(import.meta.dirname, 'us/index.html'),
+          india: resolve(import.meta.dirname, 'india/index.html'),
           privacy: resolve(import.meta.dirname, 'privacy/index.html'),
           terms: resolve(import.meta.dirname, 'terms/index.html'),
           aiAutomation: resolve(import.meta.dirname, 'services/ai-automation/index.html'),

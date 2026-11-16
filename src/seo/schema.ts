@@ -31,6 +31,15 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
       { '@type': 'SoftwareApplication', name: 'Menzy', url: 'https://menzy.arenova.in/' },
       { '@type': 'SoftwareApplication', name: 'Arenova Frontdesk', url: 'https://frontdesk.arenova.in/' },
     ],
+    currenciesAccepted: 'USD, INR',
+    paymentAccepted: 'Stripe, Credit Card, Wire Transfer, ACH, UPI, Net Banking',
+    areaServed: [
+      { '@type': 'Country', name: 'India' },
+      { '@type': 'Country', name: 'United States' },
+      { '@type': 'Country', name: 'United Kingdom' },
+      { '@type': 'Country', name: 'Canada' },
+      { '@type': 'Country', name: 'Australia' },
+    ],
     address: {
       '@type': 'PostalAddress',
       addressLocality: 'Bengaluru',
@@ -160,7 +169,7 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
   ];
 
   // If service route, attach rich Service Schema
-  if (routeKey.startsWith('/services/') || routeKey === '/us') {
+  if (routeKey.startsWith('/services/') || routeKey === '/us' || routeKey === '/india') {
     graphNodes.push({
       '@type': 'Service',
       '@id': `${route.canonicalUrl}#service`,
@@ -168,7 +177,13 @@ export function generateSchemaGraph(routeKey: CanonicalRouteKey = '/') {
       description: route.description,
       provider: { '@id': `${SEO_CONFIG.siteUrl}/#organization` },
       serviceType: 'AI Automation & Software Development',
-      areaServed: routeKey === '/us' ? ['United States'] : ['United States', 'United Kingdom', 'Canada', 'Australia', 'India'],
+      areaServed:
+        routeKey === '/us'
+          ? ['United States']
+          : routeKey === '/india'
+          ? ['India']
+          : ['United States', 'India', 'United Kingdom', 'Canada', 'Australia'],
+      currenciesAccepted: 'USD, INR',
       termsOfService: `${SEO_CONFIG.siteUrl}/pricing/`,
     });
   }

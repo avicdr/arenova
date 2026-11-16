@@ -34,7 +34,7 @@ async function generate() {
         priority = '0.9';
       } else if (routeKey.startsWith('/blog/')) {
         priority = '0.85';
-      } else if (routeKey === '/pricing') {
+      } else if (routeKey === '/pricing' || routeKey === '/us' || routeKey === '/india') {
         priority = '0.85';
       } else if (routeKey.startsWith('/industries/')) {
         priority = '0.8';

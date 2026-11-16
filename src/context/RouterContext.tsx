@@ -9,6 +9,7 @@ const VALID_ROUTES: CanonicalRouteKey[] = [
   '/pricing',
   '/about',
   '/us',
+  '/india',
   '/privacy',
   '/terms',
   '/services/ai-automation',
