@@ -289,6 +289,20 @@ p { line-height: 1.7; }
 .founder-section { padding: 120px 0; background: var(--surface-2); }
 .founder-grid > div:last-child p { color: var(--muted); }
 
+.legal-section { min-height: auto; padding: 80px 0 120px; align-items: flex-start; }
+.legal-list { border-top: 1px solid var(--line); }
+.legal-list article { display: grid; grid-template-columns: minmax(220px, 320px) minmax(0, 1fr); gap: 24px 64px; padding: 36px 0; border-bottom: 1px solid var(--line); align-items: start; }
+.legal-list__head { display: flex; flex-direction: column; gap: 8px; }
+.legal-list__index { color: var(--accent-dark); font-size: .75rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.legal-list h2 { margin: 0; font-family: 'Arenova Display', sans-serif; font-size: 1.4rem; line-height: 1.2; letter-spacing: -.025em; color: var(--ink); }
+.legal-list__body { display: flex; flex-direction: column; gap: 14px; max-width: 720px; }
+.legal-list__body p { margin: 0; color: var(--muted); font-size: 1rem; line-height: 1.75; }
+.legal-list__body ul { margin: 0; padding-left: 20px; color: var(--muted); line-height: 1.75; }
+.legal-list__body li { margin-bottom: 6px; }
+.legal-contact { margin-top: 48px; padding: 32px 36px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-md); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; }
+.legal-contact h3 { margin: 0 0 6px; font-family: 'Arenova Display', sans-serif; font-size: 1.3rem; letter-spacing: -.02em; color: var(--ink); }
+.legal-contact p { margin: 0; color: var(--muted); font-size: .95rem; max-width: 560px; }
+
 .site-footer { padding: 80px 0 28px; background: #0f1a18; color: white; }
 .footer-primary { display: grid; grid-template-columns: minmax(260px, 0.85fr) 2.15fr; gap: clamp(32px, 4vw, 56px); padding-bottom: 56px; }
 .brand--footer { color: white; }
@@ -344,6 +358,7 @@ p { line-height: 1.7; }
   .frontdesk-price__grid, .founder-grid { grid-template-columns: 1fr 280px; }
   .page-close .page-frame { grid-template-columns: 1fr; }
   .page-close h2 { grid-row: auto; }
+  .legal-list article { grid-template-columns: 1fr; gap: 14px; padding: 28px 0; }
   .footer-primary { grid-template-columns: 1fr; gap: 64px; }
 }
 
@@ -399,6 +414,8 @@ p { line-height: 1.7; }
   .frontdesk-price__grid > div:last-child { justify-self: start; }
   .faq-grid { gap: 34px; }
   .page-close { padding: 88px 0; }
+  .legal-section { padding: 56px 0 84px; }
+  .legal-contact { padding: 24px 20px; }
   .principle-grid { grid-template-columns: 1fr; }
   .principle-grid article { min-height: 0; }
   .product-list a { grid-template-columns: 1fr; gap: 8px; padding-right: 40px; }

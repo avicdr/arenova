@@ -107,7 +107,13 @@ export function FooterSection({ onNavigate }: FooterSectionProps) {
 
         <div className="footer-legal">
           <span>© 2026 ARENOVA Systems Architecture. All rights reserved.</span>
-          <span><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> · Bengaluru, India</span>
+          <span>
+            <a href="/privacy/" onClick={(e) => { e.preventDefault(); go('/privacy/'); }}>Privacy</a>
+            {' · '}
+            <a href="/terms/" onClick={(e) => { e.preventDefault(); go('/terms/'); }}>Terms</a>
+            {' · '}
+            Bengaluru, India
+          </span>
         </div>
       </div>
     </footer>
